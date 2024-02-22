@@ -1,5 +1,6 @@
 package com.projectA1.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,10 +15,13 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequestMapping("/user/*")
-@RequiredArgsConstructor
 public class UserController {
 	
-	private final UserService userService;
+	//사용자 추가
+	//사용자 마이페이지 => 정보수정, 회원탈퇴
+	
+	@Autowired
+	private UserService userService;
 	
 	//사용자 추가폼 변경완료
 	@GetMapping("join")

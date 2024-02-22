@@ -26,7 +26,7 @@ public class SecurityConfig {
       		  .loginPage("/login")
       		  .loginProcessingUrl("/loginPro")
       		  .defaultSuccessUrl("/")    
-        );
+        ); //"login"으로 페이지 이동 => loginPro로 처리 => 성공시 "/"로 이동
 		return http.build();
 	}
 

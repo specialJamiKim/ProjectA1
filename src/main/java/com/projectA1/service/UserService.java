@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import com.projectA1.model.User;
 import com.projectA1.repository.UserRepository;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -24,13 +25,13 @@ public class UserService {
 	}
 	
 	//user 수정 (더티체킹) => 전화번호, 주소, 이메일, 비밀번호 수정가능
+	@Transactional
 	public void update(User user) {
 		User u = userRepository.findByUsername(user.getUsername());
 		u.setPhoneNumber(u.getPhoneNumber());
 		u.setAddr(u.getAddr()); // 주소
 		u.setEmail(u.getEmail()); //이메일
 		u.setPassword(u.getPassword()); //비밀번호
-		
 	}
 
 	//user 삭제
