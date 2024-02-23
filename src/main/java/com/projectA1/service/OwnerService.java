@@ -30,7 +30,7 @@ public class OwnerService {
 		return ownerRepository.findById(id);
 	}
 	
-	//수정
+	//수정 (더티체킹) ==> 전화번호, 주소, 사업자 이름
 	@Transactional
 	public void update(long id, Owner updatedOwner)
 	{
@@ -38,8 +38,10 @@ public class OwnerService {
 	    // 변경된 필드들만 세팅
 	    owner.setOwnerPhoneNumber(updatedOwner.getOwnerPhoneNumber()); //전화번호
 	    owner.setCenterAddr(updatedOwner.getCenterAddr()); //주소
-	    owner.setOwnerName(updatedOwner.getOwnerName()); //이름
-	    ㅐ
+	    owner.setOwnerName(updatedOwner.getOwnerName()); //이름    
 	}
 	//삭제
+	public void delete(long id) {
+		ownerRepository.deleteById(id);
+	}
 }
