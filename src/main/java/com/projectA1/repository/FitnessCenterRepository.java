@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.projectA1.model.FitnessCenter;
 
 @Repository
-public interface FitnessCenterRepository extends JpaRepository<FitnessCenter, long>{
+public interface FitnessCenterRepository extends JpaRepository<FitnessCenter, Long>{
 
 }
