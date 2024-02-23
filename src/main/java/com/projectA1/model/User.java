@@ -27,10 +27,6 @@ public class User {
 	private String password; //로그인 비밀번호
 	private Date birthDay; //생년월일
 
-	private String username; // 회원이름
-	private String email; // 이메일 => 로그인 아이디
-	private String password; // 로그인 비밀번호
-	private String birthDate; // 생년월일
 
 	private String phoneNumber; // 전화번호
 	private String addr;// 주소
