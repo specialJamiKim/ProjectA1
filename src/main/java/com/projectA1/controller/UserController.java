@@ -28,6 +28,7 @@ public class UserController {
 	public String join() {
 		return "/user/join";
 	}
+	
 	//사용자 정보추가 => 추가 후, 로그인 페이지
 	@PostMapping("join")
 	public String join(User user) {
@@ -37,15 +38,15 @@ public class UserController {
 	
 	//사용자 마이페이지(상세보기)
 	@GetMapping("view/{id}")
-	public String view(@PathVariable String username, Model model) {
-		model.addAttribute("user", userService.view(username));
+	public String view(@PathVariable long id, Model model) {
+		model.addAttribute("user", userService.view(id));
 		return "/user/view";
 	}
 	
 	//사용자 정보수정폼
 	@GetMapping("update/{username}")
-	public String update(@PathVariable String username  ,Model model) {
-		model.addAttribute("user", userService.view(username));
+	public String update(@PathVariable long id  ,Model model) {
+		model.addAttribute("user", userService.view(id));
 		return "/user/update";
 	}
 	
@@ -53,7 +54,7 @@ public class UserController {
 	@PostMapping("update")
 	public String update(User user) {
 		userService.update(user);
-		return "/user/view/"+ user.getUsername();
+		return "/user/list";
 	}
 	
 	//사용자 회원탈퇴
