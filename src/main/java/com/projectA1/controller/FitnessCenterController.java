@@ -14,7 +14,6 @@ public class FitnessCenterController {
 	//추가폼
 	@GetMapping("insert")
 
-	public String join(FitnessCenter f) {
 	//추가//
 	public String join() {
 
