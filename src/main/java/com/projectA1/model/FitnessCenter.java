@@ -10,7 +10,7 @@ import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
+@Entity(name="f_center")
 @Getter @Setter
 public class FitnessCenter {
 
@@ -20,10 +20,9 @@ public class FitnessCenter {
     private long centerNumber; // 피트니스 센터 번호 (기본키)
     
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-
-    private String businessRegistrationNumber; // 사업자 등록 번호
+    @JoinColumn(name = "businessRegistrationNumber")
+    private Owner owner; // 사업자 등록 번호
+    
     private String branchName; // 상호명
     private String address; // 주소
     private String phoneNumber; // 전화번호
