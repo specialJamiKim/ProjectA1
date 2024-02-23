@@ -51,15 +51,15 @@ public class OwnerController {
 	
 	//오너 정보수정
 	@PostMapping("update")
-	public String update(FitnessCenter fCenter) {
-		ownerService.update(fCenter);
-		return "/owner/view/"+ fCenter.getCenterNumber();
+	public String update(long id, Owner owner) {
+		ownerService.update(id, owner);
+		return "/owner/list";
 		}
 	
 	//오너 회원탈퇴
 	@GetMapping("delete/{id}")
 	public String delete(@PathVariable long id) {
-		FitnessCenterService.delete(id);
+		ownerService.delete(id);
 		return "good";
 	}
 }
