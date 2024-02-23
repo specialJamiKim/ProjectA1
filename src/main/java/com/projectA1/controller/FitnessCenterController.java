@@ -18,6 +18,7 @@ public class FitnessCenterController {
 	public String join() {
 
 	public String join(FitnessCenter f) {
+
 		return null;
 	}
 	//추가

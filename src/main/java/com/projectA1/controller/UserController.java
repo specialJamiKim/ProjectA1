@@ -33,7 +33,7 @@ public class UserController {
 	@PostMapping("join")
 	public String join(User user) {
 		userService.join(user);
-		return "/user/login"; // 페이지 수정 필요
+		return "login"; // 페이지 수정 필요
 	}
 	
 	//사용자 마이페이지(상세보기)
@@ -53,7 +53,7 @@ public class UserController {
 	//사용자 정보수정
 	@PostMapping("update")
 	public String update(User user) {
-		userService.update(user);
+		userService.update(user.getId(),user);
 		return "/user/list";
 	}
 	
