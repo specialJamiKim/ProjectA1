@@ -59,7 +59,7 @@ public class OwnerController {
 	@GetMapping("delete/{id}")
 	public String delete(@PathVariable long id) {
 		FitnessCenterService.delete(id);
-		return "success";
+		return "good";
 	}
 }
 
