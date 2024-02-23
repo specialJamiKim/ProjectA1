@@ -1,5 +1,7 @@
 package com.projectA1.service;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 import com.projectA1.model.User;
@@ -20,18 +22,19 @@ public class UserService {
 	}
 
 	//user 상세보기
-	public User view(String username) {
-		return userRepository.findByUsername(username);
+	public Optional<User> view(long id) {
+		return userRepository.findById(id);
 	}
 	
 	//user 수정 (더티체킹) => 전화번호, 주소, 이메일, 비밀번호 수정가능
 	@Transactional
 	public void update(User user) {
-		User u = userRepository.findByUsername(user.getUsername());
+		User u = userRepository.findByUsername(u.getUserName());
 		u.setPhoneNumber(u.getPhoneNumber());
 		u.setAddr(u.getAddr()); // 주소
 		u.setEmail(u.getEmail()); //이메일
 		u.setPassword(u.getPassword()); //비밀번호
+		userRepository.save(u);
 	}
 
 	//user 삭제

@@ -11,13 +11,14 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter  @Setter
+@Getter @Setter
 @Entity
 @Table(name="f_user")
 public class User {
 	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id; //회원번호
-	@JoinColumn(name = "center_id") //헬스장 번호
+	
+	@JoinColumn(name = "center_id") //헬스장 번호(외래키)
 	private FitnessCenter center;
 	
 	private String username; //회원이름
