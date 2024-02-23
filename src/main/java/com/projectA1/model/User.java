@@ -7,19 +7,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
-
-@Getter  @Setter
-@Entity(name="f_user")
-public class User {
-	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long userId; //회원번호
-	
-	@ManyToOne
-	@JoinColumn(name = "user_centerNumber") //헬스장 번호
-	private FitnessCenter centerNumber;
 
 @Getter @Setter
 @Entity
