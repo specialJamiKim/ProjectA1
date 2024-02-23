@@ -13,6 +13,7 @@ public class Owner {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long fitnessCenterId;
 	private String businessRegistrationNumber;
 	private String ownerName;
 	private String centerName;
