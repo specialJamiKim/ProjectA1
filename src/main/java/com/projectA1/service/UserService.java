@@ -30,6 +30,7 @@ public class UserService {
 	//user 수정 (더티체킹) => 전화번호, 주소, 이메일, 비밀번호 수정가능
 	@Transactional
 
+
 	public void update(Long userId, User updatedUser) {
 	    User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userId));
 	    // 변경된 필드들만 세팅

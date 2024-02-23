@@ -21,10 +21,11 @@ public class User {
 	private Long id; // 회원번호
 	@JoinColumn(name = "center_id") // 헬스장 번호(외래키)
 	private FitnessCenter center;
-	private String username; // 회원이름
-	private String email; // 이메일 => 로그인 아이디
-	private String password; // 로그인 비밀번호
-	private String birthDate; // 생년월일
+	
+	private String username; //회원이름
+	private String loginId; //로그인 아이디
+	private String password; //로그인 비밀번호
+	private Date birthDay; //생년월일
 	private String phoneNumber; // 전화번호
 	private String addr;// 주소
 	private Date joinDate; // 가입일자
