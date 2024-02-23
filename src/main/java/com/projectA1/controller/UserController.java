@@ -53,7 +53,7 @@ public class UserController {
 	//사용자 정보수정
 	@PostMapping("update")
 	public String update(User user) {
-		userService.update(user);
+		userService.update(user.getId(),user);
 		return "/user/list";
 	}
 	
