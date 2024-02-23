@@ -25,10 +25,8 @@ public class User {
 	private String email; // 이메일 => 로그인 아이디
 	private String password; // 로그인 비밀번호
 	private String birthDate; // 생년월일
-
 	private String phoneNumber; // 전화번호
 	private String addr;// 주소
-	private String email; //이메일
 	private Date joinDate; // 가입일자
 	private String role; // 권한? 필요한지 모르겠음 => 해결해야함
 }

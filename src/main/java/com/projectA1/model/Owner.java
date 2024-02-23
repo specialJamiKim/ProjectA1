@@ -12,16 +12,6 @@ import lombok.Setter;
 @Getter @Setter
 
 public class Owner {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long fitnessCenterId;
-	private String businessRegistrationNumber;
-	private String ownerName;
-	private String centerName;
-	private String centerAddr;
-	private String ownerPhoneNumber;
-	
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
