@@ -24,10 +24,7 @@ public class PrincipalDetail  implements UserDetailsService{
 		System.out.println("loadUserByUsername");
 	   User user = 	userRepository.findByUsername(username);
 
-	   if(user != null) {
-		   PrincipalUser puser = new PrincipalUser(user);
-	   }
-	   if(user == null && owner == null) return null;
+	   if(user != null) return null;
 	   //회원이라면 시큐리티를 적용한  user 리턴
 	   PrincipalUser puser = new PrincipalUser(user);
 		return puser;

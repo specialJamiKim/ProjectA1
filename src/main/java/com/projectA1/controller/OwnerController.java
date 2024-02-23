@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.projectA1.model.FitnessCenter;
-import com.projectA1.model.User;
+import com.projectA1.model.Owner;
 import com.projectA1.service.FitnessCenterService;
+import com.projectA1.service.OwnerService;
 
 @Controller
 @RequestMapping("/owner/*")
@@ -20,39 +21,39 @@ public class OwnerController {
 	//오너 마이페이지 => 정보수정, 회원탈퇴
 	
 	@Autowired
-	private FitnessCenterService fitnessCenterService;
+	private OwnerService ownerService;
 	
 	//오너 추가폼 변경완료
 	@GetMapping("join")
 	public String join() {
-		return "/user/join";
+		return "/owner/join";
 	}
 	//오너 정보추가 => 추가 후, 로그인 페이지
 	@PostMapping("join")
-	public String join(FitnessCenter fCenter) {
-		fitnessCenterService.join(fCenter);
-		return "/login"; // 페이지 수정 필요
+	public String join(Owner owner) {
+		ownerService.join(owner);
+		return "/"; // 페이지 수정 필요
 	}
 	
 	//오너 마이페이지(상세보기)
 	@GetMapping("view/{id}")
 	public String view(@PathVariable long id, Model model) {
-		model.addAttribute("user", fitnessCenterService.view(id));
+		model.addAttribute("owner",ownerService.view(id));
 		return "/owner/view";
 	}
 	
 	//오너 정보수정폼
 	@GetMapping("update/{id}")
 	public String update(@PathVariable long id  ,Model model) {
-		model.addAttribute("user", fitnessCenterService.view(id));
+		model.addAttribute("owner", ownerService.view(id));
 		return "/owner/update";
 	}
 	
 	//오너 정보수정
 	@PostMapping("update")
 	public String update(FitnessCenter fCenter) {
-		FitnessCenterService.update(fCenter);
-		return "/owner/view/"+ fCenter.getBranchName();
+		ownerService.update(fCenter);
+		return "/owner/view/"+ fCenter.getCenterNumber();
 		}
 	
 	//오너 회원탈퇴
