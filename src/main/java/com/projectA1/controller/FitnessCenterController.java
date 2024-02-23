@@ -10,7 +10,9 @@ public class FitnessCenterController {
 
 	//추가폼
 	@GetMapping("insert")
-	{}
+	public String join() {
+		return null;
+	}
 	//추가
 	
 	//수정폼
