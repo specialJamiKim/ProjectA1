@@ -20,6 +20,17 @@ public class User {
 	@ManyToOne
 	@JoinColumn(name = "user_centerNumber") //헬스장 번호
 	private FitnessCenter centerNumber;
+
+@Getter @Setter
+@Entity
+@Table(name="f_user")
+public class User {
+	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id; //회원번호
+	
+	@JoinColumn(name = "center_id") //헬스장 번호(외래키)
+	private FitnessCenter center;
+
 	
 	private String username; //회원이름
 	private String loginId; //로그인 아이디
