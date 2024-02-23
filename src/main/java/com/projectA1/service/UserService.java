@@ -36,7 +36,6 @@ public class UserService {
 	    user.setAddr(updatedUser.getAddr());
 	    user.setEmail(updatedUser.getEmail());
 	    user.setPassword(updatedUser.getPassword());
-	   
 	}
 	//user 삭제
 	public void delete(String username) {

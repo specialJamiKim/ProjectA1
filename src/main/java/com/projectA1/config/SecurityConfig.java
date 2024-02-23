@@ -16,10 +16,15 @@ public class SecurityConfig {
 		return new BCryptPasswordEncoder();
 	}
 	@Bean
+	//사용자 : USER , 사업주 : OWNER
 	public SecurityFilterChain fileChain(HttpSecurity http) throws Exception{
 		http.csrf(csrf -> csrf.disable())
         .authorizeHttpRequests(request -> request
-                  .requestMatchers("/user/*").authenticated()
+                  .requestMatchers("/user/*").hasRole("USER")
+                  .anyRequest().permitAll()
+        )
+        .authorizeHttpRequests(request -> request
+                .requestMatchers("/owner/*").hasRole("OWNER")
                 .anyRequest().permitAll()
         )
         .formLogin(login -> login
