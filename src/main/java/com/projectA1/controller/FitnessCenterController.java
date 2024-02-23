@@ -4,16 +4,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.projectA1.model.FitnessCenter;
+
 @Controller
 @RequestMapping("/fitnessCenter/*")
 public class FitnessCenterController {
 
+	
 	//추가폼
 	@GetMapping("insert")
 
-	{}
 	//추가//
 	public String join() {
+
+	public String join(FitnessCenter f) {
 		return null;
 	}
 	//추가
