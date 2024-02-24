@@ -39,7 +39,7 @@ public class UserService {
 	    user.setPassword(updatedUser.getPassword());
 	}
 	//user 삭제
-	public void delete(String username) {
-		userRepository.delete(username);
+	public void delete(Long id) {
+		userRepository.deleteById(id);
 	}
 }

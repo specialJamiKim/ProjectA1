@@ -34,8 +34,8 @@ public class FitnessCenterController {
 
 	//수정폼
     @GetMapping("update/{username}")
-    public String update(@PathVariable long centerNumber, Model model) {
-        model.addAttribute("fitnessCenter", FitnessCenterService.view(centerNumber));
+    public String update(@PathVariable Long id, Model model) {
+        model.addAttribute("fitnessCenter", FitnessCenterService.view(id));
         return "/fitnesscenter/update";
     }
 	        
@@ -47,16 +47,16 @@ public class FitnessCenterController {
     }
 	
 	//삭제
-    @GetMapping("/delete/{centerNumber}")
-    public String delete(@PathVariable long centerNumber) {
-    	FitnessCenterService.deleteFitnessCenter(centerNumber);
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable Long id) {
+    	FitnessCenterService.deleteFitnessCenter(id);
         return "success";
     }
 	
 	// 피트니스 센터 상세보기
-    @GetMapping("/view/{centerNumber}")
-    public String view(@PathVariable long centerNumber, Model model) {
-        model.addAttribute("fitnessCenter", FitnessCenterService.view(centerNumber));
+    @GetMapping("/view/{id}")
+    public String view(@PathVariable Long id, Model model) {
+        model.addAttribute("fitnessCenter", FitnessCenterService.view(id));
         return "/fitnesscenter/view";
     }
     

@@ -23,8 +23,8 @@ public class FitnessCenterService {
 	}
 	
 	// fitnesscenter 상세보기
-	public Optional<FitnessCenter> view(long centerNumber) {
-        return fitnesscenterrepository.findById(centerNumber);
+	public Optional<FitnessCenter> view(Long id) {
+        return fitnesscenterrepository.findById(id);
     }
 	
 	// fitnesscenter 전체보기
@@ -36,7 +36,7 @@ public class FitnessCenterService {
 	// fitnesscenter 수정 => 주소, 전화번호, 일일권 수정가능
 	@Transactional
 	public void update(FitnessCenter fitnesscenter) {
-		FitnessCenter f = fitnesscenterrepository.findById(fitnesscenter.getCenterNumber()).get();
+		FitnessCenter f = fitnesscenterrepository.findById(fitnesscenter.getId()).get();
 		f.setAddress(fitnesscenter.getAddress());
 		f.setPhoneNumber(fitnesscenter.getPhoneNumber());
 		f.setOpenTime(fitnesscenter.getOpenTime());
@@ -45,8 +45,8 @@ public class FitnessCenterService {
 	
 	
 	// fitnesscenter 삭제
-	 public void deleteFitnessCenter(long centerNumber) {
-	        fitnesscenterrepository.deleteById(centerNumber);
+	 public void deleteFitnessCenter(Long id) {
+	        fitnesscenterrepository.deleteById(id);
 	    }
 
 

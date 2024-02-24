@@ -41,7 +41,7 @@ public class OwnerService {
 	    owner.setOwnerName(updatedOwner.getOwnerName()); //이름    
 	}
 	//삭제
-	public void delete(long id) {
+	public void delete(Long id) {
 		ownerRepository.deleteById(id);
 	}
 }

@@ -59,8 +59,8 @@ public class UserController {
 	
 	//사용자 회원탈퇴
 	@GetMapping("delete/{username}")
-	public String delete(@PathVariable String username) {
-		userService.delete(username);
+	public String delete(@PathVariable Long id) {
+		userService.delete(id);
 		return "success";
 	}
 }

@@ -58,7 +58,7 @@ public class OwnerController {
 	
 	//오너 회원탈퇴
 	@GetMapping("delete/{id}")
-	public String delete(@PathVariable long id) {
+	public String delete(@PathVariable Long id) {
 		ownerService.delete(id);
 		return "good";
 	}
