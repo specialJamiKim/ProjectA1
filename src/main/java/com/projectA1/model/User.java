@@ -2,13 +2,11 @@
 package com.projectA1.model;
 
 import java.util.Date;
-import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,12 +19,10 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id; // 회원번호
-    @ManyToMany(mappedBy = "users")
-    private Set<FitnessCenter> visitedCenters;
 	private String username; // 회원이름
 	private String email; // 이메일 => 로그인 아이디
 	private String password; // 로그인 비밀번호
-	private String birthDate; // 생년월일
+	private String birthDate; // 생년월일 Date처리
 	private String phoneNumber; // 전화번호
 	private String addr;// 주소
 	private Date joinDate; // 가입일자

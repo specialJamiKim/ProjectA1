@@ -2,15 +2,15 @@
 package com.projectA1.model;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import lombok.Getter;
@@ -24,15 +24,9 @@ public class FitnessCenter {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; // 기본 키
 
-    @ManyToMany
-    @JoinTable(
-        name = "user_visit_fitness_center",
-        joinColumns = @JoinColumn(name = "fitness_center_id"),
-        inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
-    private Set<User> users;
+    @OneToMany(mappedBy = "fitnessCenter", cascade = CascadeType.ALL)
+    private Set<Owner> owners = new HashSet<>(); // 여러 명의 Owner를 저장하는 Set
 
-    private String branchName; // 상호명
     private String address; // 주소
     private String phoneNumber; // 전화번호
     private int dailyPassPrice; // 일일권 가격

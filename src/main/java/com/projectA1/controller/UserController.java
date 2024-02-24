@@ -23,6 +23,12 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
+	//사용자 로그인
+	@GetMapping("login")
+	public String login() {
+	    return "indilogin"; // 뷰 이름 반환
+	}
+	
 	//사용자 추가폼 변경완료
 	@GetMapping("join")
 	public String join() {
