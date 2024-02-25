@@ -36,9 +36,9 @@ public class OwnerService {
 	{
 	    Owner owner = ownerRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
 	    // 변경된 필드들만 세팅
-	    owner.setOwnerPhoneNumber(updatedOwner.getOwnerPhoneNumber()); //전화번호
-	    owner.setCenterAddr(updatedOwner.getCenterAddr()); //주소
-	    owner.setOwnerName(updatedOwner.getOwnerName()); //이름    
+//	    owner.setOwnerPhoneNumber(updatedOwner.getOwnerPhoneNumber()); //전화번호
+//	    owner.setCenterAddr(updatedOwner.getCenterAddr()); //주소
+//	    owner.setOwnerName(updatedOwner.getOwnerName()); //이름    
 	}
 	//삭제
 	public void delete(Long id) {

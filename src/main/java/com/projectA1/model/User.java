@@ -7,24 +7,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
-@Entity
-@Table(name = "f_user")
-public class User {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id; // 회원번호
-	private String username; // 회원이름
-	private String email; // 이메일 => 로그인 아이디
-	private String password; // 로그인 비밀번호
-	private String birthDate; // 생년월일 Date처리
-	private String phoneNumber; // 전화번호
-	private String addr;// 주소
-	private Date joinDate; // 가입일자
-	private String role; // 권한? 필요한지 모르겠음 => 해결해야함
+@Data
+@Entity(name = "f_user")
+public class User extends Person {
+
+    private Date birthDate; // 생년월일
+    
 }

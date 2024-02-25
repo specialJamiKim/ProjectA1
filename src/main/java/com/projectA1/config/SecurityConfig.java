@@ -10,25 +10,26 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
-	
-	@Bean
-	public BCryptPasswordEncoder encodePwd() {
-		return new BCryptPasswordEncoder();
-	}
-	@Bean
-	public SecurityFilterChain fileChain(HttpSecurity http) throws Exception {
-	    http.csrf(csrf -> csrf.disable())
-	        .authorizeHttpRequests(request -> request
-	            .requestMatchers("/user/*").hasRole("USER")
-	            .requestMatchers("/owner/*").hasRole("OWNER")
-	            .anyRequest().permitAll()  // anyRequest()를 마지막에 배치
-	        )
-	        .formLogin(login -> login
-	            .loginPage("/login")
-	            .loginProcessingUrl("/loginPro")
-	            .defaultSuccessUrl("/")    
-	        );
-	    return http.build();
-	}
+    
+    @Bean
+    public BCryptPasswordEncoder encodePwd() {
+        return new BCryptPasswordEncoder();
+    }
+    
+    @Bean
+    public SecurityFilterChain fileChain(HttpSecurity http) throws Exception {
+        http.csrf(csrf -> csrf.disable())
+            .authorizeHttpRequests(request -> request
+//                .requestMatchers("/user/*").hasRole("USER")
+//                .requestMatchers("/owner/*").hasRole("OWNER")
+                .anyRequest().permitAll()  // anyRequest()를 마지막에 배치
+            )
+            .formLogin(login -> login
+                .loginPage("/user/indilogin") // 로그인 페이지 경로 수정
+                .loginProcessingUrl("/loginPro")
+                .defaultSuccessUrl("/")    
+            );
+        return http.build();
+    }
 
 }

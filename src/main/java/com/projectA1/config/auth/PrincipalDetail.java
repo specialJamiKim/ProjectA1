@@ -20,9 +20,9 @@ public class PrincipalDetail  implements UserDetailsService{
 	private OwnerRepository ownerRepository;
 	
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
 		System.out.println("loadUserByUsername");
-	   User user = 	userRepository.findByUsername(username);
+	   User user = 	userRepository.findByName(name);
 
 	   if(user != null) return null;
 	   //회원이라면 시큐리티를 적용한  user 리턴
