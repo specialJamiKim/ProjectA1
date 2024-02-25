@@ -20,22 +20,22 @@ public class PrincipalUser  implements UserDetails{
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		Collection<GrantedAuthority> collect = new ArrayList<>();
-		collect.add(()->{
-			return user.getRole();
-		});
+//		collect.add(()->{
+//			return user.getRole();
+//		});
 		return collect;
 	}
 
 	@Override
 	public String getPassword() {
 		// TODO Auto-generated method stub
-		return user.getPassword();
+		return null;
 	}
 
 	@Override
 	public String getUsername() {
 		// TODO Auto-generated method stub
-		return user.getUsername();
+		return null;
 	}
 
 	@Override

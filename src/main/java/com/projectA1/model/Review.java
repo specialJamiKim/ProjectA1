@@ -13,12 +13,16 @@ import lombok.Setter;
 @Getter @Setter
 public class Review {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
     @ManyToOne
-    @JoinColumn(name = "review_id", nullable = false)
+    @JoinColumn(name = "review_userId", nullable = false)
     private User user; //user id
     
     @ManyToOne
-    @JoinColumn(name = "review_centerNumber", nullable = false)
+    @JoinColumn(name = "review_centerId", nullable = false)
     private FitnessCenter centerNumber; //센터번호
 
     private int rating; //평점

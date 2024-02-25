@@ -2,6 +2,7 @@ package com.projectA1.service;
 
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.projectA1.model.User;
@@ -14,8 +15,8 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class UserService {
-	
-	private UserRepository userRepository;
+
+	private final UserRepository userRepository;
 	
 	//user 추가
 	public void join(User user) {
@@ -33,13 +34,13 @@ public class UserService {
 	public void update(Long userId, User updatedUser) {
 	    User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userId));
 	    // 변경된 필드들만 세팅
-	    user.setPhoneNumber(updatedUser.getPhoneNumber());
-	    user.setAddr(updatedUser.getAddr());
-	    user.setEmail(updatedUser.getEmail());
-	    user.setPassword(updatedUser.getPassword());
+//	    user.setPhoneNumber(updatedUser.getPhoneNumber());
+//	    user.setAddr(updatedUser.getAddr());
+//	    user.setEmail(updatedUser.getEmail());
+//	    user.setPassword(updatedUser.getPassword());
 	}
 	//user 삭제
-	public void delete(String username) {
-		userRepository.delete(username);
+	public void delete(Long id) {
+		userRepository.deleteById(id);
 	}
 }
