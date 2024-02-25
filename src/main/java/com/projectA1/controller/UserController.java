@@ -1,6 +1,8 @@
 package com.projectA1.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,11 +27,11 @@ public class UserController {
 	
 	private final UserService userService;
 	
-	//사용자 로그인
-	@GetMapping("indilogin")
-	public String login() {
-	    return "/user/indilogin"; // 뷰 이름 반환
-	}
+//	//사용자 로그인
+//	@GetMapping("indilogin")
+//	public String login() {
+//	    return "/user/indilogin"; // 뷰 이름 반환
+//	}
 	
 	//사용자 추가폼 변경완료
 	@GetMapping("join")
@@ -41,6 +43,9 @@ public class UserController {
 	@PostMapping("join")
 	@ResponseBody
 	public String join(@RequestBody User user) {
+		List<String> roles = new ArrayList<>();
+		roles.add("USER");
+		user.setRole(roles);
 		userService.join(user);
 		return "success";
 	}

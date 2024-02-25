@@ -1,6 +1,7 @@
 package com.projectA1.model;
 
 import java.util.Date;
+import java.util.List;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,4 +23,5 @@ public abstract class Person {
     private String gender; //성별
     private String address; // 주소
     private Date joinDate; // 가입일자
+    private List<String> role; // 권한
 }
