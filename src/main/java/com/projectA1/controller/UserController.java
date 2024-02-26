@@ -27,16 +27,16 @@ public class UserController {
 	
 	private final UserService userService;
 	
-//	//사용자 로그인
-//	@GetMapping("indilogin")
-//	public String login() {
-//	    return "/user/indilogin"; // 뷰 이름 반환
-//	}
+	//사용자 로그인
+	@GetMapping("indilogin")
+	public String login() {
+	    return "user/indilogin"; // 뷰 이름 반환
+	}
 	
-	//사용자 추가폼 변경완료
+	//사용자 추가폼 (변경완료)
 	@GetMapping("join")
 	public String join() {
-		return "/user/indijoin";
+		return "user/indijoin";
 	}
 	
 	//사용자 정보추가 => 추가 후, 로그인 페이지

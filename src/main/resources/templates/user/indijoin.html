@@ -42,7 +42,7 @@
                     if (resp == "success") {
                         alert("회원가입을 축하합니다.")
                         $("#idcheck").html("")
-                        location.href = "login"
+                        location.href = "/user/indilogin"
                     } else if (resp == "fail") {
                         $("#idcheck").html("<b>아이디 중복확인 하세요</b>")
                         $("#id").val("")

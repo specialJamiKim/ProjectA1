@@ -17,15 +17,16 @@ public class SecurityConfig {
     }
     
     @Bean
-    public SecurityFilterChain fileChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain fileChain(HttpSecurity http) throws Exception {  	
         http.csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(request -> request
-//                .requestMatchers("/user/*").hasRole("USER")
-//                .requestMatchers("/owner/*").hasRole("OWNER")
+            .requestMatchers("user/indilogin").permitAll()
+//              .requestMatchers("/user/*").hasRole("USER")
+//              .requestMatchers("/owner/*").hasRole("OWNER")
                 .anyRequest().permitAll()  // anyRequest()를 마지막에 배치
             )
             .formLogin(login -> login
-                .loginPage("/user/indilogin") // 로그인 페이지 경로 수정
+                .loginPage("/user/indilogin")
                 .loginProcessingUrl("/loginPro")
                 .defaultSuccessUrl("/")    
             );

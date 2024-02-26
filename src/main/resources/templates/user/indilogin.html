@@ -62,8 +62,6 @@
     <div layout:fragment="content">
         <div class="container mt-3">
             <form th:action="@{/loginPro}" method="post">
-                <!-- CSRF 토큰 추가 -->
-                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                 <div class="mb-3 mt-3">
                     <label for="id">아이디:</label>
                     <input type="text" class="form-control" id="id" placeholder="Enter id" name="id">
