@@ -17,15 +17,7 @@ public class HomeController {
     public String showLoginPage() {
         return "/login/loginPage"; // 로그인 페이지의 Thymeleaf 템플릿 이름을 반환합니다.
     }
-    
-    
-    //로그인 작업
-    @PostMapping("loginPro")
-    public String loginProcess() {
-    	return "null";
-    }
-    
-    
+      
     //회원가입 폼(선택 user/owner)
     @GetMapping("/join/selectJoin")
     public String selectJoinForm()

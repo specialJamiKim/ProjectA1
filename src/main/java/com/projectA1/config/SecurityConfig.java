@@ -32,14 +32,15 @@ public class SecurityConfig {
     public SecurityFilterChain fileChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(request -> request
+                		//페이지에 대한 권한 허용, 순서대로 적용되는 부분이라 위에가 우선순위 높음
                         .requestMatchers("/login/loginPage").permitAll() // 로그인 페이지만 허용
                         .requestMatchers("/login/indilogin", "/").permitAll() // 로그인 페이지만 허용
                         .requestMatchers("/join/*").permitAll() // 회원가입 페이지는 모든 사용자에게 허용
+                        .requestMatchers("/user/join", "/owner/join").permitAll() // 회원가입 페이지는 모든 사용자에게 허용
                         .requestMatchers("/user/*").hasRole("USER") // 유저만 접근 가능
                         .requestMatchers("/owner/*").hasRole("OWNER") // 오너만 접근 가능
                         .anyRequest().authenticated() // 나머지 요청은 인증된 사용자만 접근 가능
                 )
-
                 
                 .formLogin(login -> login
                         .loginPage("/login/loginPage") // 로그인 페이지 URL 설정
