@@ -1,42 +1,61 @@
 package com.projectA1.config.auth;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.projectA1.model.Owner;
 import com.projectA1.model.User;
 
 import lombok.Getter;
+
 @Getter
 public class PrincipalUser implements UserDetails {
-    private User user;
+	//범용 user
+    private Object user;
 
-    public PrincipalUser(User user) {
+    public PrincipalUser(Object user) {
         this.user = user;
     }
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        Collection<GrantedAuthority> authorities = new ArrayList<>();
-        for (String userRole : user.getRole()) {
-            authorities.add(new SimpleGrantedAuthority(userRole));
+    public List<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        if (user instanceof User) {
+            User currentUser = (User) user;
+            for (String userRole : currentUser.getRole()) {
+                authorities.add(new SimpleGrantedAuthority(userRole));
+            }
+        } else if (user instanceof Owner) {
+            Owner currentOwner = (Owner) user;
+            for (String ownerRole : currentOwner.getRole()) {
+                authorities.add(new SimpleGrantedAuthority(ownerRole));
+            }
         }
         return authorities;
     }
 
     @Override
     public String getPassword() {
-        // 사용자의 암호를 반환합니다.
-        return user.getPassword();
+        if (user instanceof User) {
+            return ((User) user).getPassword();
+        } else if (user instanceof Owner) {
+            return ((Owner) user).getPassword();
+        }
+        return null;
     }
 
     @Override
     public String getUsername() {
-        // 사용자의 이메일을 반환합니다.
-        return user.getName();
+        if (user instanceof User) {
+            return ((User) user).getName();
+        } else if (user instanceof Owner) {
+            return ((Owner) user).getName();
+        }
+        return null;
     }
 
     @Override
