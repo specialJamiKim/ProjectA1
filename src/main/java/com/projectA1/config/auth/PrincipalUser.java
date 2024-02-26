@@ -36,7 +36,7 @@ public class PrincipalUser implements UserDetails {
     @Override
     public String getUsername() {
         // 사용자의 이메일을 반환합니다.
-        return user.getEmail();
+        return user.getName();
     }
 
     @Override
