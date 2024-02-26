@@ -33,7 +33,6 @@ public class UserController {
 	    return "user/indilogin"; // 뷰 이름 반환
 	}
 
-	
 	//사용자 추가폼 (변경완료)
 	@GetMapping("join")
 	public String join() {
