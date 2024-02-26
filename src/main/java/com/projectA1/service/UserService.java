@@ -18,6 +18,11 @@ public class UserService {
 
 	private final UserRepository userRepository;
 	
+	//user 로그인확인
+	public User findByEmail(String email) {
+		return userRepository.findByEmail(email);
+	}
+	
 	//user 추가
 	public void join(User user) {
 		userRepository.save(user);
@@ -34,10 +39,10 @@ public class UserService {
 	public void update(Long userId, User updatedUser) {
 	    User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userId));
 	    // 변경된 필드들만 세팅
-//	    user.setPhoneNumber(updatedUser.getPhoneNumber());
-//	    user.setAddr(updatedUser.getAddr());
-//	    user.setEmail(updatedUser.getEmail());
-//	    user.setPassword(updatedUser.getPassword());
+	    user.setPhoneNumber(updatedUser.getPhoneNumber());
+	    user.setAddress(updatedUser.getAddress());
+	    user.setEmail(updatedUser.getEmail());
+	    user.setPassword(updatedUser.getPassword());
 	}
 	//user 삭제
 	public void delete(Long id) {
