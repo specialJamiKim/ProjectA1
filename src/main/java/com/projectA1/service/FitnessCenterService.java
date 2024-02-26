@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.projectA1.model.FitnessCenter;
 import com.projectA1.repository.FitnessCenterRepository;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
@@ -15,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class FitnessCenterService {
 
-	private FitnessCenterRepository fitnesscenterrepository;
+	private final FitnessCenterRepository fitnesscenterrepository;
 	
 	// fitnesscenter 추가
 	public void join(FitnessCenter fitnesscenter) {
@@ -23,7 +24,7 @@ public class FitnessCenterService {
 	}
 	
 	// fitnesscenter 상세보기
-	public Optional<FitnessCenter> view(Long id) {
+	public Optional<FitnessCenter> view(long id) {
         return fitnesscenterrepository.findById(id);
     }
 	
@@ -33,14 +34,15 @@ public class FitnessCenterService {
 	    }
 	
 	
-	// fitnesscenter 수정 => 주소, 전화번호, 일일권 수정가능
+	// fitnesscenter 수정 => 주소, 전화번호, 일일권, 오픈-마감시간 수정 가능
 	@Transactional
-	public void update(FitnessCenter fitnesscenter) {
-		FitnessCenter f = fitnesscenterrepository.findById(fitnesscenter.getId()).get();
-		f.setAddress(fitnesscenter.getAddress());
-		f.setPhoneNumber(fitnesscenter.getPhoneNumber());
-		f.setOpenTime(fitnesscenter.getOpenTime());
-		f.setClosingTime(fitnesscenter.getClosingTime());
+	public void update(Long FitnessCenterId, FitnessCenter updatedFitnesscenter) {
+		FitnessCenter f = fitnesscenterrepository.findById(FitnessCenterId).orElseThrow(() -> new EntityNotFoundException("FitnessCenter not found with id: " + FitnessCenterId));
+		 f.setAddress(updatedFitnesscenter.getAddress());
+		 f.setPhoneNumber(updatedFitnesscenter.getPhoneNumber());
+		 f.setDailyPassPrice(updatedFitnesscenter.getDailyPassPrice());
+		 f.setOpenTime(updatedFitnesscenter.getOpenTime());
+		 f.setClosingTime(updatedFitnesscenter.getClosingTime());
 	}
 	
 	
