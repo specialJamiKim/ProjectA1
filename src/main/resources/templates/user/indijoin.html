@@ -54,55 +54,89 @@
             })
         })
     </script>
+
+    <!-- 사용자 스타일을 별도의 스타일 태그로 이동합니다 -->
+    <style>
+        /* 회색 테두리로 감싸는 스타일 */
+        .input-box {
+            border: 1px solid #ced4da;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        /* 성별 선택을 감싸는 테두리 스타일 */
+        .gender-selection {
+            border: 1px solid #ced4da;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        /* 회색 버튼으로 스타일 변경 */
+        .btn-primary {
+            background-color: #6c757d !important;
+            border-color: #6c757d !important;
+            width: 100%; /* 전체 테두리에 맞게 늘리기 */
+            margin-top: 15px; /* 간격 추가 */
+        }
+    </style>
 </head>
 
 <body>
-    <div layout:fragment="content" class="container mt-3">
+    <div layout:fragment="content" class="container mt-5">
+     <h2 class="text-center mb-4">개인회원 가입</h2>
         <form th:action="@{/user/join}" method="post">
-            <div class="mb-3 mt-3">
-                <label for="name">이름:</label> <input type="text" class="form-control" id="name" placeholder="Enter name"
-                    name="name">
-            </div>
-            <!--생년월일 select로 수정해줘요~ -->
-            <div class="mb-3 mt-3">
-                <label for="name">생년월일:</label> <input type="text" class="form-control" id="birthDay" placeholder="Enter birth"
-                    name="birthDay">
-            </div>
-            <div class="row">
-                <div class="mb-3 col">
-                    <label for="email">아이디(이메일):</label> <input type="text" class="form-control" id="email" placeholder="Enter id(email)"
+            <!-- 회색 테두리로 감싸기 -->
+            <div class="input-box">
+                <div class="form-group">
+                    <label for="name">이름:</label>
+                    <input type="text" class="form-control" id="name" placeholder="이름을 입력하세요" name="name">
+                </div>
+                <div class="form-group">
+                    <label for="email">이메일(아이디):</label>
+                    <input type="text" class="form-control" id="email" placeholder="이메일(아이디)를 입력하세요"
                         name="email">
                 </div>
-                <div class="col align-self-center">
-                    <span id="idcheck"></span>
+                <div class="form-group">
+                    <label for="password">비밀번호:</label>
+                    <input type="password" class="form-control" id="password" placeholder="비밀번호를 입력하세요"
+                        name="password">
                 </div>
+                <div class="form-group">
+                    <label for="pass_check">비밀번호 확인:</label>
+                    <input type="password" class="form-control" id="pass_check" placeholder="비밀번호를 다시 입력하세요"
+                        name="pass_check">
+                </div>
+                <div class="form-group">
+                    <label for="phoneNumber">전화번호:</label>
+                    <input type="text" class="form-control" id="phoneNumber" placeholder="전화번호를 입력하세요"
+                        name="phoneNumber">
+                </div>
+            <div class="form-group">
+                        <label>성별:</label>
+                        <div class="gender-selection">
+                            <label class="gender-label" for="male">
+                                <input class="gender-input" type="radio" name="gender" id="male" value="male">
+                                남성
+                            </label>
+                            <label class="gender-label" for="female">
+                                <input class="gender-input" type="radio" name="gender" id="female" value="female">
+                                여성
+                            </label>
+                        </div>
+                    </div>
+            <div class="form-group">
+                <label for="birthDate">생년월일:</label>
+                <input type="date" class="form-control" id="birthDate" name="birthDate">
             </div>
-            <div class="mb-3">
-                <label for="password">비밀번호:</label> <input type="password" class="form-control" id="password"
-                    placeholder="Enter password" name="password">
+            <div class="form-group">
+                <label for="joinDate">가입일자:</label>
+                <input type="date" class="form-control" id="joinDate" name="joinDate">
             </div>
-            <div class="mb-3">
-                <label for="pass_check">비밀번호 확인:</label> <input type="password" class="form-control" id="pass_check"
-                    placeholder="Enter password_check" name="pass_check">
-            </div>
-            <div class="mb-3">
-                <label for="phone">전화번호:</label> <input type="text" class="form-control" id="phoneNumber"
-                    placeholder="Enter phone number" name="phoneNumber">
-            </div>
-            <div class="mb-3">
-                <label for="gender">성별:</label>
-                <select class="form-control" id="gender" name="gender">
-                    <option value="">성별 선택</option>
-                    <option value="male">남성</option>
-                    <option value="female">여성</option>
-                    <option value="other">기타</option>
-                </select>
-            </div>
-            <div class="mb-3">
-                <label for="addr">주소:</label> <input type="text" class="form-control" id="address"
-                    placeholder="Enter Address" name="address">
-            </div>
-            <button type="button" class="btn btn-secondary" id="btnJoin">회원가입</button>
+          </div> 
+            <button type="button" class="btn btn-primary" id="btnJoin">회원가입</button>
+          
         </form>
     </div>
 </body>
