@@ -66,7 +66,7 @@ public class UserController {
 	}
 	
 	//사용자 마이페이지(상세보기)
-	@GetMapping("view/{id}")
+	@GetMapping("mypage/{id}")
 	public String view(@PathVariable Long id, Model model) {
 		model.addAttribute("user", userService.view(id));
 		return "/user/mypage";

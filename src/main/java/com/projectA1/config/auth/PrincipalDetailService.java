@@ -33,8 +33,8 @@ public class PrincipalDetailService implements UserDetailsService {
         // 비밀번호 암호화
         String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
-      
         // 사용자 정보가 존재하면 PrincipalUser 객체를 생성하여 반환
+
         return new PrincipalUser(user);
     }
 }
