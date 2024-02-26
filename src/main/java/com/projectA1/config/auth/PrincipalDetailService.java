@@ -19,8 +19,8 @@ public class PrincipalDetailService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
     
-    @Autowired
-    private OwnerRepository ownerRepository;
+//    @Autowired
+//    private OwnerRepository ownerRepository;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -36,10 +36,10 @@ public class PrincipalDetailService implements UserDetailsService {
         }
 
         // 소유자 테이블에서 소유자 정보 조회
-        Owner owner = ownerRepository.findByEmail(email);
-        if (owner != null) {
-            return new PrincipalOwner(owner);
-        }
+//        Owner owner = ownerRepository.findByEmail(email);
+//        if (owner != null) {
+//            return new PrincipalOwner(owner);
+//        }
         
         // 비밀번호 암호화
         String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());

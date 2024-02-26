@@ -3,6 +3,7 @@ package com.projectA1.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class HomeController {
@@ -11,16 +12,39 @@ public class HomeController {
 		return "main";
 	}
 	
-    @GetMapping("/loginPage")
+	//로그인폼
+    @GetMapping("/login/loginPage")
     public String showLoginPage() {
-        return "loginPage"; // 로그인 페이지의 Thymeleaf 템플릿 이름을 반환합니다.
+        return "/login/loginPage"; // 로그인 페이지의 Thymeleaf 템플릿 이름을 반환합니다.
     }
     
-    @GetMapping("/login")
-    public String login() {
-    	return "login";
+    
+    //로그인 작업
+    @PostMapping("loginPro")
+    public String loginProcess() {
+    	return "null";
     }
     
+    
+    //회원가입 폼(선택 user/owner)
+    @GetMapping("/join/selectJoin")
+    public String selectJoinForm()
+    {
+    	return "/join/selectJoin";
+    }
+    
+    //user 회원가입 폼
+    @GetMapping("/join/indijoin")
+    public String selectUserJoinForm()
+    {
+    	return "/join/indijoin";
+    }
+    //owner 회원가입 폼
+    @GetMapping("/join/ownerjoin")
+    public String selectOwnerJoinForm()
+    {
+    	return "/join/ownerjoin";
+    }
 //
 //    @Autowired
 //    private UserDetailsService userDetailsService;
