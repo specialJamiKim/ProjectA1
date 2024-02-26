@@ -1,14 +1,14 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/layout1}">
 <th:block layout:fragment="script">
-	<script>
+<!-- 	<script>
 		$(document).ready(function() {
 			$("#btnLogin").click(function() {
 				$.ajax({
 					type : "post",
-					url : '/user/onwerlogin',
+					url : '/user/indilogin',
 					contentType : 'application/json;charset=utf-8',
 					data : JSON.stringify({
 						id : $("#id").val(),
@@ -33,7 +33,6 @@
 		}) //document
 	</script> -->
 
-</th:block>
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout1}">
 <head>
@@ -46,7 +45,7 @@
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title mb-4">피트니스 센터 사장님 로그인</h5>
+                            <h5 class="card-title mb-4">개인 회원 로그인</h5>
                             <form th:action="@{/user/loginPro}" method="post">
                                 <div class="mb-3">
                                     <label for="id" class="form-label">아이디:</label>
@@ -64,3 +63,6 @@
                 </div>
             </div>
         </div>
+    </div>
+</body>
+</html>

@@ -20,9 +20,9 @@ public class SecurityConfig {
     public SecurityFilterChain fileChain(HttpSecurity http) throws Exception {  	
         http.csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(request -> request
-            .requestMatchers("/user/*").hasRole("USER") //유저만 접근가능
-            .requestMatchers("/owner/*").hasRole("OWNER") // 오너만 접근가능
-            .requestMatchers("/","/loginPage", "/loginPro").permitAll()
+            .requestMatchers("/","loginPage","login").permitAll() // 내부 요청 허용
+           // .requestMatchers("/user/*").permitAll() // 모든 사용자가 접근할 수 있도록 설정
+           
             .anyRequest().authenticated()  // anyRequest()를 마지막에 배치
             )
             
@@ -31,8 +31,12 @@ public class SecurityConfig {
                 .loginProcessingUrl("/loginPro")
                 .defaultSuccessUrl("/", true)
                 .permitAll()
+            )
+            .logout(logout -> logout
+                    .logoutUrl("/logout")
+                    .logoutSuccessUrl("/loginPage")
+                    .permitAll()
             );
-        
         return http.build();
     }
     
