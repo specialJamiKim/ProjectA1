@@ -1,7 +1,7 @@
 package com.projectA1.config.auth;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,8 +19,8 @@ public class PrincipalUser implements UserDetails {
     }
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        Collection<GrantedAuthority> authorities = new ArrayList<>();
+    public List<? extends GrantedAuthority> getAuthorities() {
+    	List<GrantedAuthority> authorities = new ArrayList<>();
         for (String userRole : user.getRole()) {
             authorities.add(new SimpleGrantedAuthority(userRole));
         }

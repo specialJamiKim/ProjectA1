@@ -8,7 +8,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.projectA1.model.Owner;
 import com.projectA1.model.User;
+import com.projectA1.repository.OwnerRepository;
 import com.projectA1.repository.UserRepository;
 
 @Service
@@ -16,18 +18,27 @@ public class PrincipalDetailService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
+    
+    @Autowired
+    private OwnerRepository ownerRepository;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    
+    //user owner 같이처리
     @Override
     public UserDetails loadUserByUsername(@RequestParam String email) throws UsernameNotFoundException {
-
-        // 이메일을 기준으로 사용자 정보를 조회
+        // 사용자 테이블에서 사용자 정보 조회
         User user = userRepository.findByEmail(email);
+        if (user != null) {
+            return new PrincipalUser(user);
+        }
 
-        if (user == null) {
-            throw new UsernameNotFoundException("해당 이메일을 가진 사용자를 찾을 수 없습니다: " + email);
+        // 소유자 테이블에서 소유자 정보 조회
+        Owner owner = ownerRepository.findByEmail(email);
+        if (owner != null) {
+            return new PrincipalOwner(owner);
         }
         
         // 비밀번호 암호화

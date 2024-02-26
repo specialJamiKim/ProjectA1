@@ -34,22 +34,8 @@ public class UserController {
     @Autowired
     private PrincipalDetailService principalDetailService;
 
-    @GetMapping("/your-endpoint")
-    public String yourHandlerMethod(Model model) {
-        // 사용자 이름을 가져오기 위해 PrincipalDetailService를 사용
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String email = auth.getName();
-        User user = (User) principalDetailService.loadUserByUsername(email);
-        
-        // 사용자 이름을 모델에 추가하여 뷰로 전달
-        model.addAttribute("username", user.getName());
-
-        // 다른 작업 수행 또는 반환할 뷰 이름 반환
-        return "/";
-    }
-
 	//사용자 추가폼 (변경완료)
-	@GetMapping("join")
+	@GetMapping("indijoin")
 	public String join() {
 		return "user/indijoin";
 	}
