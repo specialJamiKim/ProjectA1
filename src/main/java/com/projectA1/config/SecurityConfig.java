@@ -22,10 +22,8 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(request -> request
                 		//페이지에 대한 권한 허용, 순서대로 적용되는 부분이라 위에가 우선순위 높음
-                        .requestMatchers("/login/loginPage").permitAll() // 로그인 페이지만 허용
-                        .requestMatchers("/login/indilogin", "/").permitAll() // 로그인 페이지만 허용
-                        .requestMatchers("/join/*").permitAll() // 회원가입 페이지는 모든 사용자에게 허용
-                        .requestMatchers("/user/join", "/owner/join").permitAll() // 회원가입 페이지는 모든 사용자에게 허용
+                        .requestMatchers("/login/loginPage", "/", "/fragments/*", "/join/*").permitAll() // 로그인 페이지만 허용
+                        //.requestMatchers("/join/*").permitAll() // 회원가입 페이지는 모든 사용자에게 허용
                         .requestMatchers("/user/*").hasRole("USER") // 유저만 접근 가능
                         .requestMatchers("/owner/*").hasRole("OWNER") // 오너만 접근 가능
                         .anyRequest().authenticated() // 나머지 요청은 인증된 사용자만 접근 가능
@@ -39,6 +37,8 @@ public class SecurityConfig {
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/") // 로그아웃 후 리다이렉트할 경로 설정
+                        .invalidateHttpSession(true) // 세션 무효화
+                        .deleteCookies("JSESSIONID") // JSESSIONID 쿠키 삭제
                         .permitAll());
         return http.build();
     }
