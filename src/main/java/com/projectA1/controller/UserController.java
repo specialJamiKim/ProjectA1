@@ -3,6 +3,9 @@ package com.projectA1.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.projectA1.config.auth.PrincipalDetailService;
 import com.projectA1.model.User;
 import com.projectA1.service.UserService;
 
@@ -27,11 +31,22 @@ public class UserController {
 	
 	private final UserService userService;
 	
-	//사용자 로그인
-	@GetMapping("indilogin")
-	public String login() {
-	    return "user/indilogin"; // 뷰 이름 반환
-	}
+    @Autowired
+    private PrincipalDetailService principalDetailService;
+
+    @GetMapping("/your-endpoint")
+    public String yourHandlerMethod(Model model) {
+        // 사용자 이름을 가져오기 위해 PrincipalDetailService를 사용
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String email = auth.getName();
+        User user = (User) principalDetailService.loadUserByUsername(email);
+        
+        // 사용자 이름을 모델에 추가하여 뷰로 전달
+        model.addAttribute("username", user.getName());
+
+        // 다른 작업 수행 또는 반환할 뷰 이름 반환
+        return "/";
+    }
 
 	//사용자 추가폼 (변경완료)
 	@GetMapping("join")
@@ -44,7 +59,7 @@ public class UserController {
 	@ResponseBody
 	public String join(@RequestBody User user) {
 		List<String> roles = new ArrayList<>();
-		roles.add("USER");
+		roles.add("ROLE_USER");
 		user.setRole(roles);
 		userService.join(user);
 		return "success";

@@ -6,8 +6,8 @@ import org.springframework.stereotype.Repository;
 import com.projectA1.model.User;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long>{
-	//select * from tbl_user4 where username='11'
-	//이 부분 PrincipalDetail.java 때문에 필요
-	  User findByName(String name);
+public interface UserRepository extends JpaRepository<User, Long> {
+    User findByEmail(String email);
+
+	User findByEmailAndPassword(String email, String password);
 }
