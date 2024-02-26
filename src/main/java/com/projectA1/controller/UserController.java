@@ -32,6 +32,7 @@ public class UserController {
 	public String login() {
 	    return "user/indilogin"; // 뷰 이름 반환
 	}
+
 	
 	//사용자 추가폼 (변경완료)
 	@GetMapping("join")
@@ -39,7 +40,7 @@ public class UserController {
 		return "user/indijoin";
 	}
 	
-	//사용자 정보추가 => 추가 후, 로그인 페이지
+	//사용자 추가 => 추가 후, 로그인 페이지
 	@PostMapping("join")
 	@ResponseBody
 	public String join(@RequestBody User user) {

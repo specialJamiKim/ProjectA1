@@ -27,10 +27,11 @@ public class SecurityConfig {
             )
             .formLogin(login -> login
                 .loginPage("/user/indilogin")
-                .loginProcessingUrl("/loginPro")
+                .loginProcessingUrl("/user/loginPro")
                 .defaultSuccessUrl("/")    
             );
         return http.build();
     }
 
+    
 }
