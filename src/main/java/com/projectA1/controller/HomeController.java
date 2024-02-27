@@ -9,10 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class HomeController {
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
 	@GetMapping("/")
 	public String home() {
 		return "main";
