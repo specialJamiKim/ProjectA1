@@ -33,12 +33,6 @@ public class UserController {
 	
     @Autowired
     private PrincipalDetailService principalDetailService;
-
-//	//사용자 추가폼 (변경완료)
-//	@GetMapping("indijoin")
-//	public String join() {
-//		return "user/indijoin";
-//	}
 	
 	//사용자 추가 => 추가 후, 로그인 페이지
 	@PostMapping("join")

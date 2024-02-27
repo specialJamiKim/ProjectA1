@@ -1,16 +1,19 @@
 package com.projectA1.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.projectA1.model.FitnessCenter;
 import com.projectA1.model.Owner;
-import com.projectA1.service.FitnessCenterService;
 import com.projectA1.service.OwnerService;
 
 @Controller
@@ -30,10 +33,20 @@ public class OwnerController {
 	}
 	//오너 정보추가 => 추가 후, 로그인 페이지
 	@PostMapping("join")
-	public String join(Owner owner) {
+	@ResponseBody
+	public String join(@RequestBody Owner owner) {
+		List<String> roles = new ArrayList<>();
+		roles.add("ROLE_USER");
+		roles.add("ROLE_OWNER");
+		owner.setRole(roles);
+		System.out.println("111");
 		ownerService.join(owner);
-		return "/"; // 페이지 수정 필요
+		return "success"; // 페이지 수정 필요
 	}
+	
+	
+	
+	
 	
 	//오너 마이페이지(상세보기)
 	@GetMapping("view/{id}")
