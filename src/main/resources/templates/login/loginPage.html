@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
 
 <head>
 	<meta charset="UTF-8">
@@ -72,16 +74,7 @@
 </head>
 
 <body>
-
-	<header>
-		<div class="navbar navbar-dark bg-dark shadow-sm">
-			<div class="container">
-				<a href="/" class="navbar-brand d-flex align-items-center">
-					<strong>로그인</strong>
-				</a>
-			</div>
-		</div>
-	</header>
+ <div layout:fragment="content">
 
 	<!-- Content here -->
 	<div class="container mt-5" th:fragment="selectMemberType">
@@ -115,6 +108,7 @@
 
 	<!-- Bootstrap JS and dependencies -->
 	<script src="https://getbootstrap.com/docs/5.3/dist/js/bootstrap.bundle.min.js"></script>
+</div>
 </body>
 
 </html>

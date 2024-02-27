@@ -26,16 +26,16 @@ public class HomeController {
     }
     
     //user 회원가입 폼
-    @GetMapping("/join/indijoin")
+    @GetMapping("/join/indiJoin")
     public String selectUserJoinForm()
     {
-    	return "/join/indijoin";
+    	return "/join/indiJoin";
     }
     //owner 회원가입 폼
-    @GetMapping("/join/ownerjoin")
+    @GetMapping("/join/ownerJoin")
     public String selectOwnerJoinForm()
     {
-    	return "/join/ownerjoin";
+    	return "/join/ownerJoin";
     }
 //
 //    @Autowired
