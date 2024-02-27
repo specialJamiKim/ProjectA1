@@ -8,7 +8,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +18,9 @@ import com.projectA1.config.auth.PrincipalUser;
 import com.projectA1.model.User;
 import com.projectA1.service.UserService;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -56,23 +58,40 @@ public class UserController {
     }
 	
 	//사용자 정보수정폼
-	@GetMapping("update/{id}")
-	public String update(@PathVariable Long id  , Model model) {
-		model.addAttribute("user", userService.view(id));
-		return "/user/update";
+	@GetMapping("updateForm")
+	public String updateForm(@AuthenticationPrincipal PrincipalUser principalUser, Model model) {
+		// 로그인된 사용자의 정보를 가져옵니다.
+        User user = (User) principalUser.getUser();
+		model.addAttribute("user", user);
+		return "/user/updateForm";
 	}
 	
-	//사용자 정보수정
+	//사용자 정보수정 => ajax 비동기 처리
 	@PostMapping("update")
-	public String update(User user) {
-		userService.update(user.getId(),user);
-		return "/user/mypage/"+ user.getId();
+	@ResponseBody
+	//updateUser -> ajax 받아온 데이터 user
+	public String update(@AuthenticationPrincipal PrincipalUser principalUser, @RequestBody User updateUser) {
+		User currentUser = (User) principalUser.getUser();
+		userService.update(currentUser, updateUser);
+		return "success";
 	}
 	
 	//사용자 회원탈퇴
-	@GetMapping("delete/{username}")
-	public String delete(@PathVariable Long id) {
-		userService.delete(id);
-		return "success";
+	@GetMapping("delete")
+	public void delete(@AuthenticationPrincipal PrincipalUser principalUser, HttpServletRequest request, HttpServletResponse response) {
+	    String email = principalUser.getUserEmail(); // 아이디로 삭제
+	    userService.delete(email);
+
+	    // 세션 무효화
+	    invalidateSession(request);
+	    System.out.println("진행완료");
+	}
+	
+	//세션 무효화
+	private void invalidateSession(HttpServletRequest request) {
+	    HttpSession session = request.getSession(false);
+	    if (session != null) {
+	        session.invalidate();
+	    }
 	}
 }

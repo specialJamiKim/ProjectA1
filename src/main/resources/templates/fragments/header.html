@@ -17,6 +17,20 @@ ul .nav-item {
 	magin-right: 5px;
 }
 </style>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    $(document).ready(function() {
+        var isAuthenticated = /*[[${#authentication.principal != null}]]*/ false;
+
+        if (isAuthenticated) {
+            $("#header").append('<li><a href="/logout">로그아웃</a></li>');
+        } else {
+            $("#header").append('<li><a href="/login">로그인</a></li>');
+        }
+    });
+    /*]]>*/
+</script>
 </head>
 
 <body>
@@ -30,7 +44,7 @@ ul .nav-item {
 					</a>
 					<!-- 메뉴 항목들 -->
 					<div>
-						<ul class="navbar-nav mb-2 mb-lg-0 d-flex flex-row">
+						<ul class="navbar-nav mb-2 mb-lg-0 d-flex flex-row" id = "userNav">
 							<!-- 가로 레이아웃을 위해 flex-row 사용 -->
 							<!-- 로그인 -->
 							<li class="nav-item"><a class="nav-link"
@@ -46,6 +60,13 @@ ul .nav-item {
 							<li class="nav-item"><a class="nav-link"
 								style="color: white; padding-left: 10px; padding-right: 10px;"
 								href="#">게시판</a></li>
+	
+	
+
+
+
+	
+	
 						</ul>
 					</div>
 				</div>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>User Information Update</title>
+	<!-- 필요한 CSS 파일을 로드 -->
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+
+	<!-- 필요한 JavaScript 파일을 로드 -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+		$(document).ready(function () {
+			$("#btnUpdate").click(function () {
+				// 유효성 검사 코드는 여기에 유지
+				var data = {
+					id: $("#id").val(),
+					name: $("#name").val(),
+					email: $("#email").val(),
+					password: $("#password").val(),
+					phoneNumber: $("#phoneNumber").val(),
+					gender: $("#gender").val(),
+					address: $("#address").val(),
+				};
+				$.ajax({
+					type: "POST",
+					url: "/user/update",
+					contentType: "application/json;charset=utf-8",
+					data: JSON.stringify(data),
+				})
+					.done(function (resp) {
+						if (resp === "success") {
+							alert($("#name").val() + "님의 회원정보가 수정되었습니다.");
+							location.href = "/user/mypage";
+						} else if (resp === "fail") {
+							var errorMessage = JSON.parse(e.responseText).message;
+							alert(errorMessage);
+						}
+					})
+					.fail(function (e) {
+						alert(e.responseText);
+					});
+			});
+
+			//삭제부분
+			$("#deleteBtn").click(function () {
+				$.ajax({
+					type: "GET",
+					url: "/user/delete",
+				})
+					.done(function (resp) {
+						alert($("#name").val() + "님의 회원탈퇴가 정상처리되었습니다. 감사합니다.");
+						window.location.href = "/";
+					})
+					.fail(function (e) {
+						alert("회원 탈퇴에 실패했습니다. 다시 시도해주세요.");
+					});
+			});
+		});
+		/*]]>*/
+	</script>
+
+
+</head>
+
+<body>
+
+	<div class="container mt-5">
+		<h2>User Information Update</h2>
+		<form id="updateForm">
+			<input type="hidden" id="id" th:value="${user.id}" />
+			<div class="form-group">
+				<label for="name">Name:</label>
+				<input type="text" id="name" name="name" class="form-control" th:value="${user.name}" />
+			</div>
+			<div class="form-group">
+				<label for="email">Email:</label>
+				<input type="email" id="email" name="email" class="form-control" th:value="${user.email}" />
+			</div>
+			<div class="form-group">
+				<label for="password">Password:</label>
+				<input type="password" id="password" name="password" class="form-control" />
+			</div>
+			<div class="form-group">
+				<label for="phoneNumber">Phone Number:</label>
+				<input type="text" id="phoneNumber" name="phoneNumber" class="form-control"
+					th:value="${user.phoneNumber}" />
+			</div>
+			<div class="form-group">
+				<label for="gender">Gender:</label>
+				<input type="text" id="gender" name="gender" class="form-control" th:value="${user.gender}" />
+			</div>
+			<div class="form-group">
+				<label for="address">Address:</label>
+				<input type="text" id="address" name="address" class="form-control" th:value="${user.address}" />
+			</div>
+			<button type="button" class="btn btn-primary" id="btnUpdate">Update</button>
+			<!-- 수정된 부분: ID가 "btnUpdate"로 변경 -->
+		</form>
+	</div>
+</body>
+
+</html>
