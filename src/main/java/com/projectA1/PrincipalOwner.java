@@ -1,4 +1,4 @@
-package com.projectA1.config.auth;
+package com.projectA1;
 
 import java.util.ArrayList;
 import java.util.List;

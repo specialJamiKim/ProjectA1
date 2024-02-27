@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.projectA1.PrincipalOwner;
 import com.projectA1.model.Owner;
 import com.projectA1.model.User;
 import com.projectA1.repository.OwnerRepository;
