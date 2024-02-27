@@ -2,6 +2,8 @@ package com.projectA1.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,7 +22,7 @@ public class SecurityConfig {
 	public SecurityFilterChain fileChain(HttpSecurity http) throws Exception {
 		http.csrf(csrf -> csrf.disable())
 		.authorizeHttpRequests(request -> request
-				.requestMatchers("/", "/join/indiJoin", "/join/ownerJoin" , "/login/loginPage", "/join/selectJoin"
+				.requestMatchers("/","/join/indiJoin", "/join/ownerJoin" , "/login/loginPage", "/join/selectJoin"
 						,"login/loginPage","/loginPro" , "/user/join", "/owner/join", "/fragments/*").permitAll()
 			    .requestMatchers("/user/*").hasRole("USER")
 			    .requestMatchers("/owner/*").hasRole("OWNER")
@@ -40,6 +42,9 @@ public class SecurityConfig {
 		return http.build();
 	}
 	
-	
+	   @Bean
+	    AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+	        return authenticationConfiguration.getAuthenticationManager();
+	    }
 
 }
