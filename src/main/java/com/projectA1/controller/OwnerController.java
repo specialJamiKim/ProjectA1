@@ -26,6 +26,13 @@ public class OwnerController {
 	@Autowired
 	private OwnerService ownerService;
 	
+	//오너 마이페이지
+	@GetMapping("ownerpage")
+	public String ownerPage() {
+		return "/owner/ownerpage";
+	}
+	
+	
 	//오너 추가폼 변경완료
 	@GetMapping("join")
 	public String join() {
@@ -36,7 +43,6 @@ public class OwnerController {
 	@ResponseBody
 	public String join(@RequestBody Owner owner) {
 		List<String> roles = new ArrayList<>();
-		roles.add("ROLE_USER");
 		roles.add("ROLE_OWNER");
 		owner.setRole(roles);
 		System.out.println("111");

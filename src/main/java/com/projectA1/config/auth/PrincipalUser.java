@@ -3,20 +3,29 @@ package com.projectA1.config.auth;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.projectA1.model.Owner;
 import com.projectA1.model.User;
 
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public class PrincipalUser implements UserDetails {
 	//범용 user
     private Object user;
 
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
     public PrincipalUser(Object user) {
         this.user = user;
     }
@@ -48,12 +57,24 @@ public class PrincipalUser implements UserDetails {
         return null;
     }
 
+
+    //이름반환(진짜이름)
     @Override
     public String getUsername() {
         if (user instanceof User) {
             return ((User) user).getName();
         } else if (user instanceof Owner) {
             return ((Owner) user).getName();
+        }
+        return null;
+    }
+    
+    //아이디반환
+    public String getUserEmail() {
+        if (user instanceof User) {
+            return ((User) user).getEmail();
+        } else if (user instanceof Owner) {
+            return ((Owner) user).getEmail();
         }
         return null;
     }

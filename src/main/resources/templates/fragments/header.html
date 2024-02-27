@@ -2,60 +2,85 @@
 <html xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 	xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>앨범 예시</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://getbootstrap.com/docs/5.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- 이 템플릿을 위한 사용자 정의 스타일 -->
-    <link href="styles.css" rel="stylesheet">
-    <style>
-       ul .nav-item {
-       magin-left : 5px;
-       magin-right : 5px; 
-       }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>앨범 예시</title>
+<!-- Bootstrap CSS -->
+<link
+	href="https://getbootstrap.com/docs/5.3/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<!-- 이 템플릿을 위한 사용자 정의 스타일 -->
+<link href="styles.css" rel="stylesheet">
+<style>
+ul .nav-item {
+	magin-left: 5px;
+	magin-right: 5px;
+}
+</style>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    $(document).ready(function() {
+        var isAuthenticated = /*[[${#authentication.principal != null}]]*/ false;
+
+        if (isAuthenticated) {
+            $("#header").append('<li><a href="/logout">로그아웃</a></li>');
+        } else {
+            $("#header").append('<li><a href="/login">로그인</a></li>');
+        }
+    });
+    /*]]>*/
+</script>
 </head>
 
 <body>
 
-    <header>
-        <div class="navbar navbar-dark bg-dark shadow-sm">
-            <div class="container-fluid">
-                <div class="d-flex justify-content-between w-100">
-                    <!-- 로고를 클릭하면 홈페이지로 이동 -->
-                    <a href="/" class="navbar-brand d-flex align-items-center">
-                        <strong>Fit-PassPlater</strong>
-                    </a>
-                    <!-- 메뉴 항목들 -->
-                    <div>
-                        <ul class="navbar-nav mb-2 mb-lg-0 d-flex flex-row"> <!-- 가로 레이아웃을 위해 flex-row 사용 -->
-                            <!-- 로그인 -->
-                            <li class="nav-item">
-                                <a class="nav-link" style="color: white; padding-left:10px; padding-right:10px; " href="/login/loginPage">로그인</a>
-                            </li>
-                          
-                            <!-- 회원가입 -->
-                            <li class="nav-item">
-                                <a class="nav-link" style="color: white; padding-left:10px; padding-right:10px;"  href="/join/selectJoin">회원가입</a>
-                            </li>
-                    
-                            <!-- 게시판 -->
-                            <li class="nav-item">
-                                <a class="nav-link" style="color: white; padding-left:10px; padding-right:10px; " href="#">게시판</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
+	<header th:fragment="header">
+		<div class="navbar navbar-dark bg-dark shadow-sm">
+			<div class="container-fluid">
+				<div class="d-flex justify-content-between w-100">
+					<!-- 로고를 클릭하면 홈페이지로 이동 -->
+					<a href="/" class="navbar-brand d-flex align-items-center"> <strong>Fit-PassPlater</strong>
+					</a>
+					<!-- 메뉴 항목들 -->
+					<div>
+						<ul class="navbar-nav mb-2 mb-lg-0 d-flex flex-row" id = "userNav">
+							<!-- 가로 레이아웃을 위해 flex-row 사용 -->
+							<!-- 로그인 -->
+							<li class="nav-item"><a class="nav-link"
+								style="color: white; padding-left: 10px; padding-right: 10px;"
+								href="/login/loginPage">로그인</a></li>
 
-    <!-- 여기에 콘텐츠가 들어갑니다 -->
+							<!-- 회원가입 -->
+							<li class="nav-item"><a class="nav-link"
+								style="color: white; padding-left: 10px; padding-right: 10px;"
+								href="/join/selectJoin">회원가입</a></li>
+
+							<!-- 게시판 -->
+							<li class="nav-item"><a class="nav-link"
+								style="color: white; padding-left: 10px; padding-right: 10px;"
+								href="#">게시판</a></li>
+	
+	
 
 
-    <!-- Bootstrap JS 및 의존성 -->
-    <script src="https://getbootstrap.com/docs/5.3/dist/js/bootstrap.bundle.min.js"></script>
+
+	
+	
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</header>
+
+	<!-- 여기에 콘텐츠가 들어갑니다 -->
+
+
+	<!-- Bootstrap JS 및 의존성 -->
+	<script
+		src="https://getbootstrap.com/docs/5.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

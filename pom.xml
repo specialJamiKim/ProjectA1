@@ -18,14 +18,15 @@
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
-		
+		<!--
+		https://mvnrepository.com/artifact/com.github.waffle/waffle-spring-security5 -->
 		<dependency>
-			<groupId>org.thymeleaf.extras</groupId>
-			<artifactId>thymeleaf-extras-springsecurity5</artifactId>
-			<version>3.0.4.RELEASE</version>
+			<groupId>com.github.waffle</groupId>
+			<artifactId>waffle-spring-security5</artifactId>
+			<version>3.1.1</version>
 		</dependency>
-		
-		
+
+
 		<!-- Spring Boot Starter Dependencies -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
