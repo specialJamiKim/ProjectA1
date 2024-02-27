@@ -25,6 +25,7 @@ public class SecurityConfig {
 				.requestMatchers("/","/main", "/join/*", "/login/*"
 						//"/join/indiJoin", "/join/ownerJoin" , "/login/loginPage", "/join/selectJoin","login/loginPage","/loginPro" 
 						, "/user/join", "/owner/join", "/fragments/*").permitAll()
+
 			    .requestMatchers("/user/*").hasRole("USER")
 			    .requestMatchers("/owner/*").hasRole("OWNER")
 			    .anyRequest().authenticated()
