@@ -39,12 +39,14 @@ public class PrincipalDetailService implements UserDetailsService {
 
         // 소유자 테이블에서 소유자 정보 조회
         Owner owner = ownerRepository.findByEmail(email);
+
         if (owner != null) {
             // 비밀번호 암호화
             String encodedPassword = bCryptPasswordEncoder.encode(owner.getPassword());
             owner.setPassword(encodedPassword);
             // 소유자 정보가 존재하면 PrincipalOwner 객체를 생성하여 반환
-            return new PrincipalOwner(owner);
+            System.out.println(owner.getName() + " " + owner.getPassword());
+            return new PrincipalUser(owner);
         }
         
         // 사용자 정보 또는 소유자 정보가 없을 경우 예외 처리

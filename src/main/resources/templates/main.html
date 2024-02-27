@@ -71,7 +71,6 @@
 }
 </style>
 </head>
-
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<div class="container-fluid">
@@ -91,15 +90,16 @@
 				<div class="card shadow-sm h-100">
 					<div class="thumbnail-container">
 						<span class="thumbnail-text">썸네일</span> <img
-							src="your_image_url_here" class="thumbnail-image" alt="...">
+							th:src="@{/your_image_url_here}" class="thumbnail-image"
+							alt="...">
 					</div>
 					<div class="card-body">
 						<hr class="card-divider">
 						<p class="card-text">내 지역 일일권 찾기</p>
 						<div class="d-flex justify-content-between align-items-center">
 							<div class="btn-group">
-								<a href="@{/user/join}" class="btn btn-sm btn-outline-secondary">일일권
-									찾기</a>
+								<a th:href="@{/user/join}"
+									class="btn btn-sm btn-outline-secondary">일일권 찾기</a>
 							</div>
 							<small class="text-muted"><i class="fas fa-users"></i></small>
 						</div>
@@ -111,28 +111,17 @@
 				<div class="card shadow-sm h-100">
 					<div class="thumbnail-container">
 						<span class="thumbnail-text">썸네일</span> <img
-							src="your_image_url_here" class="thumbnail-image" alt="...">
+							th:src="@{/your_image_url_here}" class="thumbnail-image"
+							alt="...">
 					</div>
 					<div class="card-body">
 						<hr class="card-divider">
 						<p class="card-text">개인회원</p>
 						<div class="d-flex justify-content-between align-items-center">
 							<div class="btn-group">
-								<a href="/user/mypage" class="btn btn-sm btn-outline-secondary">마이
-									페이지</a>
+								<a th:href="@{/user/mypage}"
+									class="btn btn-sm btn-outline-secondary">마이 페이지</a>
 							</div>
-							
-		<!-- 타임리프써서 인증자동으로 처리하기 -->					
-
-<!-- 모델에 담아서 전송하여 붙이는것(이거 사용 X) -->
-<!-- <div th:if="${username}">
-    <p>안녕하세요, <span th:text="${username}"></span>님!</p>
-</div>  -->
-
-
-
-
-
 							<small class="text-muted"><i class="fas fa-users"></i></small>
 						</div>
 					</div>
@@ -142,17 +131,35 @@
 				<div class="card shadow-sm h-100">
 					<div class="thumbnail-container">
 						<span class="thumbnail-text">썸네일</span> <img
-							src="your_image_url_here" class="thumbnail-image" alt="...">
+							th:src="@{/your_image_url_here}" class="thumbnail-image"
+							alt="...">
 					</div>
 					<div class="card-body">
 						<hr class="card-divider">
 						<p class="card-text">피트니스 센터 & 사장님</p>
 						<div class="d-flex justify-content-between align-items-center">
 							<div class="btn-group">
-								<a href="#" class="btn btn-sm btn-outline-secondary">사장님 페이지</a>
+								<a th:href="@{/owner/ownerpage}"
+									class="btn btn-sm btn-outline-secondary">사장님 페이지</a>
 							</div>
 							<small class="text-muted"><i class="fas fa-users"></i></small>
 						</div>
+
+
+<ul>
+                <li class="nav-item">
+                    <a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/user/login}">로그인</a>
+                    <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a>
+                </li>
+</ul>
+<div th:if="${#httpServletRequest.PrincipalUser != null}">
+    <p>인증되었습니다.</p>
+</div>
+<div th:if="${#httpServletRequest.PrincipalUser == null}">
+    <p>인증되지 않았습니다.</p>
+</div>
+
+
 					</div>
 				</div>
 			</div>
@@ -160,25 +167,9 @@
 	</div>
 
 
-
-    
-    
-	<!--     		<div sec:authentication="name">
-			<h1>안녕하세요, ${#authentication.name}님!</h1>
-		</div>
-		<div sec:authentication="principal.authorities">
-			<p>당신의 역할은 ${#authentication.principal.authorities}입니다.</p>
-		</div>
-
-		<h1 sec:authorize="hasRole('OWNER')">센터 운영자님만 볼 수 있는 글</h1>
-
-		<h1 sec:authorize="hasRole('USER')">일반 사용자만 볼 수 있는 글</h1>
-
-		<div sec:authorize="isAuthenticated()">인증된 사용자만 볼 수 있는 글</div> -->
-
-
 	<script
 		src="https://getbootstrap.com/docs/5.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+</body>
 </html>
