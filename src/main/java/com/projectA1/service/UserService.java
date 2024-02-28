@@ -28,6 +28,9 @@ public class UserService {
 
 	// user 추가
 	public void join(User user) {
+        // 비밀번호 암호화
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
 		userRepository.save(user);
 	}
 
@@ -39,14 +42,13 @@ public class UserService {
 	// user 수정 (더티체킹) => 전화번호, 주소, 이메일, 비밀번호 수정가능
 	@Transactional
 	public void update(User currentUser, User updateUser) {
-		System.out.println(updateUser.getPassword());
         // 새로운 비밀번호가 입력되었는지 확인
         if (!updateUser.getPassword().isEmpty()) {
             // 입력된 새로운 비밀번호가 현재 비밀번호와 같은지 확인
-            if (passwordEncoder.matches(updateUser.getPassword(), currentUser.getPassword())) {
-                // 현재 비밀번호와 새로운 비밀번호가 같으면 오류 처리
-                throw new IllegalArgumentException("새로운 비밀번호는 현재 비밀번호와 다르게 설정해야 합니다.");
-            }
+//            if (passwordEncoder.matches(updateUser.getPassword(), currentUser.getPassword())) {
+//                // 현재 비밀번호와 새로운 비밀번호가 같으면 오류 처리
+//                throw new IllegalArgumentException("새로운 비밀번호는 현재 비밀번호와 다르게 설정해야 합니다.");
+//            }
             // 새로운 비밀번호를 암호화하여 저장
             currentUser.setPassword(passwordEncoder.encode(updateUser.getPassword()));
         }
@@ -56,13 +58,13 @@ public class UserService {
 		currentUser.setPhoneNumber(updateUser.getPhoneNumber());
 		currentUser.setAddress(updateUser.getAddress());
 
+		//저장완료
+		userRepository.save(currentUser);
+		
 		// 세션 업데이트
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		PrincipalUser principalUser = (PrincipalUser) authentication.getPrincipal();
 		principalUser.setUser(currentUser); // 새로운 사용자 정보로 Principal 업데이트
-		
-		//저장완료
-		userRepository.save(currentUser);
 	}
 
 	// user 삭제

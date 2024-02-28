@@ -3,6 +3,7 @@ package com.projectA1.config.auth;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -22,10 +23,7 @@ public class PrincipalUser implements UserDetails {
 	//범용 user
     private Object user;
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+    
     public PrincipalUser(Object user) {
         this.user = user;
     }
