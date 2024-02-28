@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+<head>
+    <title>체육관 예약 시스템</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .gym-view {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .gym-header {
+            background-color: #eaeaea; /* 회색 톤으로 변경 */
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid #ccc; /* 경계선도 회색으로 조정 */
+        }
+        .gym-view h1 {
+            margin: 0;
+            color: #333;
+            font-size: 24px;
+        }
+        .gym-body {
+            padding: 20px;
+        }
+        .gym-body label {
+            color: #555; /* 글자 색상을 더 어두운 회색으로 변경 */
+            font-size: 16px;
+            font-weight: normal;
+            margin-bottom: 5px;
+            display: block;
+        }
+        .gym-body .info {
+            margin-bottom: 15px;
+        }
+        .gym-body .info span {
+            font-size: 18px;
+            color: #333;
+        }
+        .gym-footer {
+            padding: 20px;
+            background-color: #eaeaea; /* 회색 톤으로 변경 */
+            text-align: center;
+        }
+        .gym-view button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #6c757d; /* 버튼 색상을 더 미묘한 회색으로 변경 */
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .gym-view button:hover {
+            background-color: #5a6268; /* 호버 효과 색상도 변경 */
+        }
+        /* 별점에 별 이모지 추가 */
+        .star-rating {
+            color: #d2d2d2; /* 별점 색상 조정 */
+            font-size: 18px;
+        }
+        .star-rating .filled {
+            color: #f5d042; /* 별점 채워진 부분 색상 조정 */
+        }
+    </style>
+</head>
+<body>
+    <div layout:fragment="content">
+        <div class="gym-view">
+            <div class="gym-header">
+                <h1>피트니스 센터 정보</h1>
+            </div>
+            <div class="gym-body">
+                <div class="info">
+                    <label>센터 명 : </label>
+                    <span>휘트니스 센터</span>
+                </div>
+                <div class="info">
+                    <label>전화번호 : </label>
+                    <span>010-0000-0000</span>
+                </div>
+                <div class="info">
+                    <label>일일권 가격 :</label>
+                    <span>20,000원</span>
+                </div>
+                <div class="info">
+                    <label>센터 위치 :</label>
+                    <span>서울특별시 강남구 역삼동</span>
+                </div>
+                <div class="info">
+                    <label>운영시간</label>
+                    <span>06:00 ~ 22:00</span>
+                </div>
+                <div class="info">
+                    <label>별점 :</label>
+                    <span class="rating-stars">⭐ 4.5</span>
+                </div>
+            </div>
+            <div class="gym-footer">
+                <button type="button">돌아가기</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
