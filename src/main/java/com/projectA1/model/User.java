@@ -9,9 +9,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
 
+
 @Data
 @Entity(name = "f_user")
 public class User extends Person {
+
 
     private Date birthDate; // 생년월일
     

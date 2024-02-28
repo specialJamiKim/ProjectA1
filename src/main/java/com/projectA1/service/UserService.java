@@ -59,6 +59,7 @@ public class UserService {
 		currentUser.setPhoneNumber(updateUser.getPhoneNumber());
 		currentUser.setAddress(updateUser.getAddress());
 
+
 		//저장완료
 		userRepository.save(currentUser);
 		
@@ -66,6 +67,7 @@ public class UserService {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		PrincipalUser principalUser = (PrincipalUser) authentication.getPrincipal();
 		principalUser.setUser(currentUser); // 새로운 사용자 정보로 Principal 업데이트
+
 	}
 
 	// user 삭제

@@ -16,6 +16,7 @@ import com.projectA1.service.FitnessCenterService;
 @RequestMapping("/fitnessCenter/*")
 public class FitnessCenterController {
 	
+
 	@Autowired
 	private FitnessCenterService FitnessCenterService;
 
