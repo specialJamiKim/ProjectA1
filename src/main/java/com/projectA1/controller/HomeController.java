@@ -73,7 +73,7 @@ public class HomeController {
         // 세션 초기화
         session.invalidate();
         // 초기화된 후에 어디로 이동할지 리다이렉트할 URL을 반환합니다.
-        return "redirect:/"; // 세션을 초기화한 후 메인 페이지로 리다이렉트할 수 있습니다. 필요에 따라 다른 경로를 지정할 수 있습니다.
+        return "redirect:/"; // 세션을 초기화한 후 메인 페이지로 리다이렉트할 수 있습니다. 필요에 따라 다른 경로를 지정할 수 있습니다
     }
     
 }
