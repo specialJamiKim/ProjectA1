@@ -3,6 +3,7 @@ package com.projectA1.service;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.projectA1.model.FitnessCenter;
@@ -11,25 +12,33 @@ import com.projectA1.repository.OwnerRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class OwnerService {
 	
-	@Autowired
-	private OwnerRepository ownerRepository;
-
+	private final OwnerRepository ownerRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder; //비밀번호 암호화 때 사용
+    
+    private String encodePassword(String password) {
+        // 비밀번호 암호화
+        return bCryptPasswordEncoder.encode(password);
+    }
+    
+    ///////////////////////////////////////////////////////////////////////
 	//센터추가하면서 owner상태변경
     @Transactional
     public void addFitnessCenterToOwner(Owner owner, FitnessCenter fitnessCenter) {
         // Owner 엔티티에 센터 번호 등록
-        owner.setFitnessCenter(fitnessCenter);
-        
+        owner.setFitnessCenter(fitnessCenter);    
         // Owner 엔티티를 저장하고 데이터베이스에 반영
         ownerRepository.save(owner);
     }
 	
-	//추가
+	//회원가입
 	public void join(Owner owner) {
+		owner.setPassword(encodePassword(owner.getPassword()));
 		ownerRepository.save(owner);
 	}
 	

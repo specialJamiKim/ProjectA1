@@ -2,8 +2,7 @@
 package com.projectA1.model;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -37,6 +36,7 @@ public class FitnessCenter {
     @Temporal(TemporalType.TIMESTAMP)
     private Date closingTime; // 마감시간
     
+    // 수정된 부분: Owner와의 관계 설정
     @OneToMany(mappedBy = "fitnessCenter", cascade = CascadeType.ALL)
-    private Set<Owner> owners = new HashSet<>(); // 여러 명의 Owner를 저장하는 Set
+    private List<Owner> owners; // 이 FitnessCenter를 소유한 Owner 목록
 }

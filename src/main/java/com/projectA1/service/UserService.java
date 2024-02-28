@@ -2,8 +2,10 @@ package com.projectA1.service;
 
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +21,14 @@ import lombok.RequiredArgsConstructor;
 public class UserService {
 
 	private final UserRepository userRepository;
-	private final PasswordEncoder passwordEncoder;
-
+	private final PasswordEncoder passwordEncoder; //비밀번호 비교할때 사용
+    private final BCryptPasswordEncoder bCryptPasswordEncoder; //비밀번호 암호화 때 사용
+    
+    private String encodePassword(String password) {
+        // 비밀번호 암호화
+        return bCryptPasswordEncoder.encode(password);
+    }
+    
 	// user 로그인확인
 	public User findByEmail(String email) {
 		return userRepository.findByEmail(email);
@@ -29,8 +37,7 @@ public class UserService {
 	// user 추가
 	public void join(User user) {
         // 비밀번호 암호화
-//        String encodedPassword = passwordEncoder.encode(user.getPassword());
-//        user.setPassword(encodedPassword);
+        user.setPassword(encodePassword(user.getPassword()));
 		userRepository.save(user);
 	}
 
@@ -45,17 +52,16 @@ public class UserService {
         // 새로운 비밀번호가 입력되었는지 확인
         if (!updateUser.getPassword().isEmpty()) {
             // 입력된 새로운 비밀번호가 현재 비밀번호와 같은지 확인
-//            if (passwordEncoder.matches(updateUser.getPassword(), currentUser.getPassword())) {
-//                // 현재 비밀번호와 새로운 비밀번호가 같으면 오류 처리
-//                throw new IllegalArgumentException("새로운 비밀번호는 현재 비밀번호와 다르게 설정해야 합니다.");
-//            }
-            // 새로운 비밀번호를 암호화하여 저장
-//            currentUser.setPassword(passwordEncoder.encode(updateUser.getPassword()));
-            currentUser.setPassword(updateUser.getPassword());
+            if (passwordEncoder.matches(updateUser.getPassword(), currentUser.getPassword())) {
+                // 현재 비밀번호와 새로운 비밀번호가 같으면 오류 처리
+                throw new IllegalArgumentException("새로운 비밀번호는 현재 비밀번호와 다르게 설정해야 합니다.");
+            }
+             //새로운 비밀번호를 암호화하여 저장
+            currentUser.setPassword(encodePassword(updateUser.getPassword()));
+            System.out.println("비밀번호" + currentUser.getPassword());
         }
 		
 		currentUser.setName(updateUser.getName());
-		//currentUser.setPassword(passwordEncoder.encode(updateUser.getPassword())); // 주입받은 passwordEncoder 빈을 사용하여 암호화
 		currentUser.setPhoneNumber(updateUser.getPhoneNumber());
 		currentUser.setAddress(updateUser.getAddress());
 
