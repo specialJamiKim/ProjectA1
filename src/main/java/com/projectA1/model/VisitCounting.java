@@ -25,5 +25,6 @@ public class VisitCounting {
     @JoinColumn(name = "user_id") // "user_id"를 실제 외래 키 열과 일치하도록 변경
     private User user;
 
+    //방문횟수
     private int visitCount;
 }

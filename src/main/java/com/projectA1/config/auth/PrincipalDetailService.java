@@ -31,8 +31,7 @@ public class PrincipalDetailService implements UserDetailsService {
         User user = userRepository.findByEmail(email);
         if (user != null) {
             // 비밀번호 암호화
-            String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
-            user.setPassword(encodedPassword);
+            //user.setPassword(encodePassword(user.getPassword()));
             // 사용자 정보가 존재하면 PrincipalUser 객체를 생성하여 반환
             return new PrincipalUser(user);
         }
@@ -42,14 +41,17 @@ public class PrincipalDetailService implements UserDetailsService {
 
         if (owner != null) {
             // 비밀번호 암호화
-            String encodedPassword = bCryptPasswordEncoder.encode(owner.getPassword());
-            owner.setPassword(encodedPassword);
+        	//owner.setPassword(encodePassword(owner.getPassword()));
             // 소유자 정보가 존재하면 PrincipalOwner 객체를 생성하여 반환
-            System.out.println(owner.getName() + " " + owner.getPassword());
             return new PrincipalUser(owner);
         }
         
         // 사용자 정보 또는 소유자 정보가 없을 경우 예외 처리
         throw new UsernameNotFoundException("User or Owner not found with email: " + email);
+    }
+    
+    private String encodePassword(String password) {
+        // 비밀번호 암호화
+        return bCryptPasswordEncoder.encode(password);
     }
 }
