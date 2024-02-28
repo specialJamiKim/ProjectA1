@@ -50,7 +50,8 @@ public class UserService {
 //                throw new IllegalArgumentException("새로운 비밀번호는 현재 비밀번호와 다르게 설정해야 합니다.");
 //            }
             // 새로운 비밀번호를 암호화하여 저장
-            currentUser.setPassword(passwordEncoder.encode(updateUser.getPassword()));
+//            currentUser.setPassword(passwordEncoder.encode(updateUser.getPassword()));
+            currentUser.setPassword(updateUser.getPassword());
         }
 		
 		currentUser.setName(updateUser.getName());
