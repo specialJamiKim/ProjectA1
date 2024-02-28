@@ -34,8 +34,6 @@
                 gender : $("input[name='gender']:checked").val(), // 선택된 성별 값을 가져옴
                 address : $("#centerAddress").val(),
                 joinDate : getCurrentDate(),
-                centerName : $("#centerName").val(),
-                centerAddress : $("#centerAddress").val(),
                 businessRegistrationNumber : $("#businessRegistrationNumber").val(),
                 // 기타 필요한 데이터 추가
             };
@@ -166,16 +164,6 @@
 								value="female"> 여성
 							</label>
 						</div>
-					</div>
-					<div class="form-group">
-						<label for="centerName">센터 이름:</label> <input type="text"
-							class="form-control" id="centerName" placeholder="센터 이름을 입력하세요"
-							name="centerName">
-					</div>
-					<div class="form-group">
-						<label for="centerAddress">센터 주소:</label> <input type="text"
-							class="form-control" id="centerAddress"
-							placeholder="센터 주소를 입력하세요" name="centerAddress">
 					</div>
 					<div class="form-group">
 						<label for="businessRegistrationNumber">사업자 등록번호:</label> <input

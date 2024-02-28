@@ -1,107 +1,77 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorate="~{layouts/layout1}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fitness Center 등록</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+	<div class="container mt-5">
+		<h2 class="text-center mb-4">Fitness Center 등록</h2>
+		<div class="input-box">
+			<form>
+				<div class="form-group">
+					<label for="name">센터이름:</label> <input type="text"
+						class="form-control" id="name" placeholder="센터이름을 입력하세요"
+						name="name">
+				</div>
+				<div class="form-group">
+					<label for="address">주소:</label> <input type="text"
+						class="form-control" id="address" placeholder="주소를 입력하세요"
+						name="address">
+				</div>
+				<div class="form-group">
+					<label for="phoneNumber">전화번호:</label> <input type="text"
+						class="form-control" id="phoneNumber" placeholder="전화번호를 입력하세요"
+						name="phoneNumber">
+				</div>
+				<div class="form-group">
+					<label for="dailyPassPrice">일일권 가격:</label> <input type="number"
+						class="form-control" id="dailyPassPrice"
+						placeholder="일일권 가격을 입력하세요" name="dailyPassPrice">
+				</div>
+				<div class="form-group">
+					<label for="openTime">오픈시간:</label> <input type="datetime-local"
+						class="form-control" id="openTime" name="openTime">
+				</div>
+				<div class="form-group">
+					<label for="closingTime">마감시간:</label> <input type="datetime-local"
+						class="form-control" id="closingTime" name="closingTime">
+				</div>
+				<button type="button" class="btn btn-primary" id="btnRegister">등록하기</button>
+			</form>
+		</div>
+	</div>
+	<script>
+		$(document).ready(function() {
+			$("#btnRegister").click(function() {
+				var data = {
+					name : $("#name").val(),
+					address : $("#address").val(),
+					phoneNumber : $("#phoneNumber").val(),
+					dailyPassPrice : $("#dailyPassPrice").val(),
+					openTime : $("#openTime").val(),
+					closingTime : $("#closingTime").val()
+				};
 
-<th:block layout:fragment="script">
-<script>
-$(document).ready(function(){
-    $("#btnJoin").click(function() {
-        // 입력 값 유효성 검사
-        if ($("#centerName").val() == "") {
-            alert("지점명을 입력해주세요.");
-            $("#centerName").focus();
-            return false;
-        }
-        if ($("#phoneNumber").val() == "") {
-            alert("전화번호를 입력해주세요.");
-            $("#phoneNumber").focus();
-            return false;
-        }
-        if ($("#businessRegistrationNumber").val() == "") {
-            alert("사업자 등록번호를 입력해주세요.");
-            $("#businessRegistrationNumber").focus();
-            return false;
-        }
-        if ($("#centerAddress").val() == "") {
-            alert("주소를 입력해주세요.");
-            $("#centerAddress").focus();
-            return false;
-        }
-        if ($("#openTime").val() == "") {
-            alert("개점 시간을 입력해주세요.");
-            $("#openTime").focus();
-            return false;
-        }
-        if ($("#closingTime").val() == "") {
-            alert("폐점 시간을 입력해주세요.");
-            $("#closingTime").focus();
-            return false;
-        }
-
-        // 센터 등록 정보 객체 생성
-        var data = {
-            branch_name: $("#centerName").val(),
-            phone: $("#phoneNumber").val(),
-            business_registration_number: $("#businessRegistrationNumber").val(),
-            address: $("#centerAddress").val(),
-            opening_hours: $("#openTime").val(),
-            closing_hours: $("#closingTime").val()
-        };
-
-        // AJAX를 사용하여 서버로 센터 등록 요청 전송
-        $.ajax({
-            type: "POST",
-            url: "/center/register", // 서버 엔드포인트 주소를 센터 등록에 맞게 수정
-            contentType: "application/json;charset=utf-8",
-            data: JSON.stringify(data),
-            success: function(response) {
-                if (response === "success") {
-                    alert("센터 등록이 완료되었습니다.");
-                    window.location.href = "/"; // 등록 성공 후 리다이렉트할 페이지
-                } else {
-                    alert("센터 등록에 실패했습니다. 다시 시도해주세요.");
-                }
-            },
-            error: function() {
-                alert("센터 등록 과정에서 오류가 발생했습니다.");
-            }
-        });
-    });
-});
-</script>
-</th:block>
-
-<div layout:fragment="content">
-    <div class="container mt-3">
-        <h2>센터 등록</h2>
-        <form>
-            <div class="mb-3 mt-3">
-                <label for="centerName">지점명:</label>
-                <input type="text" class="form-control" id="centerName" placeholder="지점명을 입력하세요" name="centerName">
-            </div>
-            <div class="mb-3">
-                <label for="phoneNumber">전화번호:</label>
-                <input type="text" class="form-control" id="phoneNumber" placeholder="전화번호를 입력하세요" name="phoneNumber">
-            </div>
-            <div class="mb-3">
-                <label for="businessRegistrationNumber">사업자 등록번호:</label>
-                <input type="text" class="form-control" id="businessRegistrationNumber" placeholder="사업자 등록번호를 입력하세요" name="businessRegistrationNumber">
-            </div>
-            <div class="mb-3">
-                <label for="centerAddress">주소:</label>
-                <input type="text" class="form-control" id="centerAddress" placeholder="주소를 입력하세요" name="centerAddress">
-            </div>
-            <div class="mb-3">
-                <label for="openTime">개점 시간:</label>
-                <input type="time" class="form-control" id="openTime" name="openTime">
-            </div>
-            <div class="mb-3">
-                <label for="closingTime">폐점 시간:</label>
-                <input type="time" class="form-control" id="closingTime" name="closingTime">
-            </div>
-            <button type="button" class="btn btn-primary" id="btnJoin">등록</button>
-        </form>
-    </div>
-</div>
+				$.ajax({
+					type : "POST",
+					url : "/centerManage/register",
+					contentType : "application/json",
+					data : JSON.stringify(data),
+					success : function(response) {
+						alert("Fitness Center 등록이 완료되었습니다.");
+						location.href = "/"
+					},
+					error : function(xhr, status, error) {
+						alert("Fitness Center 등록 중 오류가 발생했습니다.");
+						console.error(xhr.responseText);
+					}
+				});
+			});
+		});
+	</script>
+</body>
 </html>

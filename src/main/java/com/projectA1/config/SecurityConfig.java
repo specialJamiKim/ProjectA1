@@ -24,12 +24,13 @@ public class SecurityConfig{
 	public SecurityFilterChain fileChain(HttpSecurity http) throws Exception {
 		http.csrf(csrf -> csrf.disable())
 		.authorizeHttpRequests(request -> request
-				.requestMatchers("/","/main", "/join/*", "/login/*"
+				.requestMatchers("/","/main", "/join/*", "/login/*", "/centerManage/*"
 						//"/join/indiJoin", "/join/ownerJoin" , "/login/loginPage", "/join/selectJoin","login/loginPage","/loginPro" 
 						, "/user/join", "/owner/join", "/fragments/*").permitAll()
 
 			    .requestMatchers("/user/*").hasRole("USER")
-			    .requestMatchers("/owner/*").hasRole("OWNER")
+			    .requestMatchers("/owner/*", "/centerManage/*").hasRole("OWNER")
+			        
 			    .anyRequest().authenticated()
 			)
 				.formLogin(login -> login

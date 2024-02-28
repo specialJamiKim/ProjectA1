@@ -5,8 +5,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.projectA1.model.FitnessCenter;
 import com.projectA1.model.Owner;
-import com.projectA1.model.User;
 import com.projectA1.repository.OwnerRepository;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -18,7 +18,15 @@ public class OwnerService {
 	@Autowired
 	private OwnerRepository ownerRepository;
 
-	//중복확인
+	//센터추가하면서 owner상태변경
+    @Transactional
+    public void addFitnessCenterToOwner(Owner owner, FitnessCenter fitnessCenter) {
+        // Owner 엔티티에 센터 번호 등록
+        owner.setFitnessCenter(fitnessCenter);
+        
+        // Owner 엔티티를 저장하고 데이터베이스에 반영
+        ownerRepository.save(owner);
+    }
 	
 	//추가
 	public void join(Owner owner) {

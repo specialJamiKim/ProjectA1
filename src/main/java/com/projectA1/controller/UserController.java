@@ -78,14 +78,15 @@ public class UserController {
 
 	// 사용자 회원탈퇴
 	@GetMapping("delete")
-	public void delete(@AuthenticationPrincipal PrincipalUser principalUser, HttpServletRequest request,
+	public String delete(@AuthenticationPrincipal PrincipalUser principalUser, HttpServletRequest request,
 			HttpServletResponse response) {
 		String email = principalUser.getUserEmail(); // 아이디로 삭제
 		userService.delete(email);
 
 		// 세션 무효화
 		invalidateSession(request);
-		System.out.println("진행완료");
+		
+		return "redirect:/";
 	}
 
 	////////////////////////////////////////////////////////////////////////////

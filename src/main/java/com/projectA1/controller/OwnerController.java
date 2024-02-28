@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.projectA1.config.auth.PrincipalUser;
 import com.projectA1.model.Owner;
 import com.projectA1.service.OwnerService;
 
@@ -28,7 +30,10 @@ public class OwnerController {
 	
 	//오너 마이페이지
 	@GetMapping("ownerpage")
-	public String ownerPage() {
+	public String ownerPage(@AuthenticationPrincipal PrincipalUser principalUser,Model model) {
+	    // 사용자 정보를 통해 해당 사용자가 관리하는 센터의 이름을 조회하여 모델에 추가합니다.
+//	    String centerName = ownerService.getCenterNameForAdmin(principal.getName());
+//	    model.addAttribute("centerName", centerName);
 		return "/owner/ownerpage";
 	}
 	
@@ -49,9 +54,6 @@ public class OwnerController {
 		ownerService.join(owner);
 		return "success"; // 페이지 수정 필요
 	}
-	
-	
-	
 	
 	
 	//오너 마이페이지(상세보기)
