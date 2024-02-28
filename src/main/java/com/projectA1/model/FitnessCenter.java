@@ -20,16 +20,15 @@ import lombok.Setter;
 @Getter @Setter
 public class FitnessCenter {
 
+	//센터id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; // 기본 키
-
-    @OneToMany(mappedBy = "fitnessCenter", cascade = CascadeType.ALL)
-    private Set<Owner> owners = new HashSet<>(); // 여러 명의 Owner를 저장하는 Set
-
+    
+    private String name; // 센터 이름
     private String address; // 주소
     private String phoneNumber; // 전화번호
-    private int dailyPassPrice; // 일일권 가격
+    private Long dailyPassPrice; // 일일권 가격
 
     // 수정된 부분: 오픈 시간과 마감 시간의 타입을 TemporalType.TIMESTAMP로 변경
     @Temporal(TemporalType.TIMESTAMP)
@@ -37,4 +36,7 @@ public class FitnessCenter {
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date closingTime; // 마감시간
+    
+    @OneToMany(mappedBy = "fitnessCenter", cascade = CascadeType.ALL)
+    private Set<Owner> owners = new HashSet<>(); // 여러 명의 Owner를 저장하는 Set
 }

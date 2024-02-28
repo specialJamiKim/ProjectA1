@@ -21,7 +21,5 @@ public class Owner extends Person {
     @JoinColumn(name = "center_id")
     private FitnessCenter fitnessCenter; // 센터 id
 
-    private String centerName; // 센터 이름
-    private String centerAddress; // 센터주소
     private String businessRegistrationNumber; // 사업자 등록번호
 }
