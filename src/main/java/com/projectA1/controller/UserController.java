@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.projectA1.config.auth.PrincipalUser;
 import com.projectA1.model.User;
 import com.projectA1.service.UserService;
+import com.projectA1.service.VisitCountingService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -32,10 +33,8 @@ public class UserController {
 	// 사용자 마이페이지 => 정보수정, 회원탈퇴
 
 	private final UserService userService;
-
-//    @Autowired
-//    private PrincipalDetailService principalDetailService;
-
+	private final VisitCountingService visitCountingService;
+	
 	// 사용자 추가 => 추가 후, 로그인 페이지
 	@PostMapping("join")
 	@ResponseBody
@@ -53,6 +52,10 @@ public class UserController {
 	public String viewMyPage(@AuthenticationPrincipal PrincipalUser principalUser, Model model) {
 		// 로그인된 사용자의 정보를 가져옵니다.
 		User user = (User) principalUser.getUser();
+		
+		//센터 방문횟수를 가져와 화면에 표시(userid, centerid)
+		long visitCount = visitCountingService.visitCounting(user.getId());
+		model.addAttribute("visitCount", visitCount);
 		model.addAttribute("user", user);
 		return "/user/mypage";
 	}

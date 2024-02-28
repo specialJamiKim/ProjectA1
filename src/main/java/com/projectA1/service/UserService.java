@@ -29,6 +29,7 @@ public class UserService {
         return bCryptPasswordEncoder.encode(password);
     }
     
+    
 	// user 로그인확인
 	public User findByEmail(String email) {
 		return userRepository.findByEmail(email);

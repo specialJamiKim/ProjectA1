@@ -1,13 +1,12 @@
 package com.projectA1.controller;
 
 
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -15,14 +14,19 @@ public class HomeController {
 
 	@GetMapping("/")
 	public String homePage() {
+        // 현재 인증된 사용자 객체 가져오기
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        
+        // 현재 인증된 사용자 객체 출력
+        System.out.println("현재 인증된 사용자: " + authentication);
 		return "main";
 	}
 	//로그아웃
-	@GetMapping("/logout")
-    public String logout(HttpServletRequest request, HttpServletResponse response) {
-        new SecurityContextLogoutHandler().logout(request, response, SecurityContextHolder.getContext().getAuthentication());
-        return "redirect:/login/loginPage";
-    }
+//	@GetMapping("/logout")
+//    public String logout(HttpServletRequest request, HttpServletResponse response) {
+//        new SecurityContextLogoutHandler().logout(request, response, SecurityContextHolder.getContext().getAuthentication());
+//        return "redirect:/login/loginPage";
+//    }
 	
 //	@GetMapping("/")
 //	public String home(Model model) {

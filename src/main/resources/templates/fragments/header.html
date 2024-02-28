@@ -18,23 +18,6 @@ ul .nav-item {
 }
 </style>
 
-<script th:inline="javascript">
-	/*<![CDATA[*/
-	$(document)
-			.ready(
-					function() {
-						var isAuthenticated = /*[[${#authentication.principal != null}]]*/false;
-
-						if (isAuthenticated) {
-							$("#header").append(
-									'<li><a href="/logout">로그아웃</a></li>');
-						} else {
-							$("#header").append(
-									'<li><a href="/login">로그인</a></li>');
-						}
-					});
-	/*]]>*/
-</script>
 </head>
 
 <body>
@@ -67,20 +50,20 @@ ul .nav-item {
 
 							<!-- 게시판 -->
 							<li class="nav-item"><a class="nav-link"
-								th:href="@{/sessionReset}"
+								th:href="@{/logout}"
 								style="color: white; padding-left: 10px; padding-right: 10px;"
-								href="#">임시세션초기화</a></li>
+								href="#">로그아웃</a></li>
 
-
-
-
-
+       <!-- 로그인 상태에 따른 내용 표시 -->
+<span class="navbar-text mx-2" th:text="${#authentication != null ? #authentication.principal.name : 'Guest'}"></span>
+<span class="navbar-text mx-2" sec:authorize="hasRole('OWNER')">Text visible to OWNER.</span>
+<span class="navbar-text mx-2" sec:authorize="hasRole('USER')">Text visible to USER .</div>
 						</ul>
 					</div>
 				</div>
+
 			</div>
 		</div>
-
 	</header>
 
 	<!-- 여기에 콘텐츠가 들어갑니다 -->
