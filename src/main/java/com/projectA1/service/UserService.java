@@ -29,8 +29,8 @@ public class UserService {
 	// user 추가
 	public void join(User user) {
         // 비밀번호 암호화
-        String encodedPassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(encodedPassword);
+//        String encodedPassword = passwordEncoder.encode(user.getPassword());
+//        user.setPassword(encodedPassword);
 		userRepository.save(user);
 	}
 
