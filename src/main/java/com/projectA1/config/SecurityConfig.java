@@ -23,9 +23,14 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain fileChain(HttpSecurity http) throws Exception {
 		http.csrf(csrf -> csrf.disable()).authorizeHttpRequests(
+<<<<<<< Updated upstream
 
 				request -> request.requestMatchers("/", "/main", "/join/**", "/login/**" , "/centerManage/**", "/diary/**"
 						,"/login/loginPage", "/user/join", "/owner/join", "/fragments/*").permitAll()
+=======
+				request -> request.requestMatchers("/", "/main", "/join/**", "/login/**" , "/centerManage/*",
+						, "/user/join", "/owner/join", "/fragments/*").permitAll()
+>>>>>>> Stashed changes
 						.requestMatchers("/user/**").hasRole("USER")
 						.requestMatchers("/owner/**").hasRole("OWNER")
 
