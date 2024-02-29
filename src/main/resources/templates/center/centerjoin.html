@@ -1,13 +1,16 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Fitness Center 등록</title>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
+<div layout:fragment="content">
 	<div class="container mt-5">
 		<h2 class="text-center mb-4">Fitness Center 등록</h2>
 		<div class="input-box">
@@ -33,11 +36,11 @@
 						placeholder="일일권 가격을 입력하세요" name="dailyPassPrice">
 				</div>
 				<div class="form-group">
-					<label for="openTime">오픈시간:</label> <input type="datetime-local"
+					<label for="openTime">오픈시간:</label> <input type="time"
 						class="form-control" id="openTime" name="openTime">
 				</div>
 				<div class="form-group">
-					<label for="closingTime">마감시간:</label> <input type="datetime-local"
+					<label for="closingTime">마감시간:</label> <input type="time"
 						class="form-control" id="closingTime" name="closingTime">
 				</div>
 				<button type="button" class="btn btn-primary" id="btnRegister">등록하기</button>
@@ -73,5 +76,6 @@
 			});
 		});
 	</script>
+	</div>
 </body>
 </html>
