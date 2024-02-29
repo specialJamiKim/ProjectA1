@@ -12,23 +12,13 @@ import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class HomeController {
-
-//	   @GetMapping("/")
-//	    public String homePage(Model model) {
-//	        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//	        String username = authentication.getName();
-//	        model.addAttribute("username", username);
-//	        return "main";
-//	    }
 	
 	@GetMapping("/")
 	public String homePage(Model model) {
 	    // 현재 인증된 사용자 객체 가져오기
-	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-	    System.out.println("여기확인 >>" + authentication.getPrincipal());
-	    
-	    // 현재 인증된 사용자 객체 추가
-	    model.addAttribute("authentication", authentication);
+//	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//	    // 현재 인증된 사용자 객체 추가
+//	    model.addAttribute("authentication", authentication);
 
 	    return "main";
 	}
