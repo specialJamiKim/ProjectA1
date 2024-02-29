@@ -1,5 +1,6 @@
 package com.projectA1.config;
 
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,9 +23,14 @@ public class SecurityConfig {
 
 	@Bean
 	public SecurityFilterChain fileChain(HttpSecurity http) throws Exception {
-	    http.csrf(csrf -> csrf.disable())
-	        .authorizeHttpRequests(authorize -> authorize
-	            .requestMatchers("/", "/main", "/join/**", "/login/**" , "/centerManage/**", "/diary/**", "/login/loginPage", "/user/join", "/owner/join", "/fragments/*").permitAll()
+	      http.csrf(csrf -> csrf.disable())
+          .authorizeHttpRequests(request -> request
+                .requestMatchers("/", "/main", "/join/**", "/login/**", "/centerManage/**", "/diary/**",
+                      "/login/loginPage", "/user/join", "/owner/join", "/fragments/*")
+                .permitAll()
+                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+                .requestMatchers("/img/**").permitAll().requestMatchers("/user/**").hasRole("USER")
+                .requestMatchers("/owner/**").hasRole("OWNER")
 	            .anyRequest().authenticated())
 	        .formLogin(login -> login
 	            .loginPage("/login/loginPage")
