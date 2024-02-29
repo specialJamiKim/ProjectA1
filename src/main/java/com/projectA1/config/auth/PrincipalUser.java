@@ -23,7 +23,6 @@ public class PrincipalUser implements UserDetails {
 	//범용 user
     private Object user;
 
-    
     public PrincipalUser(Object user) {
         this.user = user;
     }
