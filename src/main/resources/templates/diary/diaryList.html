@@ -71,7 +71,7 @@
 										<tbody>
 											<tr th:each="diary :${diarys}">
 												<td th:text="${diary.id}"></td>
-												<td><a th:href="'view/'+${diary.id}">[[${diary.title}]]</a></td>
+												<td><a th:href="'/diary/diaryView/' + ${diary.id}">[[${diary.title}]]</a></td>
 												<td th:text="${diary.date}"></td>
 												<td th:text="${diary.content}"></td>
 											</tr>
