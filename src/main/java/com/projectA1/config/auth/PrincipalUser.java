@@ -23,6 +23,10 @@ public class PrincipalUser implements UserDetails {
 	//범용 user
     private Object user;
 
+    // 사용자 객체 반환
+    public Object getUser() {
+        return user;
+    }
     public PrincipalUser(Object user) {
         this.user = user;
     }

@@ -4,6 +4,7 @@ package com.projectA1.controller;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,37 +13,41 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class HomeController {
 
-	@GetMapping("/")
-	public String homePage() {
-        // 현재 인증된 사용자 객체 가져오기
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        
-        // 현재 인증된 사용자 객체 출력
-        System.out.println("현재 인증된 사용자: " + authentication);
-		return "main";
-	}
-	//로그아웃
-//	@GetMapping("/logout")
-//    public String logout(HttpServletRequest request, HttpServletResponse response) {
-//        new SecurityContextLogoutHandler().logout(request, response, SecurityContextHolder.getContext().getAuthentication());
-//        return "redirect:/login/loginPage";
-//    }
+//	   @GetMapping("/")
+//	    public String homePage(Model model) {
+//	        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//	        String username = authentication.getName();
+//	        model.addAttribute("username", username);
+//	        return "main";
+//	    }
 	
+	@GetMapping("/")
+	public String homePage(Model model) {
+	    // 현재 인증된 사용자 객체 가져오기
+	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	    System.out.println("여기확인 >>" + authentication.getPrincipal());
+	    
+	    // 현재 인증된 사용자 객체 추가
+	    model.addAttribute("authentication", authentication);
+
+	    return "main";
+	}
+
 //	@GetMapping("/")
-//	public String home(Model model) {
-//	    // 현재 인증된 사용자 정보 가져오기
+//	public String homePage(Model model) {
+//        // 현재 인증된 사용자 객체 가져오기
 //        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        boolean isLoggedIn = authentication.isAuthenticated(); // 로그인 여부 확인
+//        // 현재 인증된 사용자 이름 가져오기
+//        String username = authentication.getName();
+//        
+//        // 모델에 현재 인증된 사용자 이름 추가
+//        model.addAttribute("username", username);
+//        // 현재 인증된 사용자 객체 출력
 //
-//        if (isLoggedIn) {
-//            String username = authentication.getName(); // 현재 사용자의 이름 가져오기
-//            model.addAttribute("username", username); // 모델에 현재 사용자의 이름 추가
-//        }
-//        model.addAttribute("isLoggedIn", isLoggedIn);
 //		return "main";
 //	}
-	
-	
+
+		
 	//로그인폼
     @GetMapping("/login/loginPage")
     public String showLoginPage() {

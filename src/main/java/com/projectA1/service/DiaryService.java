@@ -19,4 +19,7 @@ public class DiaryService {
 		return diaryrepository.findAll();
 	}
 	
+	public Diary addDiary(Diary diary) {
+		return diaryrepository.save(diary);
+	}
 }

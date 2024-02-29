@@ -61,10 +61,11 @@
     </style>
 </head>
 <body id="page-top">
-
+<!-- user_id 없음  -->
 <div class="centered-container">
     <div class="form-container" layout:fragment="content">
         <h2>새 다이어리 쓰기</h2>
+        <form th:action="@{/diary/addDiary}" method="post">
         <div class="form-group">
             <label for="title">제목 :</label>
             <input type="text" id="title" name="title" th:value="*{title}" required />
@@ -80,6 +81,7 @@
         <div class="form-group">
             <button type="submit" class="btn">작성완료</button>
         </div>
+        </form>
     </div>
 </div>
 
