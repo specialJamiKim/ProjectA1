@@ -22,8 +22,8 @@ public class PrincipalDetailService implements UserDetailsService {
     @Autowired
     private OwnerRepository ownerRepository;
 
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+//    @Autowired
+//    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -45,13 +45,13 @@ public class PrincipalDetailService implements UserDetailsService {
             // 소유자 정보가 존재하면 PrincipalOwner 객체를 생성하여 반환
             return new PrincipalUser(owner);
         }
-        
-        // 사용자 정보 또는 소유자 정보가 없을 경우 예외 처리
-        throw new UsernameNotFoundException("User or Owner not found with email: " + email);
+
+        // 사용자 정보 또는 소유자 정보가 없을 경우 빈 객체 반환
+        return new PrincipalUser(new User());
     }
     
-    private String encodePassword(String password) {
-        // 비밀번호 암호화
-        return bCryptPasswordEncoder.encode(password);
-    }
+//    private String encodePassword(String password) {
+//        // 비밀번호 암호화
+//        return bCryptPasswordEncoder.encode(password);
+//    }
 }

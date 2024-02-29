@@ -53,11 +53,16 @@ ul .nav-item {
 								th:href="@{/logout}"
 								style="color: white; padding-left: 10px; padding-right: 10px;"
 								href="#">로그아웃</a></li>
+								
+<!--  로그인 상태에 따른 내용 표시 
+<li class="nav-link" th:if="${#authentication.principal.toString() == 'anonymousUser'}"> 인증된 사용자가 아닌 경우
+    <a href="/login">로그인</a>
+</li>
+<li class="nav-link" th:unless="${#authentication.principal.toString() == 'anonymousUser'}"> 인증된 사용자인 경우
+    <span th:text="${#authentication.principal.username}"></span>
+</li>
+ -->
 
-       <!-- 로그인 상태에 따른 내용 표시 -->
-<span class="navbar-text mx-2" th:text="${#authentication != null ? #authentication.principal.name : 'Guest'}"></span>
-<span class="navbar-text mx-2" sec:authorize="hasRole('OWNER')">Text visible to OWNER.</span>
-<span class="navbar-text mx-2" sec:authorize="hasRole('USER')">Text visible to USER .</div>
 						</ul>
 					</div>
 				</div>
