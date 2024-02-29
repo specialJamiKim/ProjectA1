@@ -9,22 +9,23 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
+//VisitCount.java
 @Entity
 @Data
 public class VisitCounting {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-    @ManyToOne
-    @JoinColumn(name = "center_id") // "visit_centerNumber"를 "center_id"로 변경
-    private FitnessCenter center;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id") // "user_id"를 실제 외래 키 열과 일치하도록 변경
-    private User user;
+	@ManyToOne
+	@JoinColumn(name = "center_id") // "visit_centerNumber"를 "center_id"로 변경
+	private FitnessCenter center;
 
-    //방문횟수
-    private int visitCount;
+	@ManyToOne
+	@JoinColumn(name = "user_id") // "user_id"를 실제 외래 키 열과 일치하도록 변경
+	private User user;
+
+	// 방문횟수
+	private int visitCount;
 }

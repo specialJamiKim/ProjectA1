@@ -24,7 +24,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class FitnessCenterController {
 	
-	private final FitnessCenterService FitnessCenterService;
+	private final FitnessCenterService fitnessCenterService;
 	private final OwnerService ownerService;
 	
     //center 등록 폼
@@ -37,7 +37,7 @@ public class FitnessCenterController {
     @PostMapping("register")
     @ResponseBody
     public String join(@AuthenticationPrincipal PrincipalUser principalUser, @RequestBody FitnessCenter fitnessCenter) {	   	
-    	FitnessCenterService.join(fitnessCenter);
+    	fitnessCenterService.join(fitnessCenter);
     	Owner owner = (Owner) principalUser.getUser();
     	//현재 owner에 센터아이디 등록
     	ownerService.addFitnessCenterToOwner(owner,fitnessCenter);
@@ -48,35 +48,35 @@ public class FitnessCenterController {
 	//수정폼
     @GetMapping("update/{username}")
     public String update(@PathVariable Long id, Model model) {
-        model.addAttribute("fitnessCenter", FitnessCenterService.view(id));
+        model.addAttribute("fitnessCenter", fitnessCenterService.view(id));
         return "/fitnesscenter/update";
     }
 	        
 	//수정
     @PostMapping("update")
     public String updateFitnessCenter(FitnessCenter fitnessCenter) {
-    	FitnessCenterService.update(fitnessCenter);
+    	fitnessCenterService.update(fitnessCenter);
         return "redirect:/fitnesscenter";
     }
 	
 	//삭제
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
-    	FitnessCenterService.deleteFitnessCenter(id);
+    	fitnessCenterService.deleteFitnessCenter(id);
         return "success";
     }
 	
 	// 피트니스 센터 상세보기
     @GetMapping("/view/{id}")
     public String view(@PathVariable Long id, Model model) {
-        model.addAttribute("fitnessCenter", FitnessCenterService.view(id));
-        return "/fitnesscenter/view";
+        model.addAttribute("fitnessCenter", fitnessCenterService.view(id));
+        return "center/gymview";
     }
     
 	//전체보기
     @GetMapping("gymlist")
     public String getAllFitnessCenters(Model model) {
-        model.addAttribute("fitnessCenters", FitnessCenterService.viewAll());
+        model.addAttribute("fitnessCenters", fitnessCenterService.viewAll());
         return "/center/gymlist";
     }
 }

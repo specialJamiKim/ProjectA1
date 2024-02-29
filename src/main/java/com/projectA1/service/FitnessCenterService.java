@@ -1,7 +1,6 @@
 package com.projectA1.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -13,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class FitnessCenterService {
 
 	private final FitnessCenterRepository fitnessCenterRepository;
@@ -23,8 +23,10 @@ public class FitnessCenterService {
 	}
 	
 	//  상세보기
-	public Optional<FitnessCenter> view(Long id) {
-        return fitnessCenterRepository.findById(id);
+	@Transactional
+	public FitnessCenter view(Long id) {
+		FitnessCenter fitnessCenter = fitnessCenterRepository.findById(id).get();
+        return fitnessCenter;
     }
 	
 	//  전체보기
