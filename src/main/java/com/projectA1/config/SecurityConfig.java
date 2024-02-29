@@ -23,9 +23,9 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain fileChain(HttpSecurity http) throws Exception {
 		http.csrf(csrf -> csrf.disable()).authorizeHttpRequests(
-				request -> request.requestMatchers("/", "/main", "/join/**", "/login/**"
+				request -> request.requestMatchers("/", "/main", "/join/**", "/login/**", "/centerManage/**"
 						, "/user/join", "/owner/join", "/fragments/*").permitAll()
-						.requestMatchers("/user/**").hasRole("USER").requestMatchers("/owner/**", "/centerManage/*")
+						.requestMatchers("/user/**").hasRole("USER").requestMatchers("/owner/**")
 						.hasRole("OWNER")
 						.anyRequest().authenticated())
 				.formLogin(login -> login.loginPage("/login/loginPage") // 로그인 페이지 URL 설정
