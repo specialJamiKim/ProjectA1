@@ -1,6 +1,7 @@
 // FitnessCenter.java
 package com.projectA1.model;
 
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
@@ -30,11 +31,11 @@ public class FitnessCenter {
 	private String phoneNumber;
 	private Long dailyPassPrice;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date openTime;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date closingTime;
+	private LocalTime openTime;
+
+
+	private LocalTime closingTime;
 
 	// 수정된 부분: Owner와의 관계 설정
 	@OneToMany(mappedBy = "fitnessCenter", cascade = CascadeType.ALL)
