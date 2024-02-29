@@ -3,6 +3,8 @@ package com.projectA1.model;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,6 +27,7 @@ public class Diary {
     @JoinColumn(name = "diary_userId", nullable = false)
     private User user;
 
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date; //날짜
     private String title; //제목
 

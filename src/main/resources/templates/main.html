@@ -95,7 +95,7 @@
 			<div class="col">
 				<div class="card shadow-sm h-100">
 					<div class="thumbnail-container">
-                        <img src="https://img.freepik.com/free-photo/gym-with-indoor-cycling-equipment_23-2149270210.jpg" class="thumbnail-image" alt="Thumbnail Image">
+                        <img th:src="@{/img/gymlist.jpg}" class="thumbnail-image" alt="Thumbnail Image">
                     </div>
 					<div class="card-body">
 						<hr class="card-divider">
@@ -113,14 +113,14 @@
 			<div class="col">
 				<div class="card shadow-sm h-100">
 					<div class="thumbnail-container">
-                        <img src="https://img.freepik.com/free-photo/strong-man-training-in-gym_1303-23478.jpg" class="thumbnail-image" alt="Thumbnail Image">
+                        <img th:src="@{/img/mypage.jpg}" class="thumbnail-image" alt="Thumbnail Image">
                     </div>
 					<div class="card-body">
 						<hr class="card-divider">
 						<p class="card-text">개인회원</p>
 						<div class="d-flex justify-content-between align-items-center">
 							<div class="btn-group">
-								<a href="@{/user/mypage}" class="btn btn-sm btn-outline-secondary">마이 페이지</a>
+								<a th:href="@{/user/mypage}" class="btn btn-sm btn-outline-secondary">마이 페이지</a>
 							</div>
 							<small class="text-muted"><i class="fas fa-users"></i></small>
 						</div>
@@ -130,7 +130,8 @@
 			<div class="col">
 				<div class="card shadow-sm h-100">
 					<div class="thumbnail-container">
-                        <img src="https://img.freepik.com/free-photo/woman-helping-man-at-gym_23-2149627084.jpg" class="thumbnail-image" alt="Thumbnail Image">
+                        <img th:src="@{/img/ownerpage.jpg}" class="thumbnail-image" alt="Thumbnail Image">
+                        
                     </div>
 					<div class="card-body">
 						<hr class="card-divider">

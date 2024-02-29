@@ -1,14 +1,19 @@
 package com.projectA1.config;
 
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+
+import jakarta.servlet.DispatcherType;
 
 @Configuration
 @EnableWebSecurity
@@ -20,13 +25,40 @@ public class SecurityConfig {
 		return new BCryptPasswordEncoder();
 	}
 
+//	@Bean
+//	public WebSecurityCustomizer webSecurityCustomizer() {
+//		return web -> web.ignoring()
+//				.requestMatchers(
+//						PathRequest.toStaticResources()
+//				.atCommonLocations());
+////				.antMatchers("/fonts/**","/img/**")
+////				.antMatchers("/h2-console/**");
+//		
+//	}
+
+//	@Bean
+//	public WebSecurityCustomizer webSecurityCustomizer() {
+//		return web -> web.ignoring().requestMatchers(PathRequest
+//				.toStaticResources().atCommonLocations())
+//				.requestMatchers("/img/**")
+//	        
+//	        //        return web -> web.ignoring()
+//	        //                .antMatchers("/css/**","/img/**");
+//				;
+//	}
+
 	@Bean
 	public SecurityFilterChain fileChain(HttpSecurity http) throws Exception {
-		http.csrf(csrf -> csrf.disable()).authorizeHttpRequests(
-				request -> request.requestMatchers("/", "/main", "/join/**", "/login/**"
-						, "/user/join", "/owner/join", "/fragments/*").permitAll()
-						.requestMatchers("/user/**").hasRole("USER").requestMatchers("/owner/**", "/centerManage/*")
-						.hasRole("OWNER")
+		http.csrf(csrf -> csrf.disable())
+				.authorizeHttpRequests(request -> request
+						.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
+						.requestMatchers("/", "/main", "/join/**", "/login/**", "/diary/**"
+								, "/centerManage/**", "/user/join"
+								, "/owner/join", "/fragments/*").permitAll()
+						.requestMatchers("/user/**").hasRole("USER")
+						.requestMatchers("/owner/**").hasRole("OWNER")
+						.requestMatchers(HttpMethod.GET, "/img/**").permitAll()
+			            .requestMatchers(HttpMethod.GET, "/h2-console/**").permitAll()
 						.anyRequest().authenticated())
 				.formLogin(login -> login.loginPage("/login/loginPage") // 로그인 페이지 URL 설정
 						.loginProcessingUrl("/loginPro") // 로그인 처리 URL 설정
