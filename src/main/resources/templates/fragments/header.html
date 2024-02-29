@@ -34,38 +34,45 @@ ul .nav-item {
 						<ul class="navbar-nav mb-2 mb-lg-0 d-flex flex-row" id="userNav">
 							<!-- 가로 레이아웃을 위해 flex-row 사용 -->
 							<!-- 로그인 -->
-							<li class="nav-item"><a class="nav-link"
+							<!-- 							<li class="nav-item"><a class="nav-link"
 								style="color: white; padding-left: 10px; padding-right: 10px;"
-								href="/login/loginPage">로그인</a></li>
+								href="/login/loginPage">로그인</a></li> -->
 
-							<!-- 회원가입 -->
-							<li class="nav-item"><a class="nav-link"
-								style="color: white; padding-left: 10px; padding-right: 10px;"
-								href="/join/selectJoin">회원가입</a></li>
+
+
+<!-- 로그인 상태를 확인하여 다른 메뉴를 표시 -->
+<li th:if="${authentication != null}">
+    <p class="nav-link" style="color: white; padding-left: 10px; padding-right: 10px;">환영합니다, <span th:text="${authentication.principal.username}"></span>님!</p>
+    <a th:href="@{/logout}">로그아웃</a>
+</li>
+<li th:unless="${authentication != null}">
+    <a th:href="@{/login/loginPage}">로그인</a>
+</li>
+
+
+
 
 							<!-- 게시판 -->
 							<li class="nav-item"><a class="nav-link"
 								style="color: white; padding-left: 10px; padding-right: 10px;"
-								href="#">게시판</a></li>
+								th:href="@{/}">게시판</a></li>
 
 							<!-- 게시판 -->
-							<li class="nav-item"><a class="nav-link"
+							<!-- 							<li class="nav-item"><a class="nav-link"
 								th:href="@{/logout}"
-								style="color: white; padding-left: 10px; padding-right: 10px;"
-								href="#">로그아웃</a></li>
-								
-<!--  로그인 상태에 따른 내용 표시 
-<li class="nav-link" th:if="${#authentication.principal.toString() == 'anonymousUser'}"> 인증된 사용자가 아닌 경우
-    <a href="/login">로그인</a>
-</li>
-<li class="nav-link" th:unless="${#authentication.principal.toString() == 'anonymousUser'}"> 인증된 사용자인 경우
-    <span th:text="${#authentication.principal.username}"></span>
-</li>
+								style="color: white; padding-left: 10px; padding-right: 10px;">로그아웃</a></li>
  -->
+
+
+
+
+
 
 						</ul>
 					</div>
 				</div>
+
+
 
 			</div>
 		</div>
