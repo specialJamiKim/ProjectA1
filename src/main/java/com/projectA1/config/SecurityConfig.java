@@ -24,7 +24,7 @@ public class SecurityConfig {
 	public SecurityFilterChain fileChain(HttpSecurity http) throws Exception {
 		http.csrf(csrf -> csrf.disable()).authorizeHttpRequests(
 
-				request -> request.requestMatchers("/", "/main", "/join/**", "/login/**" , "/centerManage/*", "/diary/**"
+				request -> request.requestMatchers("/", "/main", "/join/**", "/login/**" , "/centerManage/**", "/diary/**"
 						,"/login/loginPage", "/user/join", "/owner/join", "/fragments/*").permitAll()
 						.requestMatchers("/user/**").hasRole("USER")
 						.requestMatchers("/owner/**").hasRole("OWNER")
