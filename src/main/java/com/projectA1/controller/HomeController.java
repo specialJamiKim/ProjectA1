@@ -1,8 +1,6 @@
 package com.projectA1.controller;
 
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,29 +12,9 @@ import jakarta.servlet.http.HttpSession;
 public class HomeController {
 	
 	@GetMapping("/")
-	public String homePage(Model model) {
-	    // 현재 인증된 사용자 객체 가져오기
-//	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//	    // 현재 인증된 사용자 객체 추가
-//	    model.addAttribute("authentication", authentication);
-
+	public String homePage() {
 	    return "main";
 	}
-
-//	@GetMapping("/")
-//	public String homePage(Model model) {
-//        // 현재 인증된 사용자 객체 가져오기
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        // 현재 인증된 사용자 이름 가져오기
-//        String username = authentication.getName();
-//        
-//        // 모델에 현재 인증된 사용자 이름 추가
-//        model.addAttribute("username", username);
-//        // 현재 인증된 사용자 객체 출력
-//
-//		return "main";
-//	}
-
 		
 	//로그인폼
     @GetMapping("/login/loginPage")

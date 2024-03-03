@@ -1,6 +1,7 @@
 package com.projectA1.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,14 @@ import lombok.RequiredArgsConstructor;
 public class FitnessCenterService {
 
 	private final FitnessCenterRepository fitnessCenterRepository;
+	
+    //오너 id 이용, 센터이름 찾기
+    public String findByCenterName(Long id) {
+    	FitnessCenter center = fitnessCenterRepository.findById(id).get(); 
+    	String centerName = center.getName();
+    	
+    	return centerName;
+    }
 	
 	// 추가
 	public void join(FitnessCenter fitnesscenter) {

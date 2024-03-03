@@ -1,6 +1,5 @@
 package com.projectA1.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -46,7 +45,7 @@ public class FitnessCenterController {
     }
 
 	//수정폼
-    @GetMapping("update/{username}")
+    @GetMapping("update")
     public String update(@PathVariable Long id, Model model) {
         model.addAttribute("fitnessCenter", fitnessCenterService.view(id));
         return "/fitnesscenter/update";
@@ -60,14 +59,21 @@ public class FitnessCenterController {
     }
 	
 	//삭제
-    @GetMapping("/delete/{id}")
-    public String delete(@PathVariable Long id) {
+    @GetMapping("delete")
+    public String delete(@AuthenticationPrincipal PrincipalUser principalUser) {
+    	// 고유 아이디로 삭제처리
+    	Owner owner = (Owner) principalUser.getUser();
+    	Long id = owner.getFitnessCenter().getId();
+
+    	//센터아이디 삭제
+    	ownerService.clearCenterId(owner);
+    	
     	fitnessCenterService.deleteFitnessCenter(id);
-        return "success";
+        return "redirect:/";
     }
 	
 	// 피트니스 센터 상세보기
-    @GetMapping("/view/{id}")
+    @GetMapping("view")
     public String view(@PathVariable Long id, Model model) {
         model.addAttribute("fitnessCenter", fitnessCenterService.view(id));
         return "center/gymview";

@@ -30,52 +30,41 @@ ul .nav-item {
 					<a href="/" class="navbar-brand d-flex align-items-center"> <strong>Fit-PassPlater</strong>
 					</a>
 					<!-- 메뉴 항목들 -->
-					<div>
-						<ul class="navbar-nav mb-2 mb-lg-0 d-flex flex-row" id="userNav">
-							<!-- 가로 레이아웃을 위해 flex-row 사용 -->
-							<!-- 로그인 -->
-							<!-- 							<li class="nav-item"><a class="nav-link"
-								style="color: white; padding-left: 10px; padding-right: 10px;"
-								href="/login/loginPage">로그인</a></li> -->
+					
+<div>
+<ul class="navbar-nav mb-2 mb-lg-0 d-flex flex-row" id="userNav">
+
+    <!-- 환영 메시지 -->
+    <li th:if="${authentication != null and authentication.name != 'anonymousUser'}" class="nav-item">
+        <span class="nav-link" style="color: white; padding-left: 10px; padding-right: 10px;">
+            환영합니다, <span th:text="${authentication.name}"></span>님!
+        </span>
+    </li>
+    
+    <!-- 로그인 -->
+    <li th:unless="${authentication != null and authentication.name != 'anonymousUser'}" class="nav-item">
+        <a class="nav-link" th:href="@{/login/loginPage}" style="color: white; padding-left: 10px; padding-right: 10px;">로그인</a>
+    </li>
+    
+    <!-- 로그아웃 -->
+    <li th:if="${authentication != null and authentication.name != 'anonymousUser'}" class="nav-item">
+        <a class="nav-link" th:href="@{/logout}" style="color: white; padding-left: 10px; padding-right: 10px;">로그아웃</a>
+    </li>
+
+    <!-- ROLE_OWNER -->
+    <li th:if="${roles.contains('ROLE_OWNER')}" class="nav-item">
+        <a class="nav-link" th:href="@{/owner/ownerpage}" style="color: white; padding-left: 10px; padding-right: 10px;">사장님 페이지</a>
+    </li>
+    
+    <!-- 게시판 -->
+    <li class="nav-item">
+        <a class="nav-link" th:href="@{/}" style="color: white; padding-left: 10px; padding-right: 10px;">게시판</a>
+    </li>
+</ul>
+
+</div>
 
 
-
-							<!-- 로그인 상태를 확인하여 다른 메뉴를 표시 -->
-							<li
-								th:if="${authentication != null and authentication.name != 'anonymousUser'}">
-								<p class="nav-link"
-									style="color: white; padding-left: 10px; padding-right: 10px;">
-									환영합니다, <span th:text="${authentication.name}"></span>님!
-								</p> <a th:href="@{/logout}">로그아웃</a>
-							</li>
-							<li
-								th:unless="${authentication != null and authentication.name != 'anonymousUser'}">
-								<a th:href="@{/login/loginPage}">로그인</a>
-							</li>
-
-
-
-
-
-							<!-- 게시판 -->
-							<li class="nav-item"><a class="nav-link"
-								style="color: white; padding-left: 10px; padding-right: 10px;"
-								th:href="@{/}">게시판</a></li>
-
-							<!-- 게시판 -->
-							<!-- 							<li class="nav-item"><a class="nav-link"
-								th:href="@{/logout}"
-								style="color: white; padding-left: 10px; padding-right: 10px;">로그아웃</a></li>
- -->
-
-
-
-
-
-
-						</ul>
-					</div>
-				</div>
 
 
 
