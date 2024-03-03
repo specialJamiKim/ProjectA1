@@ -40,22 +40,24 @@ public class FitnessCenterController {
     	Owner owner = (Owner) principalUser.getUser();
     	//현재 owner에 센터아이디 등록
     	ownerService.addFitnessCenterToOwner(owner,fitnessCenter);
-    
         return "success";
     }
 
 	//수정폼
     @GetMapping("update")
-    public String update(@PathVariable Long id, Model model) {
-        model.addAttribute("fitnessCenter", fitnessCenterService.view(id));
-        return "/fitnesscenter/update";
+    public String update(@AuthenticationPrincipal PrincipalUser principalUser, Model model) {
+    	Owner owner = (Owner) principalUser.getUser();
+    	Long id = owner.getFitnessCenter().getId();	
+        model.addAttribute("center", fitnessCenterService.view(id));
+        return "/center/updateForm";
     }
 	        
 	//수정
     @PostMapping("update")
-    public String updateFitnessCenter(FitnessCenter fitnessCenter) {
+    @ResponseBody
+    public String updateFitnessCenter(@AuthenticationPrincipal PrincipalUser principalUser, @RequestBody FitnessCenter fitnessCenter) {
     	fitnessCenterService.update(fitnessCenter);
-        return "redirect:/fitnesscenter";
+        return "redirect:/owner/ownerpage";
     }
 	
 	//삭제
