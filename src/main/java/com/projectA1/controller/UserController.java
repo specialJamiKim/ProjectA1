@@ -56,15 +56,18 @@ public class UserController {
 		// 로그인된 사용자의 정보를 가져옵니다.
 		User user = (User) principalUser.getUser();
 		List<Reservation> reservations = reservationService.findByUserId(user.getId());
-		
-		
-		
 		//센터 방문횟수를 가져와 화면에 표시(userid, centerid)
+        List<Object[]> top3VisitedCenters = visitCountingService.findTop3VisitedCenters(user.getId());
+
+        model.addAttribute("top3VisitedCenters", top3VisitedCenters);
+		
 		long visitCount = visitCountingService.visitCounting(user.getId());
 		model.addAttribute("visitCount", visitCount);
 		model.addAttribute("user", user);
 		model.addAttribute("reservations",reservations);
 		return "/user/mypage";
+		
+		
 	}
 
 	// 사용자 정보수정폼

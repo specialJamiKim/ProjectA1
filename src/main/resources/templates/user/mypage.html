@@ -113,6 +113,25 @@
 												type="button" id="dropdownMenuButton" data-toggle="dropdown"
 												aria-haspopup="true" aria-expanded="false">자세히 보기</button>
 										</div>
+
+
+										<hr />
+
+
+										<div class="dropdown mb-4">
+											<strong>
+												<h3 style="margin-left: 15px;">방문센터 TOP3</h3>
+											</strong>
+											<div class="navbar-brand" style="font-weight: 700;">
+												<span th:each="centerData, iterStat : ${top3VisitedCenters}">
+													<span th:if="${iterStat.index > 0}">, </span> <span
+													th:text="${centerData[0].name}">Center Name</span> (방문 횟수:
+													<span th:text="${centerData[1]}">0</span>)
+												</span>
+											</div>
+										</div>
+
+
 										<p class="mb-0 small">Note: This utility animates the CSS
 											opacity property, meaning it will override any existing
 											opacity on an element being animated!</p>
@@ -144,10 +163,11 @@
 																th:text="${reservation.center.name}"></a><br> 예약
 															시간: <span
 																th:text="${#dates.format(reservation.reservationTime, 'yyyy-MM-dd HH:mm')}"></span>
-<!-- 															<a
+															<!-- 															<a
 																th:href="@{'/reservation/update/' + ${reservation.id}}"><button
 																	style="margin-left: 15px;" class="btn btn-secondary"
-																	type="button">예약 변경</button></a> --> <a
+																	type="button">예약 변경</button></a> -->
+															<a
 																th:href="@{'/reservation/delete/' + ${reservation.id}}"><button
 																	style="margin-left: 15px;" class="btn btn-secondary"
 																	type="button">예약 취소</button></a> <a
