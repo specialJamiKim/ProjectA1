@@ -1,5 +1,8 @@
 package com.projectA1.service;
 
+import java.util.List;
+
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import com.projectA1.model.FitnessCenter;
@@ -28,4 +31,10 @@ public class VisitCountingService {
 		// TODO Auto-generated method stub
 		return visitCountingRepository.findByUserAndCenter(user, center);
 	}
+	
+
+	/*
+	 * public List<Object[]> findTop3VisitedCenters(Long id) { return
+	 * visitCountingRepository.findTop3VisitedCenters(id); }
+	 */
 }
