@@ -24,7 +24,7 @@ public class Diary {
     private Long id;
 	
 	@ManyToOne
-    @JoinColumn(name = "diary_userId", nullable = false)
+    @JoinColumn(name = "userid", nullable = false)
     private User user;
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
