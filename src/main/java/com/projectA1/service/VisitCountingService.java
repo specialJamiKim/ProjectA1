@@ -17,8 +17,8 @@ import lombok.RequiredArgsConstructor;
 public class VisitCountingService {
 
 	private final VisitCountingRepository visitCountingRepository;
-	
-	//userId로 해당 center 몇번 방문했는지 
+
+	// userId로 해당 center 몇번 방문했는지
 	public int visitCounting(Long userId) {
 		return visitCountingRepository.countByUserId(userId);
 	}
@@ -32,9 +32,8 @@ public class VisitCountingService {
 		return visitCountingRepository.findByUserAndCenter(user, center);
 	}
 	
+	public List<Object[]> findTop3VisitedCenters(Long userId) {
+		return visitCountingRepository.findTop3VisitedCenters(userId);
+	}
 
-	/*
-	 * public List<Object[]> findTop3VisitedCenters(Long id) { return
-	 * visitCountingRepository.findTop3VisitedCenters(id); }
-	 */
 }

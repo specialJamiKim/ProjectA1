@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import com.projectA1.model.FitnessCenter;
 import com.projectA1.model.User;
@@ -17,11 +16,18 @@ public interface VisitCountingRepository extends JpaRepository<VisitCounting, Lo
 
 	VisitCounting findByUserAndCenter(User user, FitnessCenter center);
 
-	/*
-	 * @Query("SELECT v.center, COUNT(v.center) AS visitCount " +
-	 * "FROM visit_counting v " + "WHERE v.user.id = :userId " +
-	 * "GROUP BY v.center " + "ORDER BY visitCount DESC") List<Object[]>
-	 * findTop3VisitedCenters(@Param("userId") Long userId);
-	 */
+	// top3 출력
+//	@Query("SELECT vc FROM VisitCounting vc WHERE vc.id = :userId ORDER BY vc.visitCount ASC")
+//	List<VisitCounting> findTop3VisitedCenters(@Param("userId") Long userId, Pageable pageable);
+
+	//top3
+	@Query("SELECT vc.center.id, COUNT(vc) as visitCount " +
+		       "FROM VisitCounting vc " +
+		       "WHERE vc.user.id = :userId " +
+		       "GROUP BY vc.center.id " +
+		       "ORDER BY visitCount DESC " +
+		       "LIMIT 3")
+		List<Object[]> findTop3VisitedCenters(Long userId);
+
 
 }
