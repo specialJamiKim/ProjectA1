@@ -33,7 +33,8 @@ public class VisitCountingService {
 	}
 	
 
-	public List<Object[]> findTop3VisitedCenters(Long id) {		
-		return visitCountingRepository.findTop3VisitedCenters(id);
-	}
+	/*
+	 * public List<Object[]> findTop3VisitedCenters(Long id) { return
+	 * visitCountingRepository.findTop3VisitedCenters(id); }
+	 */
 }
