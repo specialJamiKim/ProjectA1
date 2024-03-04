@@ -68,14 +68,13 @@ public class FitnessCenterController {
     	Long id = owner.getFitnessCenter().getId();
 
     	//센터아이디 삭제
-    	ownerService.clearCenterId(owner);
-    	
+    	ownerService.clearCenterId(owner);    	    	
     	fitnessCenterService.deleteFitnessCenter(id);
         return "redirect:/";
     }
 	
 	// 피트니스 센터 상세보기
-    @GetMapping("view")
+    @GetMapping("view/{id}")
     public String view(@PathVariable Long id, Model model) {
         model.addAttribute("fitnessCenter", fitnessCenterService.view(id));
         return "center/gymview";

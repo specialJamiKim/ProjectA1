@@ -14,6 +14,14 @@ import lombok.Data;
 @Data
 public class VisitCounting {
 
+	public VisitCounting(User user, FitnessCenter center) {
+		this.user = user;
+		this.center = center;
+	}
+	public VisitCounting() {
+	    // 기본 생성자 내용
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -25,7 +33,4 @@ public class VisitCounting {
 	@ManyToOne
 	@JoinColumn(name = "user_id") // "user_id"를 실제 외래 키 열과 일치하도록 변경
 	private User user;
-
-	// 방문횟수
-	private int visitCount;
 }

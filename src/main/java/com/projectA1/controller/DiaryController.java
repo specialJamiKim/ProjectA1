@@ -25,10 +25,11 @@ public class DiaryController {
 
 	//전체보기
 	@GetMapping("diaryList")
-	public String list(Model model) {
+	public String list(@AuthenticationPrincipal PrincipalUser principalUser, Model model) {
+		User user  = (User) principalUser.getUser();
 		// 로그인된 사용자의 정보를 가져옵니다.
-		List<Diary> list = diaryService.findAll();
-		System.out.println(list);
+		Long userId = user.getId();
+		List<Diary> list = diaryService.findAllByUserId(userId);
 		model.addAttribute("diarys", list);
 		return "/diary/diaryList";		
 	}

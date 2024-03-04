@@ -37,4 +37,6 @@ public class FitnessCenter {
 	// 수정된 부분: Owner와의 관계 설정 ==> (CascadeType.ALL) ->센터 삭제시, 오너도 삭제
 	@OneToMany(mappedBy = "fitnessCenter", cascade = CascadeType.PERSIST)
 	private List<Owner> owners; // 이 FitnessCenter를 소유한 Owner 목록
+	
+
 }
