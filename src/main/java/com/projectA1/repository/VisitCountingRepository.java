@@ -17,11 +17,11 @@ public interface VisitCountingRepository extends JpaRepository<VisitCounting, Lo
 
 	VisitCounting findByUserAndCenter(User user, FitnessCenter center);
 
-	@Query("SELECT v.center, COUNT(v.center) AS visitCount " +
-	        "FROM visit_counting v " +
-	        "WHERE v.user.id = :userId " +
-	        "GROUP BY v.center " +
-	        "ORDER BY visitCount DESC")
-	List<Object[]> findTop3VisitedCenters(@Param("userId") Long userId);
+	/*
+	 * @Query("SELECT v.center, COUNT(v.center) AS visitCount " +
+	 * "FROM visit_counting v " + "WHERE v.user.id = :userId " +
+	 * "GROUP BY v.center " + "ORDER BY visitCount DESC") List<Object[]>
+	 * findTop3VisitedCenters(@Param("userId") Long userId);
+	 */
 
 }
