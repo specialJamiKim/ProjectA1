@@ -29,51 +29,40 @@
 					</a>
 					<!-- 메뉴 항목들 -->
 
-					<div>
-						<ul class="navbar-nav mb-2 mb-lg-0 d-flex flex-row" id="userNav">
+					
+<div>
+<ul class="navbar-nav mb-2 mb-lg-0 d-flex flex-row" id="userNav">
 
-							<!-- 환영 메시지 -->
-							<li th:if="${authentication != null and authentication.name != 'anonymousUser'}"
-								class="nav-item">
-								<span class="nav-link" style="color: white; padding-left: 10px; padding-right: 10px;">
-									환영합니다, <span th:text="${authentication.name}"></span>님!
-								</span>
-							</li>
+    <!-- 환영 메시지 -->
+    <li th:if="${authentication != null and authentication.name != 'anonymousUser'}" class="nav-item">
+        <span class="nav-link" style="color: white; padding-left: 10px; padding-right: 10px;">
+            환영합니다, <span th:text="${authentication.name}"></span>님!
+        </span>
+    </li>
+    
+    <!-- 로그인 -->
+    <li th:unless="${authentication != null and authentication.name != 'anonymousUser'}" class="nav-item">
+        <a class="nav-link" th:href="@{/login/loginPage}" style="color: white; padding-left: 10px; padding-right: 10px;">로그인</a>
+    </li>
+    
+    <!-- 로그아웃 -->
+    <li th:if="${authentication != null and authentication.name != 'anonymousUser'}" class="nav-item">
+        <a class="nav-link" th:href="@{/logout}" style="color: white; padding-left: 10px; padding-right: 10px;">로그아웃</a>
+    </li>
 
-							<!-- 로그인 -->
-							<li th:unless="${authentication != null and authentication.name != 'anonymousUser'}"
-								class="nav-item">
-								<a class="nav-link" th:href="@{/login/loginPage}"
-									style="color: white; padding-left: 10px; padding-right: 10px;">로그인</a>
-							</li>
+    <!-- ROLE_OWNER -->
+    <li th:if="${roles.contains('ROLE_OWNER')}" class="nav-item">
+        <a class="nav-link" th:href="@{/owner/ownerpage}" style="color: white; padding-left: 10px; padding-right: 10px;">사장님 페이지</a>
+    </li>
+    
+    <!-- 게시판 -->
+    <li class="nav-item">
+        <a class="nav-link" th:href="@{/board/list}" style="color: white; padding-left: 10px; padding-right: 10px;">게시판</a>
+    </li>
+</ul>
 
-							<!-- 로그아웃 -->
-							<li th:if="${authentication != null and authentication.name != 'anonymousUser'}"
-								class="nav-item">
-								<a class="nav-link" th:href="@{/logout}"
-									style="color: white; padding-left: 10px; padding-right: 10px;">로그아웃</a>
-							</li>
+</div>
 
-							<!-- ROLE_OWNER -->
-							<li th:if="${roles.contains('ROLE_OWNER')}" class="nav-item">
-								<a class="nav-link" th:href="@{/owner/ownerpage}"
-									style="color: white; padding-left: 10px; padding-right: 10px;">사장님 페이지</a>
-							</li>
-
-							<!-- 게시판 -->
-							<li class="nav-item">
-								<a class="nav-link" th:href="@{/}"
-									style="color: white; padding-left: 10px; padding-right: 10px;">게시판</a>
-							</li>
-
-<!--							 게시판 
-							<li class="nav-item">
-								<a class="nav-link" th:href="@{/updatePassword}"
-									style="color: white; padding-left: 10px; padding-right: 10px;">비번암호화</a>
-							</li>-->
-						</ul>
-
-					</div>
 
 
 

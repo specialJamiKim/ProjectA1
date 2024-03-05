@@ -131,6 +131,41 @@
 
 								</div>
 							</div>
+							
+							<div class="card-body">
+
+										<!-- 사용자가 예약한 리스트를 보여주는 부분 -->
+										<div class="user-reservations ">
+
+											<h2>예약자 리스트</h2>
+											<ul class="navbar-nav">
+												<!-- 예약된 각 항목을 순회하면서 보여줍니다. -->
+												<th:block th:each="reservation : ${reserve}">
+													<li>
+														<!-- 여기에 예약된 정보를 표시합니다. -->
+														<p>
+															 이름: <span
+																th:text="${reservation.user.name}"></span><br> 
+															예약시간: <span
+																th:text="${#dates.format(reservation.reservationTime, 'yyyy-MM-dd HH:mm')}"></span>
+															<!-- 															<a
+																th:href="@{'/reservation/update/' + ${reservation.id}}"><button
+																	style="margin-left: 15px;" class="btn btn-secondary"
+																	type="button">예약 변경</button></a> -->
+															<!-- <a th:href="@{'/reservation/delete/' + ${reservation.id}}"><button
+																	style="margin-left: 15px;" class="btn btn-secondary"
+																	type="button">예약 취소</button></a> <a
+																th:href="@{'/reservation/used/' + ${reservation.id}}"><button
+																	style="margin-left: 15px;" class="btn btn-secondary"
+																	type="button">사용함(temporary)</button></a> -->
+															
+														</p>
+													</li>
+												</th:block>
+											</ul>
+											
+										</div>
+									</div>
 						</div>
 					</div>
 				</div>
