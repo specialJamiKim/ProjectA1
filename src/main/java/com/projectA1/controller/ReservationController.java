@@ -57,6 +57,8 @@ public class ReservationController {
 
 		return "success";
 	}
+	
+	
 
 	// 예약지점 상세보기
 	@GetMapping("view/{reservationId}")

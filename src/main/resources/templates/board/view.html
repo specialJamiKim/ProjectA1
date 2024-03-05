@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+<div layout:fragment="content">
+	<h3 class="m-3">[[${board.writer }]]의글보기</h3>
+	<div class="m-3">
+		<label for="num">No. :</label> <input type="text" class="form-control"
+			id="num" th:value="${board.num }" readonly="readonly">
+	</div>
+	<div class="m-3">
+		<label for="title">Title:</label> <input type="text"
+			class="form-control" id="title" th:value="${board.title }"
+			readonly="readonly">
+	</div>
+	<div class="m-3">
+		<label for="writer">Writer:</label> <input type="text"
+			class="form-control" id="writer" th:value="${board.writer }"
+			readonly="readonly" name="writer">
+	</div>
+	<div class="m-3">
+		<label for="content">Content:</label>
+		<textarea class="form-control" rows="5" id="content" name="content"
+			readonly="readonly">[[${board.content }]]</textarea>
+	</div>
+
+	<div class="text-end m-3"
+		th:if="${authentication != null and authentication.name == board.writer}">
+		<button type="button" class="btn btn-secondary btn-sm" id="btnUpdate">수정</button>
+		<button type="button" class="btn btn-danger btn-sm" id="btnDelete">삭제</button>
+	</div>
+
+	<!-- <div class="m-3">
+		<label for="msg">Comment:</label>
+		<textarea class="form-control" rows="3" id="msg" name="msg"></textarea>
+	</div>
+	<button class="btn btn-success btn-sm" id="commentBtn">Comment
+		Write</button>
+	<div id="replyResult"></div> -->
+	<script type="text/javascript">
+		//수정폼
+		$("#btnUpdate").click(function() {
+			if (!confirm('정말 수정할까요?')) { // confirm('정말 수정할까요?')==false
+				return false;
+			}
+			location.href = "/board/update/${board.num}"
+		})
+
+		//삭제
+		$("#btnDelete").click(function() {
+			if (!confirm('정말 삭제할까요?')) { // confirm('정말 삭제할까요?')==false
+				return false;
+			}
+			$.ajax({
+				type : "DELETE",
+				url : "/board/delete/${board.num}",
+				success : function(resp) {
+					alert(resp + "번 삭제 성공")
+					location.href = "/board/list";
+				},
+				error : function(e) {
+					alert("삭제실패 : " + e)
+				}
+			}) //ajax
+		}) //btnDelete
+	</script>
+
+</div>
+
+
+
+
+</html>
