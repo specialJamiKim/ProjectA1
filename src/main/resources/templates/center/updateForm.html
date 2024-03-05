@@ -56,40 +56,36 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script>
-    $(document).ready(function () {
-        // 페이지가 로드될 때 실행되는 함수
-        $("#btnRegister").click(function () {
-            // 등록 버튼 클릭 시 실행되는 함수
-            var data = {
-                name: $("#name").val(),
-                address: $("#address").val(),
-                phoneNumber: $("#phoneNumber").val(),
-                dailyPassPrice: $("#dailyPassPrice").val(),
-                openTime: $("#openTime").val(),
-                closingTime: $("#closingTime").val()
-            };
+    <script>
+    $(document).ready(function() {
+        $("#btnRegister").click(function() {
+            var formData = new FormData();
+            formData.append('image', $('#image')[0].files[0]); // 이미지 파일 추가
+            formData.append('name', $("#name").val());
+            formData.append('address', $("#address").val());
+            formData.append('phoneNumber', $("#phoneNumber").val());
+            formData.append('dailyPassPrice', $("#dailyPassPrice").val());
+            formData.append('openTime', $("#openTime").val());
+            formData.append('closingTime', $("#closingTime").val());
 
-            // AJAX를 통한 등록 처리
             $.ajax({
-                type: "POST",
-                url: "/centerManage/register",
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (response) {
-                    alert($("#name").val() + '의 수정이 완료되었습니다.');
-                    window.location.href = "/owner/ownerpage";
+                type: "PUT",
+                enctype: 'multipart/form-data', // multipart/form-data로 설정
+                url: "/centerManage/update",
+                processData: false, // 데이터 처리를 jQuery가 하지 않도록 설정
+                contentType: false, // 서버로 전송되는 데이터 형식을 설정하지 않음
+                cache: false, // 캐시를 사용하지 않도록 설정
+                data: formData, // FormData 객체 전송
+                success: function(response) {
+                    alert("Fitness Center 수정이 완료되었습니다.");
+                    location.href = "/owner/ownerpage";
                 },
-                error: function (xhr, status, error) {
-                    alert($("#name").val() + '의 수정 중 오류가 발생했습니다.');
+                error: function(xhr, status, error) {
+                    alert("Fitness Center 수정 중 오류가 발생했습니다.");
                     console.error(xhr.responseText);
                 }
             });
         });
-
-        // 오픈 시간과 마감 시간 초기 값 설정
-        $("#openTime").val("${center.openTime != null ? center.openTime : ''}");
-        $("#closingTime").val("${center.closingTime != null ? center.closingTime : ''}");
     });
 </script>
 </head>
@@ -122,13 +118,15 @@
 					</div>
 					<div class="form-group">
 						<label for="openTime">오픈시간:</label>
-						<input type="time" class="form-control" id="openTime" name="openTime"
-							>
+						<input type="time" class="form-control" id="openTime" name="openTime">
 					</div>
 					<div class="form-group">
 						<label for="closingTime">마감시간:</label>
-						<input type="time" class="form-control" id="closingTime" name="closingTime"
-							>
+						<input type="time" class="form-control" id="closingTime" name="closingTime">
+					</div>
+					<div class="form-group">
+						<label for="image">이미지 업로드:</label> <input type="file" class="form-control" id="image" th:value = "${center.imagePath}"
+							name="image">
 					</div>
 					<button type="button" class="btn btn-primary" id="btnRegister">등록하기</button>
 					<button type="button" class="btn btn-custom">

@@ -59,7 +59,6 @@ public class UserService {
             }
              //새로운 비밀번호를 암호화하여 저장
             currentUser.setPassword(encodePassword(updateUser.getPassword()));
-            System.out.println("비밀번호" + currentUser.getPassword());
         }
 		
 		currentUser.setName(updateUser.getName());

@@ -26,11 +26,14 @@ public class SecurityConfig {
 
 		http.csrf(csrf -> csrf.disable())
 				.authorizeHttpRequests(request -> request
-						.requestMatchers("/", "/src/main/**", "/main", "/join/**", "/login/**", "/centerManage/**", "/diary/**",
+						.requestMatchers("/", "/src/main/**", "/main","/updatePassword", "/join/**", "/login/**", "/centerManage/**", "/diary/**",
 								"/login/**", "/user/join", "/owner/join", "/fragments/*")
-						.permitAll().requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-						.requestMatchers("/img/**").permitAll().requestMatchers("/user/**").hasRole("USER")
-						.requestMatchers("/owner/**").hasRole("OWNER").anyRequest().authenticated())
+						.permitAll()
+						.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+						.requestMatchers("/img/**").permitAll()
+						.requestMatchers("/user/**").hasRole("USER")
+						.requestMatchers("/owner/**").hasRole("OWNER")
+						.anyRequest().authenticated())
 
 				.formLogin(login -> login.loginPage("/login/loginPage") // 로그인 페이지 URL 설정
 						.loginProcessingUrl("/loginPro") // 로그인 처리 URL 설정
