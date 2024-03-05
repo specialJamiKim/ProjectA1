@@ -94,28 +94,31 @@
 </head>
 <body>
     <div layout:fragment="content">
-    <div class="gym-view">
-        <div class="gym-header">
-            <h1>다이어리 상세보기</h1>
-        </div>
-        <div class="gym-body">
-            <div class="info">
-                <label>제목:</label>
-                <div class="info-value" th:text="${postTitle}">오늘의 운동일지</div> <!-- 임의의 값 표시 -->
+        <div class="gym-view">
+            <div class="gym-header">
+                <h1>다이어리 상세보기</h1>
             </div>
-            <div class="info">
-                <label>날짜:</label>
-                <div class="info-value" th:text="${authorName}">2017-12-19</div> <!-- 임의의 값 표시 -->
+            <div class="gym-body">
+                <div class="info">
+                    <label>제목:</label>
+                    <div class="info-value" th:text="${diary.title}">오늘의 운동일지</div>
+                </div>
+                <div class="info">
+                    <label>날짜:</label>
+                    <div class="info-value" th:text="${#dates.format(diary.date, 'yyyy-MM-dd HH:mm')}">2017-12-19</div>
+                </div>
+                <div class="info">
+                    <label>내용:</label>
+                    <div class="info-value" th:text="${diary.content}" style="white-space: pre-wrap;">이곳은 게시물의 내용이 표시되는 부분입니다.</div>
+                </div>
             </div>
-            <div class="info">
-                <label>내용:</label>
-                <div class="info-value" th:text="${content}" style="white-space: pre-wrap;">이곳은 게시물의 내용이 표시되는 부분입니다. 여기에는 DB에서 불러온 데이터가 나타납니다.</div> <!-- 임의의 값 표시 -->
-            </div>
+           <!-- 이 아래로 네 줄 수정했어요 -->
+           <div class="gym-footer">
+    <button type="button" onclick="history.go(-1)" class="btn btn-secondary">돌아가기</button>
+    <a th:href="@{/diary/diaryEdit/{id}(id=${diary.id})}" class="btn btn-primary">수정하기</a>
+    <a th:href="@{/diary/diaryDelete/{id}(id=${diary.id})}" class="btn btn-danger">삭제하기</a>
+</div>
         </div>
-        <div class="gym-footer">
-            <button type="button">돌아가기</button>
-        </div>
-    </div>
     </div>
 </body>
 </html>
