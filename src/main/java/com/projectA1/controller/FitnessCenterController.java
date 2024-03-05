@@ -251,7 +251,7 @@ public class FitnessCenterController {
 
 		return "center/gymview";
 	}
-
+    
 	// 전체보기
 	@GetMapping("gymlist")
 	public String getAllFitnessCenters(Model model) {
