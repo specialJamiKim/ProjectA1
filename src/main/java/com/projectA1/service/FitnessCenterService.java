@@ -61,5 +61,10 @@ public class FitnessCenterService {
 		fitnessCenterRepository.deleteById(id);
 	    }
 
+	public Optional<FitnessCenter> findByCenter(Long centerId) {
+		// TODO Auto-generated method stub
+		return fitnessCenterRepository.findById(centerId);
+	}
+
 
 }

@@ -80,4 +80,10 @@ public class UserService {
 	public void delete(String email) {
 		userRepository.deleteByEmail(email);
 	}
+
+
+	public Optional<User> findById(Long userId) {
+		// TODO Auto-generated method stub
+		return userRepository.findById(userId);
+	}
 }

@@ -79,6 +79,16 @@ public class PrincipalUser implements UserDetails {
         }
         return null;
     }
+    
+    //고유아이디(id)반환
+    public Long getUserId() {
+        if (user instanceof User) {
+            return ((User) user).getId();
+        } else if (user instanceof Owner) {
+            return ((Owner) user).getId();
+        }
+        return null;
+    }
 
     @Override
     public boolean isAccountNonExpired() {

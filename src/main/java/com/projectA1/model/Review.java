@@ -9,7 +9,7 @@ import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
+@Entity(name="review_content")
 @Getter @Setter
 public class Review {
 
@@ -18,12 +18,12 @@ public class Review {
 	private Long id;
 	
     @ManyToOne
-    @JoinColumn(name = "review_userId", nullable = false)
+    @JoinColumn(name = "userId", nullable = false)
     private User user; //user id
     
     @ManyToOne
-    @JoinColumn(name = "review_centerId", nullable = false)
-    private FitnessCenter centerNumber; //센터번호
+    @JoinColumn(name = "centerId", nullable = false)
+    private FitnessCenter center; //센터번호
 
     private int rating; //평점
     private String reviewText; // 후기
