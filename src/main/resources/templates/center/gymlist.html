@@ -1,145 +1,118 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/layout1}">
 
 <head>
-	<meta charset="UTF-8">
-	<title>User Information Update</title>
-	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-	<style>
-		body {
-			background-color: #f8f9fa;
-		}
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+<title>다이어리 리스트 페이지</title>
+<!-- Custom fonts for this template -->
+<link href="../../static/vendor/fontawesome-free/css/all.min.css"
+	rel="stylesheet" type="text/css">
+<link
+	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+	rel="stylesheet">
+<!-- Custom styles for this template -->
+<link href="../../static/css/sb-admin-2.min.css" rel="stylesheet">
+<!-- Custom styles for this page -->
+<link
+	href="../../static/vendor/datatables/dataTables.bootstrap4.min.css"
+	rel="stylesheet">
+<style>
+.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:focus
+	{
+	background-color: #6c757d !important; /* Bootstrap 회색 */
+	border-color: #6c757d !important;
+}
 
-		.container {
-			background: #f2f2f2;
-			/* 배경을 연한 회색으로 변경 */
-			padding: 20px;
-			border-radius: 8px;
-			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-		}
-
-		.btn-custom {
-			background-color: #6c757d;
-			color: white;
-			border-radius: 4px;
-		}
-
-		.btn-custom:hover {
-			background-color: #5a6268;
-		}
-
-		label {
-			font-weight: bold;
-		}
-
-		input[type="text"],
-		input[type="email"],
-		input[type="password"] {
-			border-radius: 4px;
-			border: 1px solid #ced4da;
-		}
-
-		.title {
-			background-color: #6c757d;
-			/* 배경색 추가 */
-			color: white;
-			/* 텍스트 색상을 흰색으로 변경 */
-			padding: 10px 15px;
-			/* 패딩 추가 */
-			border-radius: 5px;
-			/* 모서리 둥글게 */
-			margin-bottom: 20px;
-			/* 하단 여백 추가 */
-		}
-	</style>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
-    $(document).ready(function() {
-        $("#btnRegister").click(function() {
-            var formData = new FormData();
-            formData.append('id', $("#id").val()); // ID 추가
-            formData.append('image', $('#image')[0].files[0]); // 이미지 파일 추가
-            formData.append('name', $("#name").val());
-            formData.append('address', $("#address").val());
-            formData.append('phoneNumber', $("#phoneNumber").val());
-            formData.append('dailyPassPrice', $("#dailyPassPrice").val());
-            formData.append('openTime', $("#openTime").val());
-            formData.append('closingTime', $("#closingTime").val());
-
-            $.ajax({
-                type: "PUT",
-                enctype: 'multipart/form-data', // multipart/form-data로 설정
-                url: "/centerManage/update",
-                processData: false, // 데이터 처리를 jQuery가 하지 않도록 설정
-                contentType: false, // 서버로 전송되는 데이터 형식을 설정하지 않음
-                cache: false, // 캐시를 사용하지 않도록 설정
-                data: formData, // FormData 객체 전송
-                success: function(response) {
-                    alert("Fitness Center 수정이 완료되었습니다.");
-                    location.href = "/owner/ownerpage";
-                },
-                error: function(xhr, status, error) {
-                    alert("Fitness Center 수정 중 오류가 발생했습니다.");
-                    console.error(xhr.responseText);
-                }
-            });
-        });
-    });
-</script>
+.btn-sm-custom {
+	padding: .25rem .5rem;
+	font-size: .875rem;
+	line-height: 1.5;
+	border-radius: .2rem;
+}
+</style>
 </head>
 
-<body>
+<body id="page-top">
 	<div layout:fragment="content">
-		<div class="container mt-5">
-			<h2 class="text-center mb-4">Fitness Center 등록</h2>
-			<div class="input-box">
-				<form>
-                    <input type="hidden" id="id" th:value="${center.id}"> <!-- ID 값 hidden input 으로 추가 -->
-					<div class="form-group">
-						<label for="name">센터이름:</label>
-						<input type="text" class="form-control" id="name" th:value="${center.name}"
-							placeholder="센터이름을 입력하세요" name="name">
+		<div id="wrapper">
+			<div id="content-wrapper" class="d-flex flex-column">
+				<div id="content">
+					<div class="container-fluid">
+						<h1 class="h3 mb-2 text-gray-800">
+							</br>피트니스 센터 목록
+						</h1>
+						<p class="mb-4">Fit-passplater와 함께하는 피트니스 센터에서 운동을 해보세요.
+							이용횟수마다 특별한 이벤트가 있습니다!</p>
+						<div class="card shadow mb-4">
+							<div class="card-header py-3 d-flex justify-content-between">
+
+
+							</div>
+							<div class="card-body">
+								<div class="table-responsive">
+									<table class="table table-bordered" id="dataTable" width="100%"
+										cellspacing="0">
+										<thead>
+											<tr>
+												<th>대표사진</th>
+												<th>센터명</th>
+												<th>주소</th>
+												<th>일일권 가격</th>
+												<th>전화번호</th>
+												<th>오픈시간</th>
+												<th>마감시간</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="center :${fitnessCenters}">
+
+												<td>
+													<!-- Thymeleaf의 th:src 속성에 모델에서 가져온 이미지 경로를 삽입하여 이미지를 표시 -->
+													<img th:src="${imagePath + '/' + center.imageName}"
+													alt="Center Image" width="100" height="100">
+												</td>
+												<td><a th:href="'view/'+${center.id}"
+													style="text-decoration: none; color: black;">[[${center.name}]]</a></td>
+												<td th:text="${center.address}"></td>
+												<td th:text="${center.dailyPassPrice}"></td>
+												<td th:text="${center.phoneNumber}"></td>
+												<td th:text="${center.openTime}"></td>
+												<td th:text="${center.closingTime}"></td>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
 					</div>
-					<div class="form-group">
-						<label for="address">주소:</label>
-						<input type="text" class="form-control" id="address" th:value="${center.address}"
-							placeholder="주소를 입력하세요" name="address">
+				</div>
+				<footer class="sticky-footer bg-white">
+					<div class="container my-auto">
+						<div class="copyright text-center my-auto">
+							<span>Copyright © Your Website 2020</span>
+						</div>
 					</div>
-					<div class="form-group">
-						<label for="phoneNumber">전화번호:</label>
-						<input type="text" class="form-control" id="phoneNumber" th:value="${center.phoneNumber}"
-							placeholder="전화번호를 입력하세요" name="phoneNumber">
-					</div>
-					<div class="form-group">
-						<label for="dailyPassPrice">일일권 가격:</label>
-						<input type="number" class="form-control" th:value="${center.dailyPassPrice}"
-							id="dailyPassPrice" placeholder="일일권 가격을 입력하세요" name="dailyPassPrice">
-					</div>
-					<div class="form-group">
-						<label for="openTime">오픈시간:</label>
-						<input type="time" class="form-control" id="openTime" th:value="${center.openTime}" name="openTime">
-					</div>
-					<div class="form-group">
-						<label for="closingTime">마감시간:</label>
-						<input type="time" class="form-control" id="closingTime" th:value="${center.closingTime}" name="closingTime">
-					</div>
-					<div class="form-group">
-						<label for="image">이미지 업로드:</label>
-						<input type="file" class="form-control" id="image" name="image">
-                        <img th:src="@{${center.imagePath}}" style="max-width: 200px;"> <!-- 이미지 미리보기 -->
-					</div>
-					<button type="button" class="btn btn-primary" id="btnRegister">등록하기</button>
-					<button type="button" class="btn btn-custom">
-						<a th:href="@{/owner/ownerpage}" style="text-decoration: none; color: white;">돌아가기</a>
-					</button>
-				</form>
+				</footer>
 			</div>
 		</div>
+		<a class="scroll-to-top rounded" href="#page-top"> <i
+			class="fas fa-angle-up"></i>
+		</a>
+		<script src="../../static/vendor/jquery/jquery.min.js"></script>
+		<script src="../../static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<script src="../../static/vendor/jquery-easing/jquery.easing.min.js"></script>
+		<script src="../../static/js/sb-admin-2.min.js"></script>
+		<script src="../../static/vendor/datatables/jquery.dataTables.min.js"></script>
+		<script
+			src="../../static/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+		<script src="../../static/js/demo/datatables-demo.js"></script>
 	</div>
-
 </body>
 
 </html>
