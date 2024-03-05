@@ -17,4 +17,6 @@ public class VisitCountingController {
 	
 	private final VisitCountingService visitCountingService;
 	private final UserService userService;
+	
+	
 }

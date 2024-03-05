@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.projectA1.model.Diary;
+import com.projectA1.model.User;
 import com.projectA1.repository.DiaryRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -21,5 +22,9 @@ public class DiaryService {
 	
 	public Diary addDiary(Diary diary) {
 		return diaryrepository.save(diary);
+	}
+
+	public List<Diary> findAllByUserId(Long userId) {
+	    return diaryrepository.findAllByUserId(userId);
 	}
 }
