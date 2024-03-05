@@ -97,23 +97,23 @@ body {
 	color: white;
 }
 
-   .review-section {
-            margin-top: 20px;
-        }
+.review-section {
+	margin-top: 20px;
+}
 
-        .review-section h2 {
-            margin-bottom: 10px;
-        }
+.review-section h2 {
+	margin-bottom: 10px;
+}
 
-        #reviewList {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-        }
+#reviewList {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
 
-        #reviewList li {
-            margin-bottom: 10px;
-        }
+#reviewList li {
+	margin-bottom: 10px;
+}
 </style>
 
 <script>
@@ -144,51 +144,53 @@ body {
 					}
 				});
 
-
 				// 리뷰 등록 버튼 클릭 시 동작
-				$("#reviewInsert").click(function() {
-				    var rating = $("#rating").val();
-				    var reviewText = $("#review_text").val();
-				    var centerId = $("#fitnessCenterId").val();
-				    var userId = $("#userId").val(); // 사용자 ID 가져오기
+				$("#reviewInsert").click(
+						function() {
+							var rating = $("#rating").val();
+							var reviewText = $("#review_text").val();
+							var centerId = $("#fitnessCenterId").val();
+							var userId = $("#userId").val(); // 사용자 ID 가져오기
 
-				    // 필수 입력 값 체크
-				    if (!rating || !reviewText) {
-				        alert("평점과 리뷰를 모두 작성해주세요.");
-				        return;
-				    }
+							// 필수 입력 값 체크
+							if (!rating || !reviewText) {
+								alert("평점과 리뷰를 모두 작성해주세요.");
+								return;
+							}
 
-				    // 리뷰 데이터 객체 생성
-				    var reviewData = {
-				        rating: parseInt(rating),
-				        reviewText: reviewText,
-				        centerId: centerId,
-				        userId: userId
-				    };
+							// 리뷰 데이터 객체 생성
+							var reviewData = {
+								rating : parseInt(rating),
+								reviewText : reviewText,
+								centerId : centerId,
+								userId : userId
+							};
 
-				    // AJAX 요청
-				    $.ajax({
-				        type: "POST",
-				        url: "/review/add",
-				        data: JSON.stringify(reviewData),
-				        contentType: "application/json;charset=utf-8",
-				        success: function(response) {
-				            if (response === "success") {
-				                alert("리뷰가 등록되었습니다.");
-				                loadAllReviews();
-				                location.reload();
-				            } else {
-				                alert("리뷰 등록 실패: " + response);
-				            }
-				        },
-				        error: function(error) {
-				            console.error("리뷰 등록 실패:", error.status, error.statusText, error.responseText);
-				            alert("리뷰 등록 실패: " + error.responseText);
-				        }
-				    });
-				});
+							// AJAX 요청
+							$.ajax({
+								type : "POST",
+								url : "/review/add",
+								data : JSON.stringify(reviewData),
+								contentType : "application/json;charset=utf-8",
+								success : function(response) {
+									if (response === "success") {
+										alert("리뷰가 등록되었습니다.");
+										//loadAllReviews();
+										location.reload();
 
-				
+									} else {
+										alert("리뷰 등록 실패: " + response);
+									}
+								},
+								error : function(error) {
+									console.error("리뷰 등록 실패:", error.status,
+											error.statusText,
+											error.responseText);
+									alert("리뷰 등록 실패: " + error.responseText);
+								}
+							});
+						});
+
 				// 뒤로 가기 버튼 클릭 시 동작
 				$("#back").click(function() {
 					window.location.href = "/centerManage/gymlist";
@@ -202,14 +204,20 @@ body {
 		<div class="gym-view">
 			<div class="gym-header">
 				<h1 th:text="${fitnessCenter.name} + ' 센터 정보'">센터 정보</h1>
+				<h1 th:text="${#numbers.formatDecimal(avg, 1,1)} + '점'"></h1>
+
+
+
+
 			</div>
 			<input type="hidden" id="fitnessCenterId"
-				th:value="${fitnessCenter.id}">
-<input type="hidden" id="userId" th:value="${authentication.principal.userId}">
+				th:value="${fitnessCenter.id}"> <input type="hidden"
+				id="userId" th:value="${authentication.principal.userId}">
 			<div class="gym-body">
 				<div class="info">
 					<label>센터 명 :</label> <span th:text="${fitnessCenter.name}">휘트니스
 						센터</span>
+
 				</div>
 				<div class="info">
 					<label>전화번호 :</label> <span th:text="${fitnessCenter.phoneNumber}">010-0000-0000</span>
@@ -239,25 +247,74 @@ body {
 					class="reserve-button">예약하기</button>
 			</div>
 
+			<hr />
 			<form action="/review/add" method="post">
 				<!-- 리뷰 칸 -->
 				<div class="review-section">
-					<h2>댓글 작성</h2>
+					<h2>후기 작성(평점 1~5점)</h2>
 					<label>평점 :</label> <input type="number" id="rating" name="rating"
 						min="1" max="5" required />
 					<div class="star-rating">
 						<div class="filled"></div>
 					</div>
 					<label>댓글 :</label>
-					<textarea id="review_text" name="reviewText" rows="4"
+					<textarea id="review_text" name="reviewText" rows="4" cols="40"
 						placeholder="리뷰를 작성하세요." required></textarea>
 					<button type="button" id="reviewInsert">등록</button>
 				</div>
 			</form>
 
+			<hr />
+
+			<!-- 댓글 확인 -->
+			<div class="comment-section">
+				<h2>후기 확인</h2>
+				<ul id="commentList">
+					<!-- 댓글 목록 -->
+					<li th:each="review : ${reviews}">
+						<p>
+							<span th:text="${review.user.name}"></span>님 >> <span
+								th:text="${review.reviewText}"></span> / 평점 : <span
+								th:text="${review.rating}"></span>
+						</p>
+					</li>
+				</ul>
+			</div>
+
+
+
+
+			<!-- 페이징 처리 -->
+<div class="pagination">
+    <ul class="pagination">
+        <!-- 이전 -->
+        <li th:if="${currentPage > 0}">
+            <a class="page-link" th:href="@{'/centerManage/view/' + ${id} + '?page=' + (${currentPage - 1}) + '&amp;size=' + ${size}}">Previous</a>
+        </li>
+
+        <!-- 페이지 번호 -->
+        <th:block th:if="${totalPages > 0}">
+            <th:block th:each="pageNum : ${#numbers.sequence(startPage, endPage)}">
+                <li th:class="${pageNum == currentPage ? 'page-item active' : 'page-item'}">
+                    <a class="page-link" th:href="@{'/centerManage/view/' + ${id} + '?page=' + ${pageNum} + '&amp;size=' + ${size}}"><span th:text="${pageNum + 1}">1</span></a>
+                </li>
+            </th:block>
+        </th:block>
+
+        <!-- 다음 -->
+        <li th:if="${currentPage < totalPages - 1}">
+            <a class="page-link" th:href="@{'/centerManage/view/' + ${id} + '?page=' + (${currentPage + 1}) + '&amp;size=' + ${size}}">Next</a>
+        </li>
+    </ul>
+</div>
+
+
+
+
+
+
+
 
 		</div>
-	</div>
-
 </body>
 </html>

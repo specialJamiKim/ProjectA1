@@ -52,8 +52,8 @@
 							이용횟수마다 특별한 이벤트가 있습니다!</p>
 						<div class="card shadow mb-4">
 							<div class="card-header py-3 d-flex justify-content-between">
-								
-								
+
+
 							</div>
 							<div class="card-body">
 								<div class="table-responsive">
@@ -61,7 +61,7 @@
 										cellspacing="0">
 										<thead>
 											<tr>
-												<th>센터번호</th>
+												<th>대표사진</th>
 												<th>센터명</th>
 												<th>주소</th>
 												<th>일일권 가격</th>
@@ -72,8 +72,15 @@
 										</thead>
 										<tbody>
 											<tr th:each="center :${fitnessCenters}">
-												<td th:text="${center.id}"></td>
-												<td><a th:href="'view/'+${center.id}" style="text-decoration: none; color: black;">[[${center.name}]]</a></td>
+
+<td>
+    <!-- Thymeleaf의 th:src 속성에 모델에서 가져온 이미지 경로를 삽입하여 이미지를 표시 -->
+    <img th:src="${imagePath + '/' + center.imageName}" alt="Center Image" width="100" height="100">
+</td>
+
+
+												<td><a th:href="'view/'+${center.id}"
+													style="text-decoration: none; color: black;">[[${center.name}]]</a></td>
 												<td th:text="${center.address}"></td>
 												<td th:text="${center.dailyPassPrice}"></td>
 												<td th:text="${center.phoneNumber}"></td>

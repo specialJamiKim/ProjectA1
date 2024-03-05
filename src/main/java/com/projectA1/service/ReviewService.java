@@ -3,6 +3,8 @@ package com.projectA1.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.projectA1.model.Review;
@@ -39,5 +41,14 @@ public class ReviewService {
 
 	    public List<Review> getAllReviews() {
 	        return reviewRepository.findAll();
+	    }
+
+
+	    public List<Review> findByCenterId(Long id) {
+	        return reviewRepository.findByCenterId(id);
+	    }
+	    
+	    public Page<Review> findByCenterId(Long centerId, Pageable pageable) {
+	        return reviewRepository.findByCenterId(centerId, pageable);
 	    }
 }

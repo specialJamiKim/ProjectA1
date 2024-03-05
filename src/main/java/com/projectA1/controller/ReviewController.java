@@ -2,8 +2,6 @@ package com.projectA1.controller;
 
 import java.util.List;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +19,6 @@ import com.projectA1.service.FitnessCenterService;
 import com.projectA1.service.ReviewService;
 import com.projectA1.service.UserService;
 
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -35,13 +32,13 @@ public class ReviewController {
 	private final ReviewService reviewService;
 	private final FitnessCenterService fitnessCenterService;
 	private final UserService userService;
-
+		
 	// 댓글 추가
 	@PostMapping("add")
 	@ResponseBody
 	@Transactional
 	public String addReview(@RequestBody ReviewData reviewData) {		
-	
+		
 	        // 사용자 ID와 센터 ID로 User 및 FitnessCenter 객체 조회
 	        User user = userService.findById(reviewData.getUserId()).get();
 	        FitnessCenter center = fitnessCenterService.findByCenter(reviewData.getCenterId()).get();
@@ -53,7 +50,6 @@ public class ReviewController {
 	        review.setUser(user);
 	        review.setCenter(center);
 	        
-
 	        // Review 저장
 	        reviewService.addReview(review);
 	        return "success";
