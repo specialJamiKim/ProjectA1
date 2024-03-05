@@ -26,6 +26,10 @@ public class ReservationService {
 		reservationRepository.save(reservation);
 	}
 	
+	//예약자 전체보기
+	public List<Reservation>viewAll(){
+		return reservationRepository.findAll();
+	}
 	//예약 수정
 //	public void update(Reservation reservation) {
 //		reservationRepository.
@@ -59,6 +63,12 @@ public class ReservationService {
 		// TODO Auto-generated method stub
 		return reservationRepository.findAllByUserId(id);
 	}
+	
+	
+	//오너의 예약자 확인
+	public List<Reservation> findByCenterId(Long centerId) {
+        return reservationRepository.findByCenterId(centerId);
+    }
 
 	
 	//예약정보 찾기
