@@ -12,6 +12,7 @@
     $(document).ready(function() {
         $("#btnRegister").click(function() {
             var formData = new FormData();
+            formData.append('id', $("#id").val()); // ID 추가
             formData.append('image', $('#image')[0].files[0]); // 이미지 파일 추가
             formData.append('name', $("#name").val());
             formData.append('address', $("#address").val());
@@ -48,6 +49,7 @@
             <h2 class="text-center mb-4">Fitness Center 등록</h2>
             <div class="input-box">
                 <form enctype="multipart/form-data">
+                    <input type="hidden" id="id" value="1"> <!-- ID 값 hidden input 으로 추가 -->
                     <div class="form-group">
                         <label for="name">센터이름:</label> <input type="text"
                             class="form-control" id="name" placeholder="센터이름을 입력하세요"

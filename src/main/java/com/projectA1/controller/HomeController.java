@@ -2,7 +2,6 @@ package com.projectA1.controller;
 
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,6 +9,14 @@ import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class HomeController {
+	
+//	@Autowired
+//	private DataLoader da;
+//	
+//	@GetMapping("/updatePassword")
+//	public void updatePass() {
+//		da.loadData();
+//	}
 	
 	@GetMapping("/")
 	public String homePage() {
