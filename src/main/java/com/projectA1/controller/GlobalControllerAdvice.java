@@ -11,6 +11,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import com.projectA1.config.auth.PrincipalUser;
+
 @ControllerAdvice
 public class GlobalControllerAdvice {
 
@@ -33,6 +35,16 @@ public class GlobalControllerAdvice {
             }
         }
         return roles;
+    }
+    
+    @ModelAttribute("userId")
+    public Long getAuthenticatedUserId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            PrincipalUser user = (PrincipalUser) authentication.getPrincipal();
+            return user.getUserId(); // UserDetails 인터페이스의 getUsername()를 통해 사용자 ID 반환
+        }
+        return null;
     }
 
 }
