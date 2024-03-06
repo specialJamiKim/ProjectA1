@@ -23,16 +23,34 @@
 <!-- Custom styles for this template-->
 <link href="../../static/css/sb-admin-2.min.css" rel="stylesheet">
 
-<!-- 추가: 페이지 내용 설명과 가독성을 높이기 위한 스타일 -->
-<style>
-.divider {
-	height: 1px;
-	background: #d1d3e2;
-	/* 실선의 색상 */
-	margin: 20px 0;
-	/* 실선 위아래로 여백을 줍니다. */
-}
-</style>
+
+ <!-- 추가: 페이지 내용 설명과 가독성을 높이기 위한 스타일 -->
+   <style>
+      .divider {
+         height: 1px;
+         background: #d1d3e2; /* 실선의 색상 */
+         margin: 20px 0; /* 실선 위아래로 여백을 줍니다. */
+      }
+
+      /* 변경된 부분: 회색 배경을 파란색으로 변경 */
+      .bg-secondary {
+         background-color: #4e73df !important; /* Bootstrap의 bg-secondary 클래스를 덮어씁니다. */
+      }
+
+      /* 추가: 텍스트 색상 변경을 위한 스타일 */
+      .text-white {
+         color: #fff !important; /* 텍스트 색상을 흰색으로 유지합니다. */
+      }
+      .btn-secondary {
+        background-color: #4e73df; /* 회색 대신 파란색으로 변경 */
+        border-color: #4e73df; /* 회색 대신 파란색으로 변경 */
+    }
+    .btn-secondary:hover {
+        background-color: #375a7f; /* 버튼 호버 시 더 진한 파란색으로 변경 */
+        border-color: #375a7f; /* 버튼 호버 시 더 진한 파란색으로 변경 */
+    }
+   </style>
+
 
 <script type="text/javascript">
 	$(document).ready(function() {

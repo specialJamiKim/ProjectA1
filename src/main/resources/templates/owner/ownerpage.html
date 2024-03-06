@@ -3,58 +3,51 @@
    layout:decorate="~{layouts/layout1}">
 
 <head>
-   <meta charset="utf-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-   <meta name="description" content="">
-   <meta name="author" content="">
-   <title>대표 정보 페이지</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>대표 정보 페이지</title>
 
-   <!-- Custom fonts for this template -->
-   <link href="../../static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-   <link
-      href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-      rel="stylesheet">
+    <!-- Custom fonts for this template -->
+    <link href="../../static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
 
-   <!-- Custom styles for this template -->
-   <link href="../../static/css/sb-admin-2.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="../../static/css/sb-admin-2.min.css" rel="stylesheet">
 
-   <!-- 페이지 내용 설명과 가독성을 높이기 위한 추가 스타일 -->
-   <style>
-      .divider {
-         height: 1px;
-         background: #d1d3e2;
-         /* 실선의 색상 */
-         margin: 20px 0;
-         /* 실선 위아래로 여백을 줍니다. */
-      }
+    <!-- 페이지 내용 설명과 가독성을 높이기 위한 추가 스타일 -->
+    <style>
+        .divider {
+            height: 1px;
+            background: #d1d3e2; /* 회색으로 변경 */
+            margin: 20px 0;
+        }
 
-      .navbar .navbar-nav {
-         width: 100%;
-         justify-content: flex-end;
-         /* "바로 가기" 링크를 오른쪽 끝으로 정렬 */
-      }
-   </style>
-   <script type="text/javascript">
-    $(document).ready(function() {
-        $("#ownerDelete").click(function() {
-            if (confirm('정말 삭제할까요?')) {
-                $.ajax({
-                    type: "DELETE",
-                    url: "/owner/delete",
-                    success: function(resp) {
-                        alert("회원 탈퇴가 성공적으로 완료되었습니다.");
-                        window.location.href = "/"; // 메인 페이지로 리다이렉트
-                    },
-                    error: function(xhr, status, error) {
-                        alert("삭제 실패: " + xhr.responseText); // 실패 시 오류 메시지 표시
-                    }
-                });
-            }
-        });
-    });
-</script>
+        .navbar .navbar-nav {
+            width: 100%;
+            justify-content: flex-end;
+        }
+
+        .card-header.py-3.bg-secondary {
+            background-color: #4e73df !important; /* 카드 헤더의 배경색을 파란색으로 변경 */
+        }
+
+        .btn-secondary {
+            background-color: #4e73df; /* 버튼 색상을 파란색으로 변경 */
+            border-color: #4e73df; /* 버튼 테두리 색상도 파란색으로 변경 */
+        }
+
+        .btn-secondary:hover {
+            background-color: #375a7f; /* 버튼 호버 색상을 진한 파란색으로 변경 */
+            border-color: #375a7f; /* 버튼 호버 테두리 색상도 진한 파란색으로 변경 */
+        }
+    </style>
 </head>
+
 
 <body id="page-top">
    <div layout:fragment="content">
@@ -151,40 +144,33 @@
                         </div>
                      </div>
                      
-                     <div class="card-body">
-
-                              <!-- 사용자가 예약한 리스트를 보여주는 부분 -->
-                              <div class="user-reservations ">
-
-                                 <h2>예약자 리스트</h2>
-                                 <ul class="navbar-nav">
-                                    <!-- 예약된 각 항목을 순회하면서 보여줍니다. -->
-                                    <th:block th:each="reservation : ${reserve}">
-                                       <li>
-                                          <!-- 여기에 예약된 정보를 표시합니다. -->
-                                          <p>
-                                              이름: <span
-                                                th:text="${reservation.user.name}"></span><br> 
-                                             예약시간: <span
-                                                th:text="${#dates.format(reservation.reservationTime, 'yyyy-MM-dd HH:mm')}"></span>
-                                             <!--                                              <a
-                                                th:href="@{'/reservation/update/' + ${reservation.id}}"><button
-                                                   style="margin-left: 15px;" class="btn btn-secondary"
-                                                   type="button">예약 변경</button></a> -->
-                                             <!-- <a th:href="@{'/reservation/delete/' + ${reservation.id}}"><button
-                                                   style="margin-left: 15px;" class="btn btn-secondary"
-                                                   type="button">예약 취소</button></a> <a
-                                                th:href="@{'/reservation/used/' + ${reservation.id}}"><button
-                                                   style="margin-left: 15px;" class="btn btn-secondary"
-                                                   type="button">사용함(temporary)</button></a> -->
-                                             
-                                          </p>
-                                       </li>
-                                    </th:block>
-                                 </ul>
-                                 
-                              </div>
-                           </div>
+<div class="row">
+   <div class="col-lg-6">
+      <div class="card position-relative">
+         <div class="card-header py-3 bg-secondary">
+            <h4 class="m-0 font-weight-bold text-white">예약자 리스트</h4>
+         </div>
+         <div class="card-body">
+            <div class="user-reservations">
+               <h2>예약자 리스트</h2>
+               <ul class="navbar-nav">
+                  <!-- 예약된 각 항목을 순회하면서 보여줍니다. -->
+                  <th:block th:each="reservation : ${reserve}">
+                     <li>
+                        <!-- 여기에 예약된 정보를 표시합니다. -->
+                        <p>
+                           이름: <span th:text="${reservation.user.name}"></span><br> 
+                           예약시간: <span th:text="${#dates.format(reservation.reservationTime, 'yyyy-MM-dd HH:mm')}"></span>
+                        </p>
+                     </li>
+                  </th:block>
+               </ul>
+            </div>
+         </div>
+      </div>
+   </div>
+                           
+                           
                   </div>
                </div>
             </div>

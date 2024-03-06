@@ -33,6 +33,9 @@ public class OwnerService {
         return bCryptPasswordEncoder.encode(password);
     }
     
+	public boolean existsByEmail(String email) {
+		return ownerRepository.existsByEmail(email);
+	}
     
     ///////////////////////////////////////////////////////////////////////
 	//센터추가하면서 owner상태변경

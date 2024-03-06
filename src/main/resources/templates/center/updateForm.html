@@ -11,49 +11,69 @@
    rel="stylesheet">
 <style>
 body {
-   background-color: #f8f9fa;
+   background-color: #eff1f5;
 }
 
 .container {
-   background: #f2f2f2;
-   /* 배경을 연한 회색으로 변경 */
+   max-width: 1000px;
+   margin: 40px auto;
    padding: 20px;
-   border-radius: 8px;
-   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+   background-color: #ffffff;
+   border-radius: 15px;
+   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+h2.text-center {
+   color: #4e73df;
+   font-weight: bold;
+   margin-bottom: 20px;
+}
+
+.form-group {
+   margin-bottom: 15px;
+}
+
+label {
+   color: #4e73df;
+   font-weight: bold;
+   margin-bottom: 5px;
+   display: block;
+}
+
+input[type="text"], input[type="email"], input[type="password"], input[type="number"], input[type="time"], input[type="file"] {
+   width: 100%;
+   padding: 10px;
+   margin-bottom: 10px;
+   border: 1px solid #ddd;
+   border-radius: 4px;
+   font-size: 16px;
+}
+
+input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus, input[type="number"]:focus, input[type="time"]:focus, input[type="file"]:focus {
+   border-color: #4e73df;
+   box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
+}
+
+.btn-primary {
+   background-color: #4e73df;
+   border: none;
+}
+
+.btn-primary:hover {
+   background-color: #375a7f;
 }
 
 .btn-custom {
-   background-color: #6c757d;
+   background-color: #4e73df;
    color: white;
    border-radius: 4px;
 }
 
 .btn-custom:hover {
-   background-color: #5a6268;
-}
-
-label {
-   font-weight: bold;
-}
-
-input[type="text"], input[type="email"], input[type="password"] {
-   border-radius: 4px;
-   border: 1px solid #ced4da;
-}
-
-.title {
-   background-color: #6c757d;
-   /* 배경색 추가 */
-   color: white;
-   /* 텍스트 색상을 흰색으로 변경 */
-   padding: 10px 15px;
-   /* 패딩 추가 */
-   border-radius: 5px;
-   /* 모서리 둥글게 */
-   margin-bottom: 20px;
-   /* 하단 여백 추가 */
+   background-color: #375a7f;
 }
 </style>
+
 <script
    src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script
@@ -63,6 +83,41 @@ input[type="text"], input[type="email"], input[type="password"] {
 <script>
    $(document).ready(function() {
       $("#btnRegister").click(function() {
+
+    	  if ($("#name").val() == "") {
+       		alert("센터이름을 입력하세요")
+       		$("#name").focus();
+       		return false;
+    		}
+          if ($("#address").val() == "") {
+              alert("주소를 입력하세요")
+              $("#address").focus();
+              return false;
+           }
+          if ($("#phoneNumber").val() == "") {
+              alert("전화번호를 입력하세요")
+              $("#phoneNumber").focus();
+              return false;
+           }
+          if ($("#dailyPassPrice").val() == "") {
+              alert("일일권 가격을 입력하세요")
+              $("#dailyPassPrice").focus();
+              return false;
+           }
+          if ($("#openTime").val() == "") {
+       		alert("오픈시간을 선택하세요")
+       		$("#openTime").focus();
+       		return false;
+    		}
+          if ($("#closingTime").val() == "") {
+       		alert("마감시간을 선택하세요")
+       		$("#closingTime").focus();
+       		return false;
+    		}
+          if (!image) {
+              alert("사진을 첨부하세요");
+              return false;
+          }
          var formData = new FormData();
          formData.append('id', $("#id").val());
          formData.append('image', $('#image')[0].files[0]); // 이미지 파일 추가
@@ -93,6 +148,7 @@ input[type="text"], input[type="email"], input[type="password"] {
       });
    });
 </script>
+
 </head>
 
 <body>
