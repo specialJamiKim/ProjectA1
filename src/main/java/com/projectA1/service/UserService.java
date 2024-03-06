@@ -85,4 +85,9 @@ public class UserService {
 		// TODO Auto-generated method stub
 		return userRepository.findById(userId);
 	}
+	
+	public boolean existsByEmail(String email) {
+		return userRepository.existsByEmail(email);
+	}
+	
 }

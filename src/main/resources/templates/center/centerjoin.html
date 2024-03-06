@@ -8,9 +8,112 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fitness Center 등록</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        body {
+            background-color: #eff1f5;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2.text-center {
+            color: #4e73df; /* 파란색 */
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            color: #4e73df; /* 파란색 */
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="time"],
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        input[type="time"]:focus,
+        input[type="file"]:focus {
+            border-color: #4e73df; /* 파란색 */
+            box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
+        }
+
+        .btn-primary {
+            width: auto;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #4e73df; /* 파란색 */
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-primary:hover {
+            background-color: #375a7f; /* 진한 파란색 */
+        }
+    </style>
+
     <script>
     $(document).ready(function() {
+    	
+    	
         $("#btnRegister").click(function() {
+        	 var isValid = true; // 적합성 여부를 저장하는 변수
+
+             if ($("#name").val() == "") {
+                alert("센터이름을 입력하세요");
+                $("#name").focus();
+                isValid = false;
+             } else if ($("#address").val() == "") {
+                alert("주소를 입력하세요");
+                $("#address").focus();
+                isValid = false;
+             } else if ($("#phoneNumber").val() == "") {
+                alert("전화번호를 입력하세요");
+                $("#phoneNumber").focus();
+                isValid = false;
+             } else if ($("#dailyPassPrice").val() == "") {
+                alert("일일권 가격을 입력하세요");
+                $("#dailyPassPrice").focus();
+                isValid = false;
+             } else if ($("#openTime").val() == "") {
+                alert("오픈시간을 선택하세요");
+                $("#openTime").focus();
+                isValid = false;
+             } else if ($("#closingTime").val() == "") {
+                alert("마감시간을 선택하세요");
+                $("#closingTime").focus();
+                isValid = false;
+             } else if (!$("#image").val()) {
+                alert("사진을 첨부하세요");
+                isValid = false;
+             }
+             
+             if (!isValid) {
+                return false; // 적합성이 검사되지 않았다면 중단
+             }
             var formData = new FormData();
             formData.append('id', $("#id").val()); // ID 추가
             formData.append('image', $('#image')[0].files[0]); // 이미지 파일 추가

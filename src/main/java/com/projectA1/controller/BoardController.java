@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.projectA1.config.auth.PrincipalUser;
 import com.projectA1.model.Board;
+import com.projectA1.model.Diary;
 import com.projectA1.model.User;
 import com.projectA1.service.BoardService;
 
@@ -86,26 +88,28 @@ public class BoardController {
 		return "board/view";
 	}
 	//삭제
-	@DeleteMapping("delete/{num}")
-	@ResponseBody
+	@GetMapping("delete/{num}")
 	@Transactional
-	public Long delete(@PathVariable Long num) {
+	public String delete(@PathVariable Long num) {
 		boardService.delete(num);
-		return num;
+		return "/board/list";
 	}
 	//수정폼
 	@GetMapping("update/{num}")
-	public String update(@PathVariable long num,Model model) {
+	public String update(@PathVariable Long num,Model model) {
 		model.addAttribute("board",boardService.view(num));
 		return "board/update";
 	}
-	//수정
-	@PutMapping("update")
-	@ResponseBody
-	public String update(@RequestBody Board board) {
-		boardService.update(board);
-		return "success";
+	
+	@PostMapping("update/{num}")
+	public String update(@PathVariable Long num, @ModelAttribute Board updatedBoard) {
+	    Board board = boardService.findbyId(num).get();
+	    board.setTitle(updatedBoard.getTitle());
+	    board.setContent(updatedBoard.getContent());
+	    boardService.update(board);
+	    return "redirect:../../board/list";
 	}
+
 	
 
 }

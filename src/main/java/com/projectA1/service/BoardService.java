@@ -2,6 +2,7 @@ package com.projectA1.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -79,6 +80,10 @@ public class BoardService {
 		b.setContent(board.getContent());
 		b.setRegdate(new Date());
 		
+	}
+	public Optional<Board> findbyId(Long id) {
+		// TODO Auto-generated method stub
+		return boardRepository.findById(id);
 	}
 	
 

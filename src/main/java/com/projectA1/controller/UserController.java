@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,7 +17,9 @@ import com.projectA1.config.auth.PrincipalUser;
 import com.projectA1.model.FitnessCenter;
 import com.projectA1.model.Reservation;
 import com.projectA1.model.User;
+import com.projectA1.service.DiaryService;
 import com.projectA1.service.FitnessCenterService;
+import com.projectA1.service.OwnerService;
 import com.projectA1.service.ReservationService;
 import com.projectA1.service.UserService;
 import com.projectA1.service.VisitCountingService;
@@ -24,6 +27,7 @@ import com.projectA1.service.VisitCountingService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -35,19 +39,29 @@ public class UserController {
 	// 사용자 마이페이지 => 정보수정, 회원탈퇴
 
 	private final UserService userService;
+	private final OwnerService ownerService;
 	private final VisitCountingService visitCountingService;
 	private final ReservationService reservationService;
 	private final FitnessCenterService fitnessCenterService;
+	private final DiaryService diaryService;
 	
 	// 사용자 추가 => 추가 후, 로그인 페이지
 	@PostMapping("join")
 	@ResponseBody
 	public String join(@RequestBody User user) {
-		List<String> roles = new ArrayList<>();
-		roles.add("ROLE_USER");
-		user.setRole(roles);
-		userService.join(user);
-		return "success";
+	    // 사용자 이메일 중복 확인
+	    if (userService.existsByEmail(user.getEmail()) || ownerService.existsByEmail(user.getEmail())) {
+	    	return "fail"; // 중복된 이메일이 존재하는 경우 실패 반환
+	    }else {
+		    // 사용자 역할 설정
+		    List<String> roles = new ArrayList<>();
+		    roles.add("ROLE_USER");
+		    user.setRole(roles);
+		    
+		    // 사용자 추가
+		    userService.join(user);
+	    }	    
+	    return "success"; // 사용자 추가 성공 시 성공 반환
 	}
 
 	// 사용자 마이페이지(상세보기) => 예약자 리스트도 표시
@@ -100,16 +114,21 @@ public class UserController {
 	}
 
 	// 사용자 회원탈퇴
-	@GetMapping("delete")
+	@Transactional
+	@ResponseBody
+	@DeleteMapping("delete")
 	public String delete(@AuthenticationPrincipal PrincipalUser principalUser, HttpServletRequest request,
 			HttpServletResponse response) {
-		String email = principalUser.getUserEmail(); // 아이디로 삭제
-		userService.delete(email);
+		User user = (User) principalUser.getUser();
+		//다이어리 삭제하려고함
+		diaryService.deleteByUserId(user.getId());
+		
+		userService.delete(user.getEmail());
 
 		// 세션 무효화
 		invalidateSession(request);
 
-		return "redirect:/";
+		return "success";
 	}
 
 	////////////////////////////////////////////////////////////////////////////
