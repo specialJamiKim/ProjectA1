@@ -49,6 +49,8 @@ public class OwnerController {
 	    Owner owner = (Owner) principalUser.getUser();
 	    
 	    if (owner.getFitnessCenter() != null) {
+		    Long centerId = owner.getFitnessCenter().getId();
+		    List<Reservation> reservations = reservationService.findByCenterId(centerId);
 	        String centerName = fitnessCenterService.findByCenterName(owner.getFitnessCenter().getId());
 	        Long centerId = owner.getFitnessCenter().getId();
 	        List<Reservation> reservations = reservationService.findByCenterId(centerId);
