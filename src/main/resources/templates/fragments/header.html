@@ -50,6 +50,13 @@
         <a class="nav-link" th:href="@{/logout}" style="color: white; padding-left: 10px; padding-right: 10px;">로그아웃</a>
     </li>
 
+    <!-- ROLE_USER -->
+    <li th:if="${roles.contains('ROLE_USER')}" class="nav-item">
+        <a class="nav-link" th:href="@{/user/mypage}" style="color: white; padding-left: 10px; padding-right: 10px;">유저 페이지</a>
+    </li>
+    <li th:if="${roles.contains('ROLE_USER')}" class="nav-item">
+        <a class="nav-link" th:href="@{/centerManage/gymlist}" style="color: white; padding-left: 10px; padding-right: 10px;">일일권 예약</a>
+    </li>
     <!-- ROLE_OWNER -->
     <li th:if="${roles.contains('ROLE_OWNER')}" class="nav-item">
         <a class="nav-link" th:href="@{/owner/ownerpage}" style="color: white; padding-left: 10px; padding-right: 10px;">사장님 페이지</a>
