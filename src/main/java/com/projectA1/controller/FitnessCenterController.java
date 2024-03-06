@@ -47,8 +47,8 @@ public class FitnessCenterController {
 	private final OwnerService ownerService;
 	private final ReviewService reviewService;
 
-	@Value("${image.path}")
-	private String imagePath;
+//	@Value("${image.path}")
+//	private String imagePath;
 
 	// center 등록 폼
 	@GetMapping("joinForm")
@@ -255,7 +255,7 @@ public class FitnessCenterController {
 	// 전체보기
 	@GetMapping("gymlist")
 	public String getAllFitnessCenters(Model model) {
-		model.addAttribute("imagePath", imagePath);
+		//model.addAttribute("imagePath", imagePath);
 		model.addAttribute("fitnessCenters", fitnessCenterService.viewAll());
 		return "/center/gymlist";
 	}

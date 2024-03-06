@@ -47,10 +47,10 @@ public class OwnerController {
 	public String ownerPage(@AuthenticationPrincipal PrincipalUser principalUser, Model model) {
 	    // 사용자 정보를 통해 해당 사용자가 관리하는 센터의 이름을 조회하여 모델에 추가합니다.
 	    Owner owner = (Owner) principalUser.getUser();
-	    Long centerId = owner.getFitnessCenter().getId();
-	    List<Reservation> reservations = reservationService.findByCenterId(centerId);
 	    
 	    if (owner.getFitnessCenter() != null) {
+		    Long centerId = owner.getFitnessCenter().getId();
+		    List<Reservation> reservations = reservationService.findByCenterId(centerId);
 	        String centerName = fitnessCenterService.findByCenterName(owner.getFitnessCenter().getId());
 	        model.addAttribute("centerName", centerName);
 	        model.addAttribute("reserve",reservations);
