@@ -63,7 +63,6 @@
 										<thead>
 											<tr>
 
-												<th>게시글 번호</th>
 												<th>제목</th>
 												<th>작성자</th>
 												<th>게시글 등록일</th>
@@ -73,7 +72,7 @@
 										</thead>
 										<tbody>
 											<tr th:each="board :${boards}">
-												<td th:text="${board.num}"></td>
+												<input type="hidden" id="num" name="num" th:value="${board.num}" />
 												<td><a th:href="'view/'+${board.num}" style="text-decoration: none; color: black">[[${board.title}]]</a></td>
 												<td th:text="${board.writer}"></td>
 												<td th:text="${board.regdate}"></td>

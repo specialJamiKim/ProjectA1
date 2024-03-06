@@ -2,12 +2,11 @@ package com.projectA1.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,10 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.projectA1.config.auth.PrincipalUser;
-import com.projectA1.model.FitnessCenter;
 import com.projectA1.model.Owner;
 import com.projectA1.model.Reservation;
-import com.projectA1.model.User;
 import com.projectA1.service.FitnessCenterService;
 import com.projectA1.service.OwnerService;
 import com.projectA1.service.ReservationService;
@@ -26,6 +23,7 @@ import com.projectA1.service.ReservationService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -106,15 +104,17 @@ public class OwnerController {
 	}
 
 	// 오너 회원탈퇴
-	@GetMapping("delete")
-	public String delete(@AuthenticationPrincipal PrincipalUser principalUser, HttpServletRequest request,
-			HttpServletResponse response) {
-		Owner owner = (Owner) principalUser.getUser();
-		ownerService.delete(owner.getId());
-		// 세션 무효화
-		invalidateSession(request);
-		return "redirect:/";
-	}
+	   @DeleteMapping("delete")
+	   @ResponseBody
+	   @Transactional
+	   public String delete(@AuthenticationPrincipal PrincipalUser principalUser, HttpServletRequest request,
+	         HttpServletResponse response) {
+	      Owner owner = (Owner) principalUser.getUser();
+	      ownerService.delete(owner.getId());
+	      // 세션 무효화
+	      invalidateSession(request);
+	      return "success";
+	   }
 
 	// 세션 무효화
 	private void invalidateSession(HttpServletRequest request) {

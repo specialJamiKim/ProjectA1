@@ -27,8 +27,8 @@ public class Diary {
     @JoinColumn(name = "userid", nullable = false)
     private User user;
 
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date date; //날짜
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date date; //날짜 및 시간
     private String title; //제목
 
     @Column(length = 1000)

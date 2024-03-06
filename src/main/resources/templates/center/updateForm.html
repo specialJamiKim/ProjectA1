@@ -127,11 +127,11 @@ input[type="text"], input[type="email"], input[type="password"] {
                </div>
                <div class="form-group">
                   <label for="openTime">오픈시간:</label> <input type="time"
-                     class="form-control" id="openTime" name="openTime">
+                     class="form-control" id="openTime" name="openTime" th:value="${center.openTime}">
                </div>
                <div class="form-group">
                   <label for="closingTime">마감시간:</label> <input type="time"
-                     class="form-control" id="closingTime" name="closingTime">
+                     class="form-control" id="closingTime" name="closingTime" th:value="${center.closingTime}">
                </div>
                <div class="form-group">
                   <label for="image">이미지 업로드:</label> <input type="file"

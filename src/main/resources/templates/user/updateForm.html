@@ -74,19 +74,7 @@
                     alert(e.responseText);
                 });
             });
-            $("#deleteBtn").click(function () {
-                $.ajax({
-                    type: "GET",
-                    url: "/user/delete",
-                })
-                .done(function (resp) {
-                    alert($("#name").val() + "님의 회원탈퇴가 정상처리되었습니다. 감사합니다.");
-                    window.location.href = "/";
-                })
-                .fail(function (e) {
-                    alert("회원 탈퇴에 실패했습니다. 다시 시도해주세요.");
-                });
-            });
+
         });
     </script>
 </head>
@@ -98,6 +86,8 @@
         <div class="title"><h2>회원정보 수정👤</h2></div>
         <form id="updateForm">
             <input type="hidden" id="id" th:value="${user.id}" />
+            <input type="hidden" id="gender" name="gender" th:value="${user.gender}" />
+            
             <div class="form-group">
                 <label for="name">이름 :</label>
                 <input type="text" id="name" name="name" class="form-control" th:value="${user.name}" />
@@ -113,10 +103,6 @@
             <div class="form-group">
                 <label for="phoneNumber">전화번호 :</label>
                 <input type="text" id="phoneNumber" name="phoneNumber" class="form-control" th:value="${user.phoneNumber}" />
-            </div>
-            <div class="form-group">
-                <label for="gender">성별 :</label>
-                <input type="text" id="gender" name="gender" class="form-control" th:value="${user.gender}" />
             </div>
             <div class="form-group">
                 <label for="address">주소 :</label>

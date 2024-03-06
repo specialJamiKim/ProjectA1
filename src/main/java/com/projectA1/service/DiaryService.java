@@ -52,4 +52,9 @@ public class DiaryService {
 	    diaryrepository.deleteById(id);
 	}
 
+	public void deleteByUserId(Long id) {
+		diaryrepository.deleteAllByUserId(id);
+		
+	}
+
 }
