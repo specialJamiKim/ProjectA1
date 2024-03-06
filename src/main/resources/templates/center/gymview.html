@@ -198,8 +198,7 @@ input[type="text"]:focus, textarea:focus, input[type="number"]:focus {
 <body>
     <div layout:fragment="content" class="gym-view">
         <div class="gym-header">
-            <h1 th:text="${fitnessCenter.name + ' 센터 정보'}">센터 정보</h1>
-            <h1 th:text="${#numbers.formatDecimal(avg, 1,1) + '점'}"></h1>
+            <h1 th:text="${fitnessCenter.name + ' 센터 정보' + ' / (평점 : ' + #numbers.formatDecimal(avg, 1,1) + '점)'}">센터 정보</h1>
         </div>
         
         <input type="hidden" id="fitnessCenterId" th:value="${fitnessCenter.id}">
@@ -254,7 +253,8 @@ input[type="text"]:focus, textarea:focus, input[type="number"]:focus {
                 </div>
                 <label>댓글 :</label>
                 <textarea id="review_text" name="reviewText" rows="4" cols="40" placeholder="리뷰를 작성하세요." required></textarea>
-                <button type="button" id="reviewInsert">등록</button>
+                <button type="button" id="reviewInsert"  style="background-color: blue;">등록</button>
+
             </div>
         </form>
 

@@ -61,7 +61,7 @@ public class ReservationService {
 	//매일 자정에 실행되는 메서드
 	//  @Scheduled(cron = "0 0 0 * * *")
 	// 현재 시간에서 1분 뒤에 실행되는 메서드
-	@Scheduled(fixedDelay = 60000) // 1분 = 60,000 밀리초
+	@Scheduled(fixedDelay = 120000) // 2분 = 120,000 밀리초
 	public void deletePreviousDayReservations() {
 	    // 현재 시간을 구합니다.
 	    LocalDateTime now = LocalDateTime.now();
