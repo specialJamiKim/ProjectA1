@@ -52,8 +52,6 @@ public class OwnerController {
 		    Long centerId = owner.getFitnessCenter().getId();
 		    List<Reservation> reservations = reservationService.findByCenterId(centerId);
 	        String centerName = fitnessCenterService.findByCenterName(owner.getFitnessCenter().getId());
-	        Long centerId = owner.getFitnessCenter().getId();
-	        List<Reservation> reservations = reservationService.findByCenterId(centerId);
 	        model.addAttribute("centerName", centerName);
 	        model.addAttribute("reserve",reservations);
 	    } else {
