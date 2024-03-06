@@ -90,6 +90,21 @@
                 font-size: 90%;
             }
         }
+        .btn.button-standard {
+    padding: 4px 16px; /* 패딩을 줄여서 버튼 크기를 작게 조정 */
+    font-size: 16px; /* 폰트 크기를 줄임 */
+    min-width: 80px; /* 버튼의 최소 너비를 조정 */
+    box-sizing: border-box; /* 패딩을 너비 계산에 포함 */
+    border-radius: 4px; /* 필요한 경우, 버튼의 모서리 둥글기를 조정 */
+}
+
+/* 기존에 적용된 다른 btn 클래스 스타일의 영향을 최소화 */
+.btn-secondary.button-standard {
+    background-color: var(--button-bg-color); /* 돌아가기 버튼 배경색 */
+    color: white; /* 돌아가기 버튼 텍스트 색상 */
+}
+
+        
     </style>
 </head>
 <body>
@@ -114,10 +129,12 @@
             </div>
            <!-- 이 아래로 네 줄 수정했어요 -->
            <div class="gym-footer">
-    <button type="button" onclick="history.go(-1)" class="btn btn-secondary">돌아가기</button>
-    <a th:href="@{/diary/diaryEdit/{id}(id=${diary.id})}" class="btn btn-primary">수정하기</a>
-    <a th:href="@{/diary/diaryDelete/{id}(id=${diary.id})}" class="btn btn-danger">삭제하기</a>
+    <button type="button" onclick="history.go(-1)" class="btn btn-secondary button-standard">돌아가기</button>
+    <a th:href="@{/diary/diaryEdit/{id}(id=${diary.id})}" class="btn btn-primary button-standard">수정하기</a>
+    <a th:href="@{/diary/diaryDelete/{id}(id=${diary.id})}" class="btn btn-danger button-standard">삭제하기</a>
 </div>
+
+
         </div>
     </div>
 </body>
