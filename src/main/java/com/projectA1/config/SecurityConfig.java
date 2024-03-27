@@ -26,7 +26,7 @@ public class SecurityConfig {
 
 		http.csrf(csrf -> csrf.disable())
 				.authorizeHttpRequests(request -> request
-						.requestMatchers("/m_user/**","/", "/img/**", "/src/main/**", "/main","/updatePassword", "/join/**", "/login/**", "/centerManage/**", "/diary/**","/test/**",
+						.requestMatchers("/m_visit/**","/m_review/**","/m_reservation/**","/m_centerManage/**","/m_user/**","/", "/img/**", "/src/main/**", "/main","/updatePassword", "/join/**", "/login/**", "/centerManage/**", "/diary/**","/test/**",
 								"/login/**", "/user/join", "/owner/join", "/fragments/*")
 						.permitAll()
 						.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()

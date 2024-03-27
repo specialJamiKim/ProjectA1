@@ -2,12 +2,12 @@ package com.projectA1.service;
 
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.projectA1.config.auth.PrincipalUser;
 import com.projectA1.model.User;
@@ -28,6 +28,12 @@ public class UserService {
         // 비밀번호 암호화
         return bCryptPasswordEncoder.encode(password);
     }
+    
+    private User isAutenticated(@RequestParam String email, @RequestParam String password) {
+        
+        return userRepository.findByEmailAndPassword(email,encodePassword(password));
+        
+     }
     
     
 	// user 로그인확인
