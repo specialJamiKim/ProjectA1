@@ -12,21 +12,21 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-@EnableWebSecurity
+@EnableWebSecurity	// security 적용하려면 사용
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
-	@Bean
+	@Bean	// method보다 훨씬 독립적, 별도의 객체로 뽑아서 진행
 	public BCryptPasswordEncoder encodePwd() {
 		return new BCryptPasswordEncoder();
 	}
 
-	@Bean
+	@Bean	// SecurityFilterChain - 로그인했을 때 어떻게 처리하겠다는 것.
 	public SecurityFilterChain fileChain(HttpSecurity http) throws Exception {
 
 		http.csrf(csrf -> csrf.disable())
 				.authorizeHttpRequests(request -> request
-						.requestMatchers("/", "/img/**", "/src/main/**", "/main","/updatePassword", "/join/**", "/login/**", "/centerManage/**", "/diary/**",
+						.requestMatchers("/m_user/**","/", "/img/**", "/src/main/**", "/main","/updatePassword", "/join/**", "/login/**", "/centerManage/**", "/diary/**","/test/**",
 								"/login/**", "/user/join", "/owner/join", "/fragments/*")
 						.permitAll()
 						.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()

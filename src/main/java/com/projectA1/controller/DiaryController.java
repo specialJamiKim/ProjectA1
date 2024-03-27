@@ -25,7 +25,7 @@ public class DiaryController {
 
 	private final DiaryService diaryService;
 
-	//전체보기
+	// 전체보기
 	@GetMapping("diaryList")
 	public String list(@AuthenticationPrincipal PrincipalUser principalUser, Model model) {
 		User user  = (User) principalUser.getUser();
@@ -41,7 +41,7 @@ public class DiaryController {
 		return "/diary/diaryNew";
 	}
 
-	//기록 추가
+	// 기록 추가
 	@PostMapping("addDiary")
 	public String addDiary(Diary diary, @AuthenticationPrincipal PrincipalUser principal) {
 		User user = (User) principal.getUser();
@@ -50,7 +50,7 @@ public class DiaryController {
 		return "redirect:/diary/diaryList";
 	}
 	
-	//상세보기
+	// 상세보기
 	@GetMapping("diaryView/{id}")
 	public String diaryView(Model model, @PathVariable long id) {
 		model.addAttribute("diary", diaryService.diaryview(id));

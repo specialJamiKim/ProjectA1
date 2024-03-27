@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.projectA1.config.auth.PrincipalUser;
@@ -38,10 +39,10 @@ import com.projectA1.service.ReviewService;
 
 import lombok.RequiredArgsConstructor;
 
-@Controller
-@RequestMapping("/centerManage/*")
+@RestController
+@RequestMapping("/m_centerManage/*")
 @RequiredArgsConstructor
-public class FitnessCenterController {
+public class M_FitnessCenterController {
 
 	private final FitnessCenterService fitnessCenterService;
 	private final OwnerService ownerService;
@@ -52,8 +53,8 @@ public class FitnessCenterController {
 
 	// center 등록 폼
 	@GetMapping("joinForm")
-	public String CenterJoinForm() {
-		return "/center/centerJoin";
+	public ResponseEntity<String> CenterJoinForm() {
+		return ResponseEntity.ok("/center/centerJoin");
 	}
 
 //	// 피트니스 센터 추가 (사장님에 center추가, 센터 추가)
@@ -69,8 +70,7 @@ public class FitnessCenterController {
 
 	// 센터 등록(이미지파일때문에 길어짐)
 	@PostMapping("register")
-	@ResponseBody
-	public String join(@AuthenticationPrincipal PrincipalUser principalUser, @RequestParam("name") String name,
+	public ResponseEntity<String> join(@AuthenticationPrincipal PrincipalUser principalUser, @RequestParam("name") String name,
 			@RequestParam("address") String address, @RequestParam("phoneNumber") String phoneNumber,
 			@RequestParam("dailyPassPrice") Long dailyPassPrice, @RequestParam("openTime") LocalTime openTime,
 			@RequestParam("closingTime") LocalTime closingTime, @RequestParam("image") MultipartFile image) {
@@ -111,20 +111,20 @@ public class FitnessCenterController {
 			Owner owner = (Owner) principalUser.getUser();
 			ownerService.addFitnessCenterToOwner(owner, fitnessCenter);
 
-			return "success";
+			return ResponseEntity.ok("success");
 		} catch (IOException e) {
 			e.printStackTrace();
-			return "error";
+			return ResponseEntity.ok("error");
 		}
 	}
 
 	// 수정폼
 	@GetMapping("update")
-	public String update(@AuthenticationPrincipal PrincipalUser principalUser, Model model) {
+	public ResponseEntity<String> update(@AuthenticationPrincipal PrincipalUser principalUser, Model model) {
 		Owner owner = (Owner) principalUser.getUser();
 		Long id = owner.getFitnessCenter().getId();
 		model.addAttribute("center", fitnessCenterService.view(id));
-		return "/center/updateForm";
+		return ResponseEntity.ok("/center/updateForm");
 	}
 
 	// 수정
@@ -135,8 +135,7 @@ public class FitnessCenterController {
 //	    return ResponseEntity.ok().body("Fitness center updated successfully");
 //	}
 	@PutMapping("update")
-	@ResponseBody
-	public String updateFitnessCenter(@RequestParam("id") Long id, @RequestParam("name") String name,
+	public ResponseEntity<String> updateFitnessCenter(@RequestParam("id") Long id, @RequestParam("name") String name,
 			@RequestParam("address") String address, @RequestParam("phoneNumber") String phoneNumber,
 			@RequestParam("dailyPassPrice") Long dailyPassPrice, @RequestParam("openTime") LocalTime openTime,
 			@RequestParam("closingTime") LocalTime closingTime, @RequestParam("image") MultipartFile image) throws IOException {
@@ -173,12 +172,12 @@ public class FitnessCenterController {
 		// Fitness Center 수정
 		fitnessCenterService.update(fitnessCenter);
 
-		return "success";
+		return ResponseEntity.ok("success");
 	}
 
 	// 삭제
 	@GetMapping("delete")
-	public String delete(@AuthenticationPrincipal PrincipalUser principalUser) {
+	public ResponseEntity<String> delete(@AuthenticationPrincipal PrincipalUser principalUser) {
 		// 고유 아이디로 삭제처리
 		Owner owner = (Owner) principalUser.getUser();
 		Long id = owner.getFitnessCenter().getId();
@@ -186,11 +185,11 @@ public class FitnessCenterController {
 		// 센터아이디 삭제
 		ownerService.clearCenterId(owner);
 		fitnessCenterService.deleteFitnessCenter(id);
-		return "redirect:/";
+		return ResponseEntity.ok("redirect:/");
 	}
 
 	@GetMapping("/view/{id}")
-	public String view(@PathVariable Long id, @RequestParam(defaultValue = "0") String page,
+	public ResponseEntity<String> view(@PathVariable Long id, @RequestParam(defaultValue = "0") String page,
 			@RequestParam(defaultValue = "5") String size, Model model) {
 
 		// 페이지 번호와 페이지 크기의 유효성 검사
@@ -248,14 +247,14 @@ public class FitnessCenterController {
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("endPage", endPage);
 
-		return "center/gymview";
+		return ResponseEntity.ok("center/gymview");
 	}
     
 	// 전체보기
 	@GetMapping("gymlist")
-	public String getAllFitnessCenters(Model model) {
+	public ResponseEntity<String> getAllFitnessCenters(Model model) {
 		//model.addAttribute("imagePath", imagePath);
 		model.addAttribute("fitnessCenters", fitnessCenterService.viewAll());
-		return "/center/gymlist";
+		return ResponseEntity.ok("/center/gymlist");
 	}
 }
