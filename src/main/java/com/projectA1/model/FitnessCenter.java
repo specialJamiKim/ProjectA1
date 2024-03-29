@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,11 +32,17 @@ public class FitnessCenter {
     private String phoneNumber;
     private Long dailyPassPrice;
 
-    @DateTimeFormat(pattern = "HH:mm")
-    private LocalTime openTime;
-    @DateTimeFormat(pattern = "HH:mm")
-    private LocalTime closingTime;
+	/*
+	 * @DateTimeFormat(pattern = "HH:mm") private LocalTime openTime;
+	 * 
+	 * @DateTimeFormat(pattern = "HH:mm") private LocalTime closingTime;
+	 */
 
+    @JsonFormat(pattern = "HH:mm")
+    private LocalTime openTime;
+
+    @JsonFormat(pattern = "HH:mm")
+    private LocalTime closingTime;
     // 이미지 파일 경로 저장 변수 추가
     private String imagePath; // 예: "/static/img/filename.jpg"
 

@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.projectA1.config.auth.PrincipalUser;
 import com.projectA1.model.FitnessCenter;
 import com.projectA1.model.Owner;
@@ -51,12 +52,22 @@ public class M_FitnessCenterController {
 	private final ReviewService reviewService;
 
 	
+	
+	
 	// 테스트용 엔드포인트
-//	@GetMapping("/tototo")
-//	public ResponseEntity<Optional<FitnessCenter>> testSend(@RequestParam long num) {
-//		Optional<FitnessCenter> center = fitnessCenterService.findByCenter(num);
-//		return ResponseEntity.ok(center);
-//	}
+	@PostMapping("/gymList")
+	public ResponseEntity<FitnessCenter> testSend(@RequestParam Long id) {
+		System.out.println("서버응답완료");
+		Optional<FitnessCenter> center = fitnessCenterService.findByCenter(id);
+		FitnessCenter cen = center.get();
+		cen.setOwners(null);
+		return ResponseEntity.ok(cen);
+	}
+	
+	
+	
+	
+	
 	
 	
 //	@Value("${image.path}")
