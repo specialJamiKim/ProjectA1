@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -33,6 +34,7 @@ import com.projectA1.config.auth.PrincipalUser;
 import com.projectA1.model.FitnessCenter;
 import com.projectA1.model.Owner;
 import com.projectA1.model.Review;
+import com.projectA1.model.User;
 import com.projectA1.service.FitnessCenterService;
 import com.projectA1.service.OwnerService;
 import com.projectA1.service.ReviewService;
@@ -48,6 +50,15 @@ public class M_FitnessCenterController {
 	private final OwnerService ownerService;
 	private final ReviewService reviewService;
 
+	
+	// 테스트용 엔드포인트
+//	@GetMapping("/tototo")
+//	public ResponseEntity<Optional<FitnessCenter>> testSend(@RequestParam long num) {
+//		Optional<FitnessCenter> center = fitnessCenterService.findByCenter(num);
+//		return ResponseEntity.ok(center);
+//	}
+	
+	
 //	@Value("${image.path}")
 //	private String imagePath;
 
