@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
@@ -46,7 +47,23 @@ public class M_UserController {
 	private final ReservationService reservationService;
 	private final FitnessCenterService fitnessCenterService;
 	private final DiaryService diaryService;
+	
+	//유저 조회(email 사용)
+	@PostMapping("/userSelect")
+	public ResponseEntity<User> selecty(@RequestParam String email) {
+		return ResponseEntity.ok(userService.findByEmail(email));
+	}
+	
+	//로그인 된 인증객체 반환
+	@PostMapping("/getAuthUser")
+	public ResponseEntity<User> getAuthUser(@AuthenticationPrincipal PrincipalUser princialUser){
+		User user = (User) princialUser.getUser();
+		return ResponseEntity.ok(user);
+	}
 
+	////////// 안드로이드 용 추가 부분 ///////////////////////
+	///////////////////////////////////////////////////
+	///////////////////////////////////////////////////
 	// 사용자 추가 => 추가 후, 로그인 페이지
 	@PostMapping("join")
 	public ResponseEntity<String> join(@RequestBody User user) {
