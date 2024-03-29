@@ -65,11 +65,6 @@ public class M_FitnessCenterController {
 	}
 	
 	
-	
-	
-	
-	
-	
 //	@Value("${image.path}")
 //	private String imagePath;
 
