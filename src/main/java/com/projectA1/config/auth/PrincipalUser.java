@@ -89,7 +89,18 @@ public class PrincipalUser implements UserDetails {
         }
         return null;
     }
+    
+    // 추가된 메소드들
+    public String getAddress() {
+        if (user instanceof User) {
+            return ((User) user).getAddress();
+        } else if (user instanceof Owner) {
+            return ((Owner) user).getAddress();
+        }
+        return null;
+    }
 
+    
     @Override
     public boolean isAccountNonExpired() {
         return true;
