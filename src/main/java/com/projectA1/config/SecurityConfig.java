@@ -49,7 +49,9 @@ public class SecurityConfig {
         return (request, response, authentication) -> {
             PrincipalUser principalUser = (PrincipalUser) authentication.getPrincipal();
             response.setStatus(HttpServletResponse.SC_OK);
-            response.setContentType("application/json");
+            
+         // Content-Type을 설정하여 UTF-8 문자 인코딩을 사용
+            response.setContentType("application/json; charset=UTF-8");
             response.getWriter().write(convertObjectToJson(principalUser.getUser()));
         };
     }
@@ -93,7 +95,7 @@ public class SecurityConfig {
 				
 				//안드로이드 통신 시큐리티 적용때문에 사용하는 부분
 				.formLogin(login -> login
-					    .loginPage("/login/loginPage") // 로그인 페이지 URL 설정 (필요한 경우)
+					    .loginPage("/login/loginPage") // 로그인 페이지 URL 설정 (필요한 경우) => 안드로이드 앱 사용시 사용 안함
 					    .loginProcessingUrl("/loginPro") // 로그인 처리 URL 설정
 					    .usernameParameter("email").passwordParameter("password") // 요청에서 사용되는 파라미터 설정 (필요한 경우)
 		                .successHandler(successHandler())
