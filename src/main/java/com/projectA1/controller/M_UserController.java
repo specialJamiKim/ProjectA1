@@ -3,6 +3,7 @@ package com.projectA1.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -48,11 +49,23 @@ public class M_UserController {
 	private final FitnessCenterService fitnessCenterService;
 	private final DiaryService diaryService;
 	
-	//유저 조회(email 사용)
-	@PostMapping("/userSelect")
-	public ResponseEntity<User> selecty(@RequestParam String email) {
-		return ResponseEntity.ok(userService.findByEmail(email));
+	////////// 안드로이드 용 추가 부분 ///////////////////////
+	///////////////////////////////////////////////////
+	///////////////////////////////////////////////////
+	
+	// 회원가입 => 아이디 중복검사(email)
+	@PostMapping("/inquiryEmail")
+	public ResponseEntity<Void> checkEmailAvailability(@RequestParam String email) {
+	    User user = userService.findByEmail(email);
+	    if (user != null) {
+	        // 이미 존재하는 이메일이라면 HttpStatus.CONFLICT(409) 반환
+	        return ResponseEntity.status(HttpStatus.CONFLICT).build();
+	    } else {
+	        // 이메일이 존재하지 않으면 HttpStatus.OK(200) 반환
+	        return ResponseEntity.ok().build();
+	    }
 	}
+
 	
 	//로그인 된 인증객체 반환
 	@PostMapping("/getAuthUser")
@@ -61,9 +74,6 @@ public class M_UserController {
 		return ResponseEntity.ok(user);
 	}
 
-	////////// 안드로이드 용 추가 부분 ///////////////////////
-	///////////////////////////////////////////////////
-	///////////////////////////////////////////////////
 	// 사용자 추가 => 추가 후, 로그인 페이지
 	@PostMapping("join")
 	public ResponseEntity<String> join(@RequestBody User user) {
