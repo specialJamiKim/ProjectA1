@@ -53,6 +53,17 @@ public class M_UserController {
 	///////////////////////////////////////////////////
 	///////////////////////////////////////////////////
 	
+	// 사용자 정보 조회
+    @GetMapping("/user-info")
+    public ResponseEntity<User> getUserInfo(@RequestParam String email) {
+        User user = userService.findByEmail(email);
+        if (user != null) {
+            return ResponseEntity.ok(user);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+	
 	// 회원가입 => 아이디 중복검사(email)
 	@PostMapping("/inquiryEmail")
 	public ResponseEntity<Void> checkEmailAvailability(@RequestParam String email) {
