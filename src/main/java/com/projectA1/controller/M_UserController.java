@@ -9,14 +9,12 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.projectA1.config.auth.PrincipalUser;
 import com.projectA1.model.Reservation;
 import com.projectA1.model.User;
@@ -27,8 +25,7 @@ import com.projectA1.service.ReservationService;
 import com.projectA1.service.UserService;
 import com.projectA1.service.VisitCountingService;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -48,41 +45,69 @@ public class M_UserController {
 	private final ReservationService reservationService;
 	private final FitnessCenterService fitnessCenterService;
 	private final DiaryService diaryService;
-	
+
 	////////// 안드로이드 용 추가 부분 ///////////////////////
 	///////////////////////////////////////////////////
 	///////////////////////////////////////////////////
-	
+
+	// 로그인 된 인증객체 반환
+	public User getAuthUser(@AuthenticationPrincipal PrincipalUser princialUser) {
+		User user = (User) princialUser.getUser();
+		return user;
+	}
+
+	// 사용자 수정
+	@PutMapping("update")
+	@Transactional
+	public ResponseEntity<String> update(@RequestBody User updatedUser) {
+		User user = userService.findByEmail(updatedUser.getEmail());
+
+		// 업데이트 작업 수행
+		userService.update(user, updatedUser);
+		System.out.println("성공!!");
+		return ResponseEntity.ok("success");
+	}
+
+	/*
+	 * // 사용자 수정
+	 * 
+	 * @PutMapping("update")
+	 * 
+	 * @Transactional public ResponseEntity<String> update(@RequestBody User
+	 * updatedUser, HttpSession session) { // 세션에서 PrincipalUser 가져오기 PrincipalUser
+	 * principalUser = (PrincipalUser) session.getAttribute("user"); if
+	 * (principalUser != null) { // PrincipalUser에서 User 객체 가져오기 User user = (User)
+	 * principalUser.getUser();
+	 * 
+	 * // 업데이트 작업 수행 userService.update(user, updatedUser);
+	 * System.out.println("성공!!"); return ResponseEntity.ok("success"); } else { //
+	 * 세션에서 사용자 정보를 가져올 수 없는 경우 에러 응답 System.out.println("세션에서 사용자 정보를 가져올 수 없음");
+	 * return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized"); }
+	 * }
+	 */
+
 	// 사용자 정보 조회
-    @GetMapping("/user-info")
-    public ResponseEntity<User> getUserInfo(@RequestParam String email) {
-        User user = userService.findByEmail(email);
-        if (user != null) {
-            return ResponseEntity.ok(user);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-	
+	@PostMapping("/user-info")
+	public ResponseEntity<User> getUserInfo(@RequestParam String email) {
+		User user = userService.findByEmail(email);
+		if (user != null) {
+			return ResponseEntity.ok(user);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+
 	// 회원가입 => 아이디 중복검사(email)
 	@PostMapping("/inquiryEmail")
 	public ResponseEntity<Void> checkEmailAvailability(@RequestParam String email) {
-	    User user = userService.findByEmail(email);
-	    if (user != null) {
-	        // 이미 존재하는 이메일이라면 HttpStatus.CONFLICT(409) 반환
-	        return ResponseEntity.status(HttpStatus.CONFLICT).build();
-	    } else {
-	        // 이메일이 존재하지 않으면 HttpStatus.OK(200) 반환
-	        return ResponseEntity.ok().build();
-	    }
-	}
-
-	
-	//로그인 된 인증객체 반환
-	@PostMapping("/getAuthUser")
-	public ResponseEntity<User> getAuthUser(@AuthenticationPrincipal PrincipalUser princialUser){
-		User user = (User) princialUser.getUser();
-		return ResponseEntity.ok(user);
+		User user = userService.findByEmail(email);
+		if (user != null) {
+			// 이미 존재하는 이메일이라면 HttpStatus.CONFLICT(409) 반환
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+		} else {
+			// 이메일이 존재하지 않으면 HttpStatus.OK(200) 반환
+			return ResponseEntity.ok().build();
+		}
 	}
 
 	// 사용자 추가 => 추가 후, 로그인 페이지
@@ -115,47 +140,11 @@ public class M_UserController {
 		return ResponseEntity.ok("/user/mypage");
 	}
 
-	// 사용자 정보수정폼(조회)
-	@GetMapping("updateForm")
-	public ResponseEntity<User> updateForm(@AuthenticationPrincipal PrincipalUser principalUser) {
-		// 로그인된 사용자의 정보를 가져옵니다.
-		User user = (User) principalUser.getUser();
-		return ResponseEntity.ok().body(user);
-	}
-
-	// 사용자 정보수정 => ajax 비동기 처리
-	@PostMapping("update")
-	// updateUser -> ajax 받아온 데이터 user
-	public ResponseEntity<User> update(@AuthenticationPrincipal PrincipalUser principalUser,
-			@RequestBody User updateUser) {
-		User currentUser = (User) principalUser.getUser();
-		userService.update(currentUser, updateUser);
-		return ResponseEntity.ok().body(currentUser);
-	}
-
-	// 사용자 회원탈퇴
-	@Transactional
-	@DeleteMapping("delete")
-	public ResponseEntity<String> delete(@AuthenticationPrincipal PrincipalUser principalUser,
-			HttpServletRequest request, HttpServletResponse response) {
-		User user = (User) principalUser.getUser();
-
-		userService.delete(user.getEmail());
-		return ResponseEntity.ok("success");
-	}
-
-	// 테스트용임 지워도 됩니다.
-	private Gson gson = new GsonBuilder().create();
-
-	// 테스트용 엔드포인트
-	@GetMapping("/tototo")
-	public ResponseEntity<String> testSend() {
-		User user = new User();
-		user.setName("kimkim");
-		user.setEmail("kdsf@gmail.com");
-		user.setAddress("주소");
-		String json = gson.toJson(user);
-		return ResponseEntity.ok(json);
+	// 사용자 삭제
+	@DeleteMapping("/deleteUser")
+	public ResponseEntity<Void> deleteUser(@RequestParam String email) {
+		userService.delete(email);
+		return ResponseEntity.ok().build();
 	}
 
 }
