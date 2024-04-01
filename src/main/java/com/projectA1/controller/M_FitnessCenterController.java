@@ -51,18 +51,17 @@ public class M_FitnessCenterController {
 	private final OwnerService ownerService;
 	private final ReviewService reviewService;
 
-	
-	
-	
-	// 테스트용 엔드포인트
-	@PostMapping("/gymList")
-	public ResponseEntity<FitnessCenter> testSend(@RequestParam Long id) {
-		System.out.println("서버응답완료");
-		Optional<FitnessCenter> center = fitnessCenterService.findByCenter(id);
-		FitnessCenter cen = center.get();
-		cen.setOwners(null);
-		return ResponseEntity.ok(cen);
-	}
+	@GetMapping("/gymList")
+    public ResponseEntity<?> getGymList() {
+        System.out.println("서버 응답 완료");
+        List<FitnessCenter> centerList = fitnessCenterService.findByCenter2();
+       
+        // FitnessCenter 목록이 비어 있는지 확인
+        for(int i = 0 ; i < centerList.size(); i++) {
+           centerList.get(i).setOwners(null);
+        }
+        return ResponseEntity.ok(centerList);//
+    }
 	
 	
 //	@Value("${image.path}")

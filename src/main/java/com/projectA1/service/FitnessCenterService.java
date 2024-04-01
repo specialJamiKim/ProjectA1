@@ -22,6 +22,11 @@ public class FitnessCenterService {
 
 	private final FitnessCenterRepository fitnessCenterRepository;
 
+	
+	public List<FitnessCenter> findByCenter2() {
+	       return fitnessCenterRepository.findAll();
+	   }
+	
 	// 오너 id 이용, 센터이름 찾기
 	public String findByCenterName(Long id) {
 		FitnessCenter center = fitnessCenterRepository.findById(id).get();
