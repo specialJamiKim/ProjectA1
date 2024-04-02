@@ -35,28 +35,28 @@ public class ReservationController {
 	private final VisitCountingService visitCountingService; // 방문횟수 저장
 
 	// 예약 등록
-	@PostMapping("create")
-	@ResponseBody
-	public String createReservation(@AuthenticationPrincipal PrincipalUser principalUser, @RequestParam Long centerId) {
-		// 센터 아이디를 이용하여 예약 객체 생성
-		Reservation reservation = new Reservation();
-
-		// 유저id 객체 생성
-		User user = (User) principalUser.getUser();
-		// 센터 아이디 설정
-		FitnessCenter center = new FitnessCenter();
-		// 시간 설정
-		Date currentTime = new Date();
-		center.setId(centerId);
-		reservation.setUser(user);
-		reservation.setCenter(center);
-		reservation.setReservationTime(currentTime);
-
-		// 예약 서비스를 통해 예약 생성
-		reservationService.create(reservation);
-
-		return "success";
-	}
+//	@PostMapping("create")
+//	@ResponseBody
+//	public String createReservation(@AuthenticationPrincipal PrincipalUser principalUser, @RequestParam Long centerId) {
+//		// 센터 아이디를 이용하여 예약 객체 생성
+//		Reservation reservation = new Reservation();
+//
+//		// 유저id 객체 생성
+//		User user = (User) principalUser.getUser();
+//		// 센터 아이디 설정
+//		FitnessCenter center = new FitnessCenter();
+//		// 시간 설정
+//		Date currentTime = new Date();
+//		center.setId(centerId);
+//		reservation.setUser(user);
+//		reservation.setCenter(center);
+//		reservation.setReservationTime(currentTime);
+//
+//		// 예약 서비스를 통해 예약 생성
+//		reservationService.create(reservation);
+//
+//		return "success";
+//	}
 	
 	
 

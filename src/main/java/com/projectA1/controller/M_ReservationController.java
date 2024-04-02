@@ -5,24 +5,20 @@ import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.projectA1.config.auth.PrincipalUser;
 import com.projectA1.model.FitnessCenter;
-import com.projectA1.model.Owner;
 import com.projectA1.model.Reservation;
 import com.projectA1.model.User;
 import com.projectA1.model.VisitCounting;
-import com.projectA1.repository.VisitCountingRepository;
 import com.projectA1.service.ReservationService;
 import com.projectA1.service.VisitCountingService;
 
@@ -36,31 +32,21 @@ public class M_ReservationController {
 	private final ReservationService reservationService;
 	private final VisitCountingService visitCountingService; // 방문횟수 저장
 
-	// 예약 등록
-	@PostMapping("create")
-	public ResponseEntity<String> createReservation(@AuthenticationPrincipal PrincipalUser principalUser, @RequestParam Long centerId) {
-		
-		// 센터 아이디를 이용하여 예약 객체 생성
-		Reservation reservation = new Reservation();
-
-		// 유저id 객체 생성
-		User user = (User) principalUser.getUser();
-		
-		// 센터 아이디 설정
-		FitnessCenter center = new FitnessCenter();
-		
-		// 시간 설정
-		Date currentTime = new Date();
-		center.setId(centerId);
-		reservation.setUser(user);
-		reservation.setCenter(center);
-		reservation.setReservationTime(currentTime);
-
-		// 예약 서비스를 통해 예약 생성
-		reservationService.create(reservation);
-
-		return ResponseEntity.ok("success");
-	}
+	   // 예약 등록
+	   @PostMapping("create")
+	   public ResponseEntity<String> createReservation(@RequestBody Reservation reservation) {
+//	      Date reservationTime = parseDateString(reservation.getReservationTime().toString());
+//	      reservation.setReservationTime(reservationTime);
+	      // 예약 서비스를 통해 예약 생성
+		   System.out.println(reservation.getId());
+		   System.out.println(reservation.getCenter().getId());
+		   System.out.println(reservation.getUser().getId());
+		   System.out.println(reservation.getReservationTime());
+	      reservationService.create(reservation);
+	      return ResponseEntity.ok("success");
+	   }
+	
+	
 
 	// 예약지점 상세보기
 	@GetMapping("view/{reservationId}")
