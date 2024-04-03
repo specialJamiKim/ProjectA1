@@ -35,25 +35,26 @@ public class M_ReviewController {
 	private final ReviewService reviewService;
 	private final FitnessCenterService fitnessCenterService;
 	private final UserService userService;
-		
+
 	// 댓글 추가
 	@PostMapping("add")
-	public ResponseEntity<String> addReview(@RequestBody ReviewData reviewData) {		
-		
-	        // 사용자 ID와 센터 ID로 User 및 FitnessCenter 객체 조회
-	        User user = userService.findById(reviewData.getUserId()).get();
-	        FitnessCenter center = fitnessCenterService.findByCenter(reviewData.getCenterId()).get();
+	public ResponseEntity<String> addReview(@RequestBody ReviewData review) {
+		System.out.println("텍스트 >> " + review.getReviewText());
+		System.out.println("userid >> " + review.getUserId());
+		System.out.println("centerid >> " + review.getCenterId());
 
-	        // Review 객체 생성
-	        Review review = new Review();
-	        review.setRating(reviewData.getRating());
-	        review.setReviewText(reviewData.getReviewText());
-	        review.setUser(user);
-	        review.setCenter(center);
-	        
-	        // Review 저장
-	        reviewService.addReview(review);
-	        return ResponseEntity.ok("success");
+		User user = userService.findById(review.getUserId()).orElse(null);
+		FitnessCenter center = fitnessCenterService.findByCenter(review.getCenterId()).orElse(null);
+		
+		Review saveReview = new Review();
+		
+		saveReview.setUser(user);
+		saveReview.setCenter(center);
+		saveReview.setRating(5);
+		saveReview.setReviewText(review.getReviewText());
+		// Review 저장
+		reviewService.addReview(saveReview);
+		return ResponseEntity.ok("success");
 	}
 
 	// 댓글 삭제

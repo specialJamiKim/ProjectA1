@@ -99,7 +99,7 @@ public class M_UserController {
 
 	// 회원가입 => 아이디 중복검사(email)
 	@PostMapping("/inquiryEmail")
-	public ResponseEntity<Void> checkEmailAvailability(@RequestParam String email) {
+	public ResponseEntity<User> checkEmailAvailability(@RequestParam String email) {
 		User user = userService.findByEmail(email);
 		if (user != null) {
 			// 이미 존재하는 이메일이라면 HttpStatus.CONFLICT(409) 반환
