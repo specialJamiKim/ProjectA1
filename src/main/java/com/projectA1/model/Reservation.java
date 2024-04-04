@@ -34,6 +34,7 @@ public class Reservation {
 
 //    @Temporal(TemporalType.TIMESTAMP)
 //    private Date reservationTime;
+    @JsonProperty("reservationTime")
     private String reservationTime;
 
 }
