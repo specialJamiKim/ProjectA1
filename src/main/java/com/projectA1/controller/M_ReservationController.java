@@ -38,70 +38,64 @@ public class M_ReservationController {
 	// 예약 리스트 클라이언트 반환
 	@PostMapping("list")
 	public ResponseEntity<Result<Reservation>> getUserReservations(@RequestParam("userId") Long userId) {
-	    // 당일 날짜 카운팅
-	    int count = 0;
-	    // 현재 날짜 가져오기
-	       LocalDate today = LocalDate.now();
+		// 당일 날짜 카운팅
+		int count = 0;
+		// 현재 날짜 가져오기
+		LocalDate today = LocalDate.now();
 
-	        // 날짜를 yyyy-MM-dd 형식의 문자열로 변환하기
-	        String formattedDate = today.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-	    // 불러오기 예약들
-	    List<Reservation> reservations = reservationService.findByUserId(userId);
-	    // 당일예약 저장 리스트
-	    List<Reservation> todayReservations = new ArrayList<>();
-	    System.out.println(formattedDate);
-	    //for-each문사용
-	    for (Reservation reservation : reservations) {
-	    	System.out.println(reservation.getReservationTime());
-	        // 예약 시간이 오늘인 경우에만 리스트에 추가
-	        if (reservation.getReservationTime().equals(formattedDate)) {
-	            reservation.getCenter().setOwners(null);
-	            todayReservations.add(reservation);
-	            count++; // 당일 예약 수 증가
-	        }
-	    }
-	    System.out.println(count);
-	    // 당일예약 정보, 카운팅만 보냄
-	    Result<Reservation> result = new Result<>(todayReservations, count);
-	    return ResponseEntity.ok().body(result);
+		// 날짜를 yyyy-MM-dd 형식의 문자열로 변환하기
+		String formattedDate = today.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		// 불러오기 예약들
+		List<Reservation> reservations = reservationService.findByUserId(userId);
+		// 당일예약 저장 리스트
+		List<Reservation> todayReservations = new ArrayList<>();
+		System.out.println(formattedDate);
+		// for-each문사용
+		for (Reservation reservation : reservations) {
+			System.out.println(reservation.getReservationTime());
+			// 예약 시간이 오늘인 경우에만 리스트에 추가
+			if (reservation.getReservationTime().equals(formattedDate)) {
+				reservation.getCenter().setOwners(null);
+				todayReservations.add(reservation);
+				count++; // 당일 예약 수 증가
+			}
+		}
+		System.out.println(count);
+		// 당일예약 정보, 카운팅만 보냄
+		Result<Reservation> result = new Result<>(todayReservations, count);
+		return ResponseEntity.ok().body(result);
 	}
 
-
-	
-	//이너클래스 => 리스트 보내기 위함(get,set필요)
+	// 이너클래스 => 리스트 보내기 위함(get,set필요)
 	@Getter
 	@Setter
-	static class Result<T>{
+	static class Result<T> {
 		private T data;
 		private int count;
-		
+
 		@SuppressWarnings("unchecked")
 		public Result(List<Reservation> data, int count) {
 			this.data = (T) data;
 			this.count = count;
 		}
 	}
-	
+
 	/*
-	@PostMapping("list")
-	public ResponseEntity<String> getUserReservations(@RequestParam("userId") Long userId) throws JsonProcessingException {
-	    // userId를 이용하여 해당 사용자의 예약 리스트를 조회하고 반환하는 코드를 작성해야 합니다.
-	    List<Reservation> reservations = reservationService.findByUserId(userId); // 예약 리스트를 조회하는 코드 작성
-	    System.out.println(reservations.getClass());
-	    for(int i = 0; i < reservations.size(); i++) {
-	        System.out.println(reservations.get(i).getCenter().getName());
-	    }
-
-	    // Java 객체를 JSON 문자열로 변환
-	    ObjectMapper objectMapper = new ObjectMapper();
-	    String jsonReservations = objectMapper.writeValueAsString(reservations);
-
-	    // JSON 문자열을 ResponseEntity에 담아 반환
-	    return ResponseEntity.ok()
-	                         .contentType(MediaType.APPLICATION_JSON)
-	                         .body(jsonReservations);
-	}*/
-
+	 * @PostMapping("list") public ResponseEntity<String>
+	 * getUserReservations(@RequestParam("userId") Long userId) throws
+	 * JsonProcessingException { // userId를 이용하여 해당 사용자의 예약 리스트를 조회하고 반환하는 코드를 작성해야
+	 * 합니다. List<Reservation> reservations =
+	 * reservationService.findByUserId(userId); // 예약 리스트를 조회하는 코드 작성
+	 * System.out.println(reservations.getClass()); for(int i = 0; i <
+	 * reservations.size(); i++) {
+	 * System.out.println(reservations.get(i).getCenter().getName()); }
+	 * 
+	 * // Java 객체를 JSON 문자열로 변환 ObjectMapper objectMapper = new ObjectMapper();
+	 * String jsonReservations = objectMapper.writeValueAsString(reservations);
+	 * 
+	 * // JSON 문자열을 ResponseEntity에 담아 반환 return ResponseEntity.ok()
+	 * .contentType(MediaType.APPLICATION_JSON) .body(jsonReservations); }
+	 */
 
 	// 예약 등록
 	@PostMapping("create")
