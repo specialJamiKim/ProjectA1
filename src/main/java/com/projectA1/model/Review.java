@@ -25,6 +25,6 @@ public class Review {
     @JoinColumn(name = "centerId", nullable = false)
     private FitnessCenter center; //센터번호
 
-    private int rating; //평점
+    private Integer rating; //평점
     private String reviewText; // 후기
 }

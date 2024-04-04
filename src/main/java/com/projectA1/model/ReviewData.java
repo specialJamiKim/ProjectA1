@@ -3,7 +3,7 @@ package com.projectA1.model;
 public class ReviewData {
     private Long userId;
     private Long centerId;
-    private int rating;
+    private Integer rating;
     private String reviewText;
 
     // 생성자, 게터, 세터 등 필요한 메서드를 추가할 수 있음
@@ -28,11 +28,11 @@ public class ReviewData {
         this.centerId = centerId;
     }
 
-    public int getRating() {
+    public Integer getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(Integer rating) {
         this.rating = rating;
     }
 
