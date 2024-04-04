@@ -1,6 +1,7 @@
 package com.projectA1.controller;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
@@ -32,21 +33,33 @@ public class M_ReservationController {
 	private final ReservationService reservationService;
 	private final VisitCountingService visitCountingService; // 방문횟수 저장
 
-	   // 예약 등록
-	   @PostMapping("create")
-	   public ResponseEntity<String> createReservation(@RequestBody Reservation reservation) {
+	// 예약 리스트 클라이언트 반환
+	@PostMapping("/list")
+	public ResponseEntity<List<Reservation>> getUserReservations(@RequestParam("userId") Long userId) {
+	    // userId를 이용하여 해당 사용자의 예약 리스트를 조회하고 반환하는 코드를 작성해야 합니다.
+	    List<Reservation> reservations = reservationService.findByUserId(userId); // 예약 리스트를 조회하는 코드 작성
+
+	    for(int i = 0; i < reservations.size(); i++) {
+	        System.out.println(reservations.get(i).getCenter().getName());
+	    }
+
+	    return ResponseEntity.ok(reservations);
+	}
+
+
+	// 예약 등록
+	@PostMapping("create")
+	public ResponseEntity<String> createReservation(@RequestBody Reservation reservation) {
 //	      Date reservationTime = parseDateString(reservation.getReservationTime().toString());
 //	      reservation.setReservationTime(reservationTime);
-	      // 예약 서비스를 통해 예약 생성
-		   System.out.println(reservation.getId());
-		   System.out.println(reservation.getCenter().getId());
-		   System.out.println(reservation.getUser().getId());
-		   System.out.println(reservation.getReservationTime());
-	      reservationService.create(reservation);
-	      return ResponseEntity.ok("success");
-	   }
-	
-	
+		// 예약 서비스를 통해 예약 생성
+		System.out.println(reservation.getId());
+		System.out.println(reservation.getCenter().getId());
+		System.out.println(reservation.getUser().getId());
+		System.out.println(reservation.getReservationTime());
+		reservationService.create(reservation);
+		return ResponseEntity.ok("success");
+	}
 
 	// 예약지점 상세보기
 	@GetMapping("view/{reservationId}")
@@ -89,7 +102,7 @@ public class M_ReservationController {
 		FitnessCenter center = reservation.get().getCenter();
 
 		// 유저와 센터 기록 존재 여부 파악위함
-		VisitCounting visitCounting  = new VisitCounting(user, center);
+		VisitCounting visitCounting = new VisitCounting(user, center);
 
 //		// 예약한 기록이 있다면 카운트 +1 만 추가해주기
 //		if (visitCounting != null) {

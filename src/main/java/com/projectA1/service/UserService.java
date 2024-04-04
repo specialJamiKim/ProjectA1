@@ -57,7 +57,7 @@ public class UserService {
 	@Transactional
 	public void update(User currentUser, User updateUser) {
         // 새로운 비밀번호가 입력되었는지 확인
-   /*     if (!updateUser.getPassword().isEmpty()) {
+       if (!updateUser.getPassword().isEmpty()) {
             // 입력된 새로운 비밀번호가 현재 비밀번호와 같은지 확인
             if (passwordEncoder.matches(updateUser.getPassword(), currentUser.getPassword())) {
                 // 현재 비밀번호와 새로운 비밀번호가 같으면 오류 처리
@@ -65,7 +65,7 @@ public class UserService {
             }
              //새로운 비밀번호를 암호화하여 저장
             currentUser.setPassword(encodePassword(updateUser.getPassword()));
-        }*/
+        }
 		
 		currentUser.setName(updateUser.getName());
 		currentUser.setPhoneNumber(updateUser.getPhoneNumber());
