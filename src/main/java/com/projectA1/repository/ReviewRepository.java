@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.projectA1.model.Review;
+import com.projectA1.model.ReviewData;
 
 @Repository
 public interface ReviewRepository extends JpaRepository<Review,Long>{
@@ -18,4 +19,6 @@ public interface ReviewRepository extends JpaRepository<Review,Long>{
 	//리뷰 전체가져오기
 	List<Review> findByCenterId(Long id);
 	Page<Review> findByCenterId(Long centerId, Pageable pageable);
+	
+	
 }

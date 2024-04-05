@@ -1,5 +1,6 @@
 package com.projectA1.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -42,6 +43,7 @@ public class M_ReviewController {
 		System.out.println("텍스트 >> " + review.getReviewText());
 		System.out.println("userid >> " + review.getUserId());
 		System.out.println("centerid >> " + review.getCenterId());
+		System.out.println(review.getRating());
 
 		User user = userService.findById(review.getUserId()).orElse(null);
 		FitnessCenter center = fitnessCenterService.findByCenter(review.getCenterId()).orElse(null);
@@ -50,7 +52,7 @@ public class M_ReviewController {
 		
 		saveReview.setUser(user);
 		saveReview.setCenter(center);
-		saveReview.setRating(5);
+		saveReview.setRating(review.getRating());
 		saveReview.setReviewText(review.getReviewText());
 		// Review 저장
 		reviewService.addReview(saveReview);
@@ -86,11 +88,27 @@ public class M_ReviewController {
 	}*/
 	
 	@GetMapping("all/{centerId}")
-	public ResponseEntity<List<ReviewData>> getAllReviews(@PathVariable Long centerId) {
-		
-		List<Review> reviews = reviewService.getAllReviews(centerId);
-		return null;
-		//return ResponseEntity.ok().body(reviews);
-	}
+    public ResponseEntity<?> getAllReviews(@PathVariable Long centerId) {
+       
+       List<Review> reviews = reviewService.findByCenterId(centerId);
+       
+       List<ReviewData> reviewDatas = new ArrayList<>();
+       int i = 0;
+       for (Review review : reviews) {
+    	   ReviewData r = new ReviewData(reviews.get(i).getUser().getId(), 
+    			   reviews.get(i).getCenter().getId(),
+    			   reviews.get(i).getRating(),
+    			   reviews.get(i).getReviewText());
+    	   reviewDatas.add(r);
+    	}
+       System.out.println("요청옴");
+       
+       for(ReviewData r : reviewDatas) {
+    	   System.out.println(r.getReviewText());
+       }
+       
+       return  ResponseEntity.ok(reviewDatas);
+       //return ResponseEntity.ok().body(reviews);
+    }
 
 }
