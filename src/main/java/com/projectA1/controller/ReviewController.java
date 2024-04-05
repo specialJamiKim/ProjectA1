@@ -82,7 +82,8 @@ public class ReviewController {
 	// 댓글 전체보기
 	@GetMapping("all")
 	public List<Review> getAllReviews() {
-	    return reviewService.getAllReviews();
+		return null;
+	    //return reviewService.getAllReviews();
 	}
 
 }

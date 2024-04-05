@@ -39,8 +39,8 @@ public class ReviewService {
 	    }
 
 
-	    public List<Review> getAllReviews() {
-	        return reviewRepository.findAll();
+	    public List<Review> getAllReviews(Long centerId) {
+	        return reviewRepository.findAllByCenterId(centerId);
 	    }
 
 

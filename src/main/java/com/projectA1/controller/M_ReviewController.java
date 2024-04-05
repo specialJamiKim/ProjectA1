@@ -79,10 +79,18 @@ public class M_ReviewController {
 	}
 
 	// 댓글 전체보기
-	@GetMapping("all")
+/*	@GetMapping("all")
 	public ResponseEntity<List<Review>> getAllReviews() {
 		List<Review> reviews = reviewService.getAllReviews();
 		return ResponseEntity.ok().body(reviews);
+	}*/
+	
+	@GetMapping("all/{centerId}")
+	public ResponseEntity<List<ReviewData>> getAllReviews(@PathVariable Long centerId) {
+		
+		List<Review> reviews = reviewService.getAllReviews(centerId);
+		return null;
+		//return ResponseEntity.ok().body(reviews);
 	}
 
 }
