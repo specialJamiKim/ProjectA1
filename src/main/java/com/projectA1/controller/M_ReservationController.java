@@ -80,6 +80,43 @@ public class M_ReservationController {
 		}
 	}
 
+	// 예약 취소
+	@PostMapping("delete")
+	public ResponseEntity<String> delete(@RequestParam Long reservationId) {
+		reservationService.delete(reservationId);
+		return ResponseEntity.ok("success");
+	}
+
+	// 예약 사용함(임시로 만들어둔 버튼)
+	@PostMapping("used")
+	public ResponseEntity<String> used(@RequestParam Long reservationId) {
+		Optional<Reservation> reservation = reservationService.findReservation(reservationId);
+		User user = reservation.get().getUser();
+		FitnessCenter center = reservation.get().getCenter();
+
+		// 유저와 센터 기록 존재 여부 파악위함
+		VisitCounting visitCounting = new VisitCounting(user, center);
+
+		/*
+		// 예약한 기록이 있다면 카운트 +1 만 추가해주기
+		if (visitCounting != null) {
+			int count = visitCounting.getVisitCount();
+			visitCounting.setVisitCount(count + 1);
+		} else
+		// 아니라면 새롭게 만들어서 추가해주기
+		{
+			visitCounting = new VisitCounting(user, center, count + 1);
+		}*/
+
+		// 방문기록
+		visitCountingService.visit(visitCounting);
+		// 예약기록 삭제
+		System.out.println(reservationId);
+		reservationService.delete(reservationId);
+		System.out.println("수행완료");
+		return ResponseEntity.ok("success");
+	}
+
 	/*
 	 * @PostMapping("list") public ResponseEntity<String>
 	 * getUserReservations(@RequestParam("userId") Long userId) throws
@@ -113,13 +150,6 @@ public class M_ReservationController {
 		return ResponseEntity.ok("redirect:/reservation/view");
 	}
 
-	// 예약 취소
-	@GetMapping("delete/{reservationId}")
-	public ResponseEntity<String> delete(@PathVariable Long reservationId) {
-		reservationService.delete(reservationId);
-		return ResponseEntity.ok("redirect:/user/mypage");
-	}
-
 	// 예약 수정폼(모달로 처리)
 //	@GetMapping("update/{reservationId}")
 //	public String update(@PathVariable Long reservationId, Model model) {
@@ -138,34 +168,5 @@ public class M_ReservationController {
 //		reservationService.create(reservation.get());
 //		return "success";
 //	}
-
-	// 예약 사용함(임시로 만들어둔 버튼)
-	@PostMapping("used")
-	public ResponseEntity<String> used(@RequestParam Long reservationId) {
-//		Optional<Reservation> reservation = reservationService.findReservation(reservationId);
-//		User user = reservation.get().getUser();
-//		FitnessCenter center = reservation.get().getCenter();
-
-//		// 유저와 센터 기록 존재 여부 파악위함
-//		VisitCounting visitCounting = new VisitCounting(user, center);
-//
-//		// 예약한 기록이 있다면 카운트 +1 만 추가해주기
-//		if (visitCounting != null) {
-//			int count = visitCounting.getVisitCount();
-//			visitCounting.setVisitCount(count + 1);
-//		} else
-//		// 아니라면 새롭게 만들어서 추가해주기
-//		{
-//			visitCounting = new VisitCounting(user, center, count + 1);
-//		}
-
-		// 방문기록
-	//	visitCountingService.visit(visitCounting);
-		// 예약기록 삭제
-		System.out.println(reservationId);
-		reservationService.delete(reservationId);
-		System.out.println("수행완료");
-		return ResponseEntity.ok("success");
-	}
 
 }
