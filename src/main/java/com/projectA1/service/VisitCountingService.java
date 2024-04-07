@@ -19,7 +19,7 @@ public class VisitCountingService {
 	private final VisitCountingRepository visitCountingRepository;
 
 	// userId로 해당 center 몇번 방문했는지
-	public int visitCounting(Long userId) {
+	public Long visitCounting(Long userId) {
 		return visitCountingRepository.countByUserId(userId);
 	}
 

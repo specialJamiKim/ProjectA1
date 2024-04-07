@@ -40,7 +40,7 @@ public class M_ReservationController {
 	public ResponseEntity<Result<Reservation>> getUserReservations(@RequestParam("userId") Long userId) {
 		// 당일 날짜 카운팅
 		int count = 0;
-		// 현재 날짜 가져오기
+	/*	// 현재 날짜 가져오기
 		LocalDate today = LocalDate.now();
 
 		// 날짜를 yyyy-MM-dd 형식의 문자열로 변환하기
@@ -61,8 +61,14 @@ public class M_ReservationController {
 			}
 		}
 		System.out.println(count);
+		*/
+		List<Reservation> reservations = reservationService.findByUserId(userId);
+		for(Reservation reservation : reservations) {
+			reservation.getCenter().setOwners(null);
+		}
+		
 		// 당일예약 정보, 카운팅만 보냄
-		Result<Reservation> result = new Result<>(todayReservations, count);
+		Result<Reservation> result = new Result<>(reservations, count);
 		return ResponseEntity.ok().body(result);
 	}
 
