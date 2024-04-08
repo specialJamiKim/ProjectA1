@@ -11,6 +11,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.projectA1.model.Reservation;
+import com.projectA1.model.User;
 import com.projectA1.repository.ReservationRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -95,6 +96,11 @@ public class ReservationService {
 	public Optional<Reservation> findReservation(Long reservationId) {
 		// TODO Auto-generated method stub
 		return reservationRepository.findById(reservationId);
+	}
+
+	public void deleteByUserId(User user) {
+		reservationRepository.deleteByUser(user);
+		
 	}
 
 }

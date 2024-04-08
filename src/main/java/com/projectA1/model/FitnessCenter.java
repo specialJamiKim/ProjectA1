@@ -2,9 +2,8 @@
 package com.projectA1.model;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
-
-import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -77,7 +76,5 @@ public class FitnessCenter {
     @JsonFormat
     @OneToMany(mappedBy = "fitnessCenter", cascade = CascadeType.PERSIST)
     private List<Owner> owners;
-
-    // 다른 코드는 생략합니다.
 }
 

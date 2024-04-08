@@ -2,7 +2,6 @@ package com.projectA1.service;
 
 import java.util.List;
 
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import com.projectA1.model.FitnessCenter;
@@ -10,6 +9,7 @@ import com.projectA1.model.User;
 import com.projectA1.model.VisitCounting;
 import com.projectA1.repository.VisitCountingRepository;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -35,5 +35,11 @@ public class VisitCountingService {
 	public List<Object[]> findTop3VisitedCenters(Long userId) {
 		return visitCountingRepository.findTop3VisitedCenters(userId);
 	}
+	
+    // 사용자 ID에 해당하는 방문 기록 삭제
+    @Transactional
+    public void deleteByUserId(User user) {
+        visitCountingRepository.deleteByUser(user);
+    }
 
 }

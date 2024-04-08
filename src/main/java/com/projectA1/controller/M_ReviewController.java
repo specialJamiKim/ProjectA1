@@ -2,17 +2,17 @@ package com.projectA1.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.projectA1.model.FitnessCenter;
@@ -23,7 +23,6 @@ import com.projectA1.service.FitnessCenterService;
 import com.projectA1.service.ReviewService;
 import com.projectA1.service.UserService;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -59,12 +58,16 @@ public class M_ReviewController {
 		return ResponseEntity.ok("success");
 	}
 
+	
 	// 댓글 삭제
-	@GetMapping("/delete/{id}")
+	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<String> deleteReview(@PathVariable Long id) {
+		System.out.println("리뷰 아이디 >>" + id);
 		reviewService.deleteReview(id);
 		return ResponseEntity.ok("success");
 	}
+	
+	
 
 	// 댓글 수정폼
 	@GetMapping("/edit/{id}")
@@ -89,23 +92,21 @@ public class M_ReviewController {
 	
 	@GetMapping("all/{centerId}")
     public ResponseEntity<?> getAllReviews(@PathVariable Long centerId) {
-       
        List<Review> reviews = reviewService.findByCenterId(centerId);
        
        List<ReviewData> reviewDatas = new ArrayList<>();
        int i = 0;
        for (Review review : reviews) {
+    	   Optional<User> user = userService.findById(reviews.get(i).getUser().getId());
     	   ReviewData r = new ReviewData(reviews.get(i).getUser().getId(), 
     			   reviews.get(i).getCenter().getId(),
     			   reviews.get(i).getRating(),
-    			   reviews.get(i).getReviewText());
+    			   reviews.get(i).getReviewText(),
+    			   user.get().getName()
+    			   );
     	   reviewDatas.add(r);
+    	   i++;
     	}
-       System.out.println("요청옴");
-       
-       for(ReviewData r : reviewDatas) {
-    	   System.out.println(r.getReviewText());
-       }
        
        return  ResponseEntity.ok(reviewDatas);
        //return ResponseEntity.ok().body(reviews);

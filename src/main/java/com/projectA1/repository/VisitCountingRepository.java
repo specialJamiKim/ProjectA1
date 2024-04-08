@@ -29,5 +29,13 @@ public interface VisitCountingRepository extends JpaRepository<VisitCounting, Lo
 		       "LIMIT 3")
 		List<Object[]> findTop3VisitedCenters(Long userId);
 
+	//해당 id에 있는 예약 전부 삭제
+	void deleteAllById(Long id);
+
+	void deleteByUserId(Long id);
+	
+    // 사용자에 대한 방문 기록 삭제
+    void deleteByUser(User user);
+
 
 }

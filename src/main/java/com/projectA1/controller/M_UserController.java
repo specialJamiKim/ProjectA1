@@ -3,6 +3,8 @@ package com.projectA1.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.plaf.synth.SynthConstants;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -22,6 +24,7 @@ import com.projectA1.service.DiaryService;
 import com.projectA1.service.FitnessCenterService;
 import com.projectA1.service.OwnerService;
 import com.projectA1.service.ReservationService;
+import com.projectA1.service.ReviewService;
 import com.projectA1.service.UserService;
 import com.projectA1.service.VisitCountingService;
 
@@ -45,6 +48,7 @@ public class M_UserController {
 	private final ReservationService reservationService;
 	private final FitnessCenterService fitnessCenterService;
 	private final DiaryService diaryService;
+	private final ReviewService reviewService;
 
 	////////// 안드로이드 용 추가 부분 ///////////////////////
 	///////////////////////////////////////////////////
@@ -140,11 +144,48 @@ public class M_UserController {
 		return ResponseEntity.ok("/user/mypage");
 	}
 
+	
+	// 사용자 삭제
+/*	@DeleteMapping("/deleteUser")
+	@Transactional
+	public ResponseEntity<Void> deleteUser(@RequestParam String email) {
+		//이거 아예 새로 짜야함
+		//User user = userService.findByEmail(email);
+		//visitCountingService.deleteByUserId(user);
+		//reviewService.deleteByUserId(user);
+		userService.delete(email);
+		
+		return ResponseEntity.ok().build();
+	}*/
+	
 	// 사용자 삭제
 	@DeleteMapping("/deleteUser")
+	@Transactional
 	public ResponseEntity<Void> deleteUser(@RequestParam String email) {
-		userService.delete(email);
-		return ResponseEntity.ok().build();
+	    // 사용자 이메일을 사용하여 사용자 엔티티 조회
+	    User user = userService.findByEmail(email);
+	    System.out.println(user.getName());
+	    System.out.println(user.getEmail());
+	    System.out.println(user.getId());
+	    
+	    
+	    // 방문 기록 삭제
+	    visitCountingService.deleteByUserId(user);
+	    System.out.println("1번");   
+	    // 리뷰 삭제
+	    reviewService.deleteByUserId(user);
+	    System.out.println("2번");
+	    // 예약기록삭제
+	    reservationService.deleteByUserId(user);
+	    System.out.println("3번");
+	    // 사용자 삭제
+	    userService.delete(email);
+	    System.out.println("4번");
+	    
+	    return ResponseEntity.ok().build();
 	}
 
+
+	
+	
 }

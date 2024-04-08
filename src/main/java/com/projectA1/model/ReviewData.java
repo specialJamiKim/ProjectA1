@@ -5,18 +5,28 @@ public class ReviewData {
     private Long centerId;
     private Integer rating;
     private String reviewText;
+    private String userName;
 
     // 생성자, 게터, 세터 등 필요한 메서드를 추가할 수 있음
 
     // 생성자
-    public ReviewData(Long userId, Long centerId, Integer rating, String reviewText) {
+    public ReviewData(Long userId, Long centerId, Integer rating, String reviewText, String userName) {
     	this.userId = userId;
     	this.centerId = centerId;
     	this.rating = rating;
     	this.reviewText = reviewText;
+    	this.userName = userName;
     }
 
-    // 게터와 세터 메서드
+    public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	// 게터와 세터 메서드
     public Long getUserId() {
         return userId;
     }
