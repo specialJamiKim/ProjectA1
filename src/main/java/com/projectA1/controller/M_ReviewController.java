@@ -91,25 +91,26 @@ public class M_ReviewController {
 	}*/
 	
 	@GetMapping("all/{centerId}")
-    public ResponseEntity<?> getAllReviews(@PathVariable Long centerId) {
-       List<Review> reviews = reviewService.findByCenterId(centerId);
-       
-       List<ReviewData> reviewDatas = new ArrayList<>();
-       int i = 0;
-       for (Review review : reviews) {
-    	   Optional<User> user = userService.findById(reviews.get(i).getUser().getId());
-    	   ReviewData r = new ReviewData(reviews.get(i).getUser().getId(), 
-    			   reviews.get(i).getCenter().getId(),
-    			   reviews.get(i).getRating(),
-    			   reviews.get(i).getReviewText(),
-    			   user.get().getName()
-    			   );
-    	   reviewDatas.add(r);
-    	   i++;
-    	}
-       
-       return  ResponseEntity.ok(reviewDatas);
-       //return ResponseEntity.ok().body(reviews);
-    }
+	public ResponseEntity<?> getAllReviews(@PathVariable Long centerId) {
+	   List<Review> reviews = reviewService.findByCenterId(centerId);
+	   
+	   List<ReviewData> reviewDatas = new ArrayList<>();
+	   for (Review review : reviews) {
+	       Optional<User> user = userService.findById(review.getUser().getId());
+	       
+	       ReviewData r = new ReviewData(
+	               review.getId(),
+	               review.getUser().getId(),
+	               review.getCenter().getId(),
+	               review.getRating(),
+	               review.getReviewText(),
+	               user.get().getName()
+	       );
+	       reviewDatas.add(r);
+	   }
+	   
+	   return ResponseEntity.ok(reviewDatas);
+	}
+
 
 }

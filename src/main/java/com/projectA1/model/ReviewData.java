@@ -1,6 +1,7 @@
 package com.projectA1.model;
 
 public class ReviewData {
+	private Long id;
     private Long userId;
     private Long centerId;
     private Integer rating;
@@ -10,7 +11,8 @@ public class ReviewData {
     // 생성자, 게터, 세터 등 필요한 메서드를 추가할 수 있음
 
     // 생성자
-    public ReviewData(Long userId, Long centerId, Integer rating, String reviewText, String userName) {
+    public ReviewData(Long id, Long userId, Long centerId, Integer rating, String reviewText, String userName) {
+    	this.id = id;
     	this.userId = userId;
     	this.centerId = centerId;
     	this.rating = rating;
@@ -18,7 +20,15 @@ public class ReviewData {
     	this.userName = userName;
     }
 
-    public String getUserName() {
+    public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getUserName() {
 		return userName;
 	}
 
