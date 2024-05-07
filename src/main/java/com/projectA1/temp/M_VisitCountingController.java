@@ -1,4 +1,4 @@
-package com.projectA1.controller;
+package com.projectA1.temp;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
