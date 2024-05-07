@@ -3,6 +3,8 @@ package com.projectA1.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,7 +33,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Controller
-@RequestMapping("/user/*")	// 주소를 요청했을 때 모든 것에 반응
+@RequestMapping(value = "/user")	// 주소를 요청했을 때 모든 것에 반응
 @RequiredArgsConstructor
 public class UserController {
 
@@ -47,10 +49,10 @@ public class UserController {
 	
 	// 사용자 추가 => 추가 후, 로그인 페이지
 	@PostMapping("join")
-	public String join(@RequestBody User user) {
+	public ResponseEntity<String> join(@RequestBody User user) {
 	    // 사용자 이메일 중복 확인
 	    if (userService.existsByEmail(user.getEmail()) || ownerService.existsByEmail(user.getEmail())) {
-	    	return "fail"; // 중복된 이메일이 존재하는 경우 실패 반환
+	    	 return ResponseEntity.status(HttpStatus.CONFLICT).body("fail"); // 중복된 이메일이 존재하는 경우 실패 반환
 	    }else {
 		    // 사용자 역할 설정
 		    List<String> roles = new ArrayList<>();
@@ -60,7 +62,7 @@ public class UserController {
 		    // 사용자 추가
 		    userService.join(user);
 	    }	    
-	    return "success"; // 사용자 추가 성공 시 성공 반환
+        return ResponseEntity.ok("success"); // 사용자 추가 성공 시 성공 반환
 	}
 
 	// 사용자 마이페이지(상세보기) => 예약자 리스트도 표시

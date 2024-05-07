@@ -2,8 +2,6 @@ package com.projectA1.model;
 
 import java.util.Date;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -32,9 +30,7 @@ public class Reservation {
     @JoinColumn(name = "user_id")
     private User user;
 
-//    @Temporal(TemporalType.TIMESTAMP)
-//    private Date reservationTime;
-    @JsonProperty("reservationTime")
-    private String reservationTime;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date reservationTime;
 
 }
