@@ -189,6 +189,59 @@ public class FitnessCenterController {
 		return "redirect:/";
 	}
 
+	//체육관 상세보기
+	@GetMapping("/view/{id}")
+	public String view(@PathVariable Long id, @RequestParam(required = false, defaultValue = "0") Integer page,
+	        @RequestParam(required = false, defaultValue = "5") Integer size, Model model) {
+
+	    // 페이지 번호와 페이지 크기의 유효성 검사
+	    int pageNumber = page != null && page >= 0 ? page : 0;
+	    int pageSize = size != null && size > 0 ? size : 5;
+
+	    Pageable pageable = PageRequest.of(pageNumber, pageSize);
+	    Page<Review> reviewsPage = reviewService.findByCenterId(id, pageable);
+
+	    double avg = 0.0;
+	    int sum = 0;
+	    List<Review> reviews = reviewsPage.getContent(); // 페이지에 해당하는 후기 목록 가져오기
+
+	    for (Review review : reviews) {
+	        sum += review.getRating();
+	    }
+
+	    if (!reviews.isEmpty()) {
+	        avg = (double) sum / reviews.size();
+	    }
+
+	    int totalPages = reviewsPage.getTotalPages(); // 전체 페이지 수 가져오기
+
+	    int startPage;
+	    int endPage;
+	    if (totalPages <= 3) {
+	        startPage = 0;
+	        endPage = totalPages - 1;
+	    } else {
+	        startPage = Math.max(0, pageNumber / 3 * 3);
+	        endPage = Math.min(totalPages - 1, startPage + 2);
+	        if (endPage - startPage < 2) { // 페이지가 부족한 경우 보정
+	            startPage = Math.max(0, endPage - 2);
+	        }
+	    }
+
+	    model.addAttribute("avg", avg);
+	    model.addAttribute("reviews", reviews);
+	    model.addAttribute("fitnessCenter", fitnessCenterService.view(id));
+	    model.addAttribute("currentPage", pageNumber); // 수정된 부분
+	    model.addAttribute("totalPages", totalPages);
+	    model.addAttribute("startPage", startPage);
+	    model.addAttribute("endPage", endPage);
+
+	    return "center/gymview";
+	}
+
+
+	
+	/*
 	@GetMapping("/view/{id}")
 	public String view(@PathVariable Long id, @RequestParam(defaultValue = "0") String page,
 			@RequestParam(defaultValue = "5") String size, Model model) {
@@ -249,7 +302,7 @@ public class FitnessCenterController {
 		model.addAttribute("endPage", endPage);
 
 		return "center/gymview";
-	}
+	}*/
     
 	// 전체보기
 	@GetMapping("gymlist")

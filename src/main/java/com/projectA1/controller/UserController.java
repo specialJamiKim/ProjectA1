@@ -49,10 +49,11 @@ public class UserController {
 	
 	// 사용자 추가 => 추가 후, 로그인 페이지
 	@PostMapping("join")
-	public ResponseEntity<String> join(@RequestBody User user) {
+	@ResponseBody
+	public String join(@RequestBody User user) {
 	    // 사용자 이메일 중복 확인
 	    if (userService.existsByEmail(user.getEmail()) || ownerService.existsByEmail(user.getEmail())) {
-	    	 return ResponseEntity.status(HttpStatus.CONFLICT).body("fail"); // 중복된 이메일이 존재하는 경우 실패 반환
+	    	 return "fail";
 	    }else {
 		    // 사용자 역할 설정
 		    List<String> roles = new ArrayList<>();
@@ -62,7 +63,7 @@ public class UserController {
 		    // 사용자 추가
 		    userService.join(user);
 	    }	    
-        return ResponseEntity.ok("success"); // 사용자 추가 성공 시 성공 반환
+        return "success";
 	}
 
 	// 사용자 마이페이지(상세보기) => 예약자 리스트도 표시
