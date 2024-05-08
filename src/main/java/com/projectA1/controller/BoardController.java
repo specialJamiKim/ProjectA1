@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.projectA1.config.auth.PrincipalUser;
 import com.projectA1.model.Board;
 import com.projectA1.model.Diary;
+import com.projectA1.model.Owner;
+import com.projectA1.model.Person;
 import com.projectA1.model.User;
 import com.projectA1.service.BoardService;
 
@@ -78,15 +80,26 @@ public class BoardController {
 //		model.addAttribute("boards",boardService.list());
 //		return "board/list";
 //	}
+	
 	//상세보기
 	@GetMapping("view/{num}")
 	public String view(@AuthenticationPrincipal PrincipalUser principalUser  ,@PathVariable Long num,Model model) {
-		User user = (User) principalUser.getUser();
+		//여기서 문제임 이 부분 수정하면 됨
+		
+		Person user = null;
+		if(principalUser.getUser() instanceof User) {
+			user = (User) principalUser.getUser();
+		}else if(principalUser.getUser() instanceof Owner) {
+			user = (Owner) principalUser.getUser();
+		}
 		Long userId = user.getId();
 		model.addAttribute("Id", userId);
 		model.addAttribute("board",boardService.view(num));
 		return "board/view";
 	}
+	
+	
+	
 	//삭제
 	@GetMapping("delete/{num}")
 	@Transactional
