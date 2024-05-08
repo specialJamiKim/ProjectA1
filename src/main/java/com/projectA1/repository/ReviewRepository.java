@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.projectA1.model.Review;
@@ -26,6 +27,9 @@ public interface ReviewRepository extends JpaRepository<Review,Long>{
 	
     // 사용자에 대한 리뷰 삭제
     void deleteByUser(User user);
+    
+    // 해당 사용자의 해당 리뷰 삭제
+    void deleteByUserIdAndId(Long userId, Long id);
 	
 	
 }

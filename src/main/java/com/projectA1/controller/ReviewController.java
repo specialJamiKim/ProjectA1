@@ -56,12 +56,12 @@ public class ReviewController {
 	}
 
 	// 댓글 삭제
-	@GetMapping("/delete/{id}")
-	@ResponseBody
-	public String deleteReview(@PathVariable Long id) {
-		reviewService.deleteReview(id);
-		return "success";
-	}
+//	@GetMapping("/delete/{id}")
+//	@ResponseBody
+//	public String deleteReview(@PathVariable Long id) {
+//		reviewService.deleteReview(id);
+//		return "success";
+//	}
 
 	// 댓글 수정폼
 	@GetMapping("/edit/{id}")

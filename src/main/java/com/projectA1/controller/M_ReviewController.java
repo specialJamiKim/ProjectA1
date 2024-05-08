@@ -12,11 +12,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.projectA1.config.auth.PrincipalUser;
 import com.projectA1.model.FitnessCenter;
 import com.projectA1.model.Review;
+import com.projectA1.model.ReviewDTO;
 import com.projectA1.model.ReviewData;
 import com.projectA1.model.User;
 import com.projectA1.service.FitnessCenterService;
@@ -57,11 +58,32 @@ public class M_ReviewController {
 		reviewService.addReview(saveReview);
 		return ResponseEntity.ok("success");
 	}
-
+	
+	@DeleteMapping("/users/{userId}/reviews/{reviewId}")
+	public ResponseEntity<String> deleteReview(@PathVariable Long userId, @PathVariable Long reviewId) {
+	    System.out.println("댓글 삭제 요청 들어옴");
+	    System.out.println("유저 아이디 >>" + userId);
+	    System.out.println("리뷰 아이디 >>" + reviewId);
+	    reviewService.deleteReview(userId, reviewId);
+	    return ResponseEntity.ok("success");
+	}
+	
+/*	// 댓글 삭제
+	@DeleteMapping("delete")
+	public ResponseEntity<String> deleteReview(@RequestBody ReviewDTO reviewDTO) {
+		Long userId = reviewDTO.getUserId();
+		Long reviewId = reviewDTO.getReviewId();
+		System.out.println("댓글 삭제 요청 들어옴");
+		System.out.println("유저 아이디 >>" + userId);
+		System.out.println("리뷰 아이디 >>" + reviewId);
+		reviewService.deleteReview(userId, reviewId);
+		return ResponseEntity.ok("success");
+	}*/
+	
 	
 	// 댓글 삭제
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<String> deleteReview(@PathVariable Long id) {
+	public ResponseEntity<String> deleteReview(@PathVariable Long id) {	
 		System.out.println("리뷰 아이디 >>" + id);
 		reviewService.deleteReview(id);
 		return ResponseEntity.ok("success");
