@@ -41,43 +41,6 @@ public class ReservationService {
 	public void delete(Long reservationId) {
 		reservationRepository.deleteById(reservationId);
 	}
-	
-	//자정이 되면 전날 예약 삭제
-	// 매일 자정에 실행되는 메서드
-//    @Scheduled(cron = "0 0 0 * * *")
-//    public void deletePreviousDayReservations() {
-//        // 자정 전의 시간을 구합니다.
-//        LocalDateTime now = LocalDateTime.now();
-//        LocalDateTime midnight = LocalDateTime.of(LocalDate.now(), LocalTime.MIDNIGHT);
-//
-//        // 전날 자정 시간을 구합니다.
-//        LocalDateTime previousMidnight = midnight.minusDays(1);
-//
-//        // 전날 자정 이전의 예약들을 가져옵니다.
-//        List<Reservation> previousDayReservations = reservationRepository.findByReservationTimeBefore(previousMidnight);
-//
-//        // 가져온 예약들을 삭제합니다.
-//        reservationRepository.deleteAll(previousDayReservations);
-//    }
-	
-	//매일 자정에 실행되는 메서드
-	//  @Scheduled(cron = "0 0 0 * * *")
-	// 현재 시간에서 1분 뒤에 실행되는 메서드
-//	@Scheduled(fixedDelay = 120000) // 2분 = 120,000 밀리초
-//	public void deletePreviousDayReservations() {
-//	    // 현재 시간을 구합니다.
-//	    LocalDateTime now = LocalDateTime.now();
-//
-//	    // 1분 뒤의 시간을 계산합니다.
-//	    LocalDateTime oneMinuteLater = now.plusMinutes(1);
-//
-//	    // 예약들을 가져옵니다.
-//	    List<Reservation> reservations = reservationRepository.findByReservationTimeBefore(oneMinuteLater);
-//
-//	    // 가져온 예약들을 삭제합니다.
-//	    reservationRepository.deleteAll(reservations);
-//	}
-
 
     //유저의 예약확인
 	public List<Reservation> findByUserId(Long id) {

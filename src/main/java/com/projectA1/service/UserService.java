@@ -28,14 +28,7 @@ public class UserService {
         // 비밀번호 암호화
         return bCryptPasswordEncoder.encode(password);
     }
-    
-    private User isAutenticated(@RequestParam String email, @RequestParam String password) {
-        
-        return userRepository.findByEmailAndPassword(email,encodePassword(password));
-        
-     }
-    
-    
+
 	// user 로그인확인
 	public User findByEmail(String email) {
 		return userRepository.findByEmail(email);

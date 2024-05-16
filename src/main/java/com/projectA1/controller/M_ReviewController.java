@@ -14,10 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.projectA1.config.auth.PrincipalUser;
 import com.projectA1.model.FitnessCenter;
 import com.projectA1.model.Review;
-import com.projectA1.model.ReviewDTO;
 import com.projectA1.model.ReviewData;
 import com.projectA1.model.User;
 import com.projectA1.service.FitnessCenterService;
@@ -47,9 +45,9 @@ public class M_ReviewController {
 
 		User user = userService.findById(review.getUserId()).orElse(null);
 		FitnessCenter center = fitnessCenterService.findByCenter(review.getCenterId()).orElse(null);
-		
+
 		Review saveReview = new Review();
-		
+
 		saveReview.setUser(user);
 		saveReview.setCenter(center);
 		saveReview.setRating(review.getRating());
@@ -58,81 +56,71 @@ public class M_ReviewController {
 		reviewService.addReview(saveReview);
 		return ResponseEntity.ok("success");
 	}
-	
-	@DeleteMapping("/users/{userId}/reviews/{reviewId}")
-	public ResponseEntity<String> deleteReview(@PathVariable Long userId, @PathVariable Long reviewId) {
-	    System.out.println("댓글 삭제 요청 들어옴");
-	    System.out.println("유저 아이디 >>" + userId);
-	    System.out.println("리뷰 아이디 >>" + reviewId);
-	    reviewService.deleteReview(userId, reviewId);
-	    return ResponseEntity.ok("success");
-	}
-	
-/*	// 댓글 삭제
-	@DeleteMapping("delete")
-	public ResponseEntity<String> deleteReview(@RequestBody ReviewDTO reviewDTO) {
-		Long userId = reviewDTO.getUserId();
-		Long reviewId = reviewDTO.getReviewId();
-		System.out.println("댓글 삭제 요청 들어옴");
-		System.out.println("유저 아이디 >>" + userId);
-		System.out.println("리뷰 아이디 >>" + reviewId);
-		reviewService.deleteReview(userId, reviewId);
-		return ResponseEntity.ok("success");
-	}*/
-	
-	
+
 	// 댓글 삭제
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<String> deleteReview(@PathVariable Long id) {	
+	public ResponseEntity<String> deleteReview(@PathVariable Long id) {
 		System.out.println("리뷰 아이디 >>" + id);
 		reviewService.deleteReview(id);
 		return ResponseEntity.ok("success");
 	}
-	
-	
 
-	// 댓글 수정폼
-	@GetMapping("/edit/{id}")
-	public ResponseEntity<Review> editReview(@PathVariable Long id, Model model) {
-		Review review = reviewService.getReviewById(id);
-		return ResponseEntity.ok().body(review);
-	}
-
-	// 댓글 수정
-	@PostMapping("/edit")
-	public ResponseEntity<String> updateReview(@RequestBody Review review) {
-		reviewService.updateReview(review);
-		return ResponseEntity.ok("success");
-	}
-
-	// 댓글 전체보기
-/*	@GetMapping("all")
-	public ResponseEntity<List<Review>> getAllReviews() {
-		List<Review> reviews = reviewService.getAllReviews();
-		return ResponseEntity.ok().body(reviews);
-	}*/
-	
 	@GetMapping("all/{centerId}")
 	public ResponseEntity<?> getAllReviews(@PathVariable Long centerId) {
-	   List<Review> reviews = reviewService.findByCenterId(centerId);
-	   
-	   List<ReviewData> reviewDatas = new ArrayList<>();
-	   for (Review review : reviews) {
-	       Optional<User> user = userService.findById(review.getUser().getId());
-	       
-	       ReviewData r = new ReviewData(
-	               review.getId(),
-	               review.getUser().getId(),
-	               review.getCenter().getId(),
-	               review.getRating(),
-	               review.getReviewText(),
-	               user.get().getName()
-	       );
-	       reviewDatas.add(r);
-	   }
-	   
-	   return ResponseEntity.ok(reviewDatas);
+		List<Review> reviews = reviewService.findByCenterId(centerId);
+
+		List<ReviewData> reviewDatas = new ArrayList<>();
+		for (Review review : reviews) {
+			Optional<User> user = userService.findById(review.getUser().getId());
+
+			ReviewData r = new ReviewData(review.getId(), review.getUser().getId(), review.getCenter().getId(),
+					review.getRating(), review.getReviewText(), user.get().getName());
+			reviewDatas.add(r);
+		}
+
+		return ResponseEntity.ok(reviewDatas);
 	}
 
+//	@DeleteMapping("/users/{userId}/reviews/{reviewId}")
+//	public ResponseEntity<String> deleteReview(@PathVariable Long userId, @PathVariable Long reviewId) {
+//	    System.out.println("댓글 삭제 요청 들어옴");
+//	    System.out.println("유저 아이디 >>" + userId);
+//	    System.out.println("리뷰 아이디 >>" + reviewId);
+//	    reviewService.deleteReview(userId, reviewId);
+//	    return ResponseEntity.ok("success");
+//	}
+
+	/*
+	 * // 댓글 삭제
+	 * 
+	 * @DeleteMapping("delete") public ResponseEntity<String>
+	 * deleteReview(@RequestBody ReviewDTO reviewDTO) { Long userId =
+	 * reviewDTO.getUserId(); Long reviewId = reviewDTO.getReviewId();
+	 * System.out.println("댓글 삭제 요청 들어옴"); System.out.println("유저 아이디 >>" + userId);
+	 * System.out.println("리뷰 아이디 >>" + reviewId);
+	 * reviewService.deleteReview(userId, reviewId); return
+	 * ResponseEntity.ok("success"); }
+	 */
+
+//	// 댓글 수정폼
+//	@GetMapping("/edit/{id}")
+//	public ResponseEntity<Review> editReview(@PathVariable Long id, Model model) {
+//		Review review = reviewService.getReviewById(id);
+//		return ResponseEntity.ok().body(review);
+//	}
+//
+//	// 댓글 수정
+//	@PostMapping("/edit")
+//	public ResponseEntity<String> updateReview(@RequestBody Review review) {
+//		reviewService.updateReview(review);
+//		return ResponseEntity.ok("success");
+//	}
+
+	// 댓글 전체보기
+	/*
+	 * @GetMapping("all") public ResponseEntity<List<Review>> getAllReviews() {
+	 * List<Review> reviews = reviewService.getAllReviews(); return
+	 * ResponseEntity.ok().body(reviews); }
+	 */
 
 }

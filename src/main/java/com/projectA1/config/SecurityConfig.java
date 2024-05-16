@@ -88,19 +88,11 @@ public class SecurityConfig {
 				.requestMatchers("/img/**").permitAll().requestMatchers("/user/**").hasRole("USER")
 				.requestMatchers("/owner/**").hasRole("OWNER").anyRequest().authenticated())
 
-		// 되는 부분, 원래 웹서버랑 연동하는 부분입니다. 나중에 살려서 쓰시면 잘 동작함
-//				.formLogin(login -> login.loginPage("/login/loginPage") // 로그인 페이지 URL 설정
-//						.loginProcessingUrl("/loginPro") // 로그인 처리 URL 설정
-//						.usernameParameter("email").passwordParameter("password")
-//						.defaultSuccessUrl("/", true) // 로그인 성공 후 리다이렉트할 경로 설정
-//						.permitAll())
-
 				// 안드로이드 통신 시큐리티 적용때문에 사용하는 부분
-				.formLogin(login -> login.loginPage("/login/loginPage") // 로그인 페이지 URL 설정 (필요한 경우) => 안드로이드 앱 사용시 사용 안함
-						.loginProcessingUrl("/loginPro") // 로그인 처리 URL 설정
+				.formLogin(login -> login.loginProcessingUrl("/loginPro") // 로그인 처리 URL 설정
 						.usernameParameter("email").passwordParameter("password") // 요청에서 사용되는 파라미터 설정 (필요한 경우)
-						.successHandler(successHandler()).failureHandler(failureHandler()).permitAll()) // 모든 사용자에게 접근
-																										// 허용
+						.successHandler(successHandler()).failureHandler(failureHandler()).permitAll()) // 모든 사용자에게 접근 허용
+																										
 
 				.logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/") // 로그아웃 후 리다이렉트할 경로 설정
 						.invalidateHttpSession(true) // 세션 무효화

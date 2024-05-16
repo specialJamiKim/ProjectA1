@@ -1,15 +1,9 @@
 package com.projectA1.controller;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,38 +29,23 @@ public class M_ReservationController {
 	private final ReservationService reservationService;
 	private final VisitCountingService visitCountingService; // 방문횟수 저장
 
+	// 예약 등록
+	@PostMapping("create")
+	public ResponseEntity<String> createReservation(@RequestBody Reservation reservation) {
+		reservationService.create(reservation);
+		return ResponseEntity.ok("success");
+	}
+
 	// 예약 리스트 클라이언트 반환
 	@PostMapping("list")
 	public ResponseEntity<Result<Reservation>> getUserReservations(@RequestParam("userId") Long userId) {
 		// 당일 날짜 카운팅
 		int count = 0;
-	/*	// 현재 날짜 가져오기
-		LocalDate today = LocalDate.now();
-
-		// 날짜를 yyyy-MM-dd 형식의 문자열로 변환하기
-		String formattedDate = today.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-		// 불러오기 예약들
 		List<Reservation> reservations = reservationService.findByUserId(userId);
-		// 당일예약 저장 리스트
-		List<Reservation> todayReservations = new ArrayList<>();
-		System.out.println(formattedDate);
-		// for-each문사용
 		for (Reservation reservation : reservations) {
-			System.out.println(reservation.getReservationTime());
-			// 예약 시간이 오늘인 경우에만 리스트에 추가
-			if (reservation.getReservationTime().equals(formattedDate)) {
-				reservation.getCenter().setOwners(null);
-				todayReservations.add(reservation);
-				count++; // 당일 예약 수 증가
-			}
-		}
-		System.out.println(count);
-		*/
-		List<Reservation> reservations = reservationService.findByUserId(userId);
-		for(Reservation reservation : reservations) {
 			reservation.getCenter().setOwners(null);
 		}
-		
+
 		// 당일예약 정보, 카운팅만 보냄
 		Result<Reservation> result = new Result<>(reservations, count);
 		return ResponseEntity.ok().body(result);
@@ -103,17 +82,6 @@ public class M_ReservationController {
 		// 유저와 센터 기록 존재 여부 파악위함
 		VisitCounting visitCounting = new VisitCounting(user, center);
 
-		/*
-		// 예약한 기록이 있다면 카운트 +1 만 추가해주기
-		if (visitCounting != null) {
-			int count = visitCounting.getVisitCount();
-			visitCounting.setVisitCount(count + 1);
-		} else
-		// 아니라면 새롭게 만들어서 추가해주기
-		{
-			visitCounting = new VisitCounting(user, center, count + 1);
-		}*/
-
 		// 방문기록
 		visitCountingService.visit(visitCounting);
 		// 예약기록 삭제
@@ -140,21 +108,12 @@ public class M_ReservationController {
 	 * .contentType(MediaType.APPLICATION_JSON) .body(jsonReservations); }
 	 */
 
-	// 예약 등록
-	@PostMapping("create")
-	public ResponseEntity<String> createReservation(@RequestBody Reservation reservation) {
-//	      Date reservationTime = parseDateString(reservation.getReservationTime().toString());
-//	      reservation.setReservationTime(reservationTime);
-		reservationService.create(reservation);
-		return ResponseEntity.ok("success");
-	}
-
 	// 예약지점 상세보기
-	@GetMapping("view/{reservationId}")
-	public ResponseEntity<String> view(@PathVariable Long reservationId, Model model) {
-		model.addAttribute("reservation", reservationService.findReservation(reservationId));
-		return ResponseEntity.ok("redirect:/reservation/view");
-	}
+//	@GetMapping("view/{reservationId}")
+//	public ResponseEntity<String> view(@PathVariable Long reservationId, Model model) {
+//		model.addAttribute("reservation", reservationService.findReservation(reservationId));
+//		return ResponseEntity.ok("redirect:/reservation/view");
+//	}
 
 	// 예약 수정폼(모달로 처리)
 //	@GetMapping("update/{reservationId}")
