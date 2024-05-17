@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -58,10 +57,18 @@ public class M_ReviewController {
 	}
 
 	// 댓글 삭제
-	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<String> deleteReview(@PathVariable Long id) {
-		System.out.println("리뷰 아이디 >>" + id);
-		reviewService.deleteReview(id);
+//	@DeleteMapping("/delete/{id}")
+//	public ResponseEntity<String> deleteReview(@PathVariable Long id) {
+//		System.out.println("리뷰 아이디 >>" + id);
+//		reviewService.deleteReview(id);
+//		return ResponseEntity.ok("success");
+//	}
+	//댓글 삭제 수정 (ReviewData로 받음 => id, userid만 쓰면됨 나머지값 null)
+	@DeleteMapping("/delete/{reviewId}/{userId}")
+	public ResponseEntity<String> deleteReview(@PathVariable Long reviewId, @PathVariable Long userId) {
+		System.out.println("리뷰 아이디 >>" + reviewId);
+		System.out.println("유저 아이디 >>" + userId);
+		reviewService.deleteReview(reviewId, userId);
 		return ResponseEntity.ok("success");
 	}
 

@@ -26,9 +26,11 @@ public class ReviewService {
 	    }
 
 		//해당 유저, 리뷰에 해당하는 사람이 있으면 삭제
-	    public void deleteReview(Long userId, Long reviewId) {
+	    public void deleteReview(Long reviewId, Long userId) {
 	    	System.out.println("서비스 부분여기 수행완료");
-	        reviewRepository.deleteByUserIdAndId(userId, reviewId);
+	    	User user = new User();
+	    	user.setId(userId);
+	        reviewRepository.deleteByIdAndUser(reviewId, user);
 	    }
 		
 	    public void deleteReview(Long id) {
