@@ -53,7 +53,6 @@ public class M_UserController {
 	@Transactional
 	public ResponseEntity<String> update(@RequestBody User updatedUser) {
 		User user = userService.findByEmail(updatedUser.getEmail());
-
 		// 업데이트 작업 수행
 		userService.update(user, updatedUser);
 		System.out.println("사용자 수정 , 성공!!");
