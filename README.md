@@ -18,7 +18,11 @@ Spring boot, JSP/Servlet을 활용한 헬스장 일일권 예약 프로젝트입
 
 ### 개발환경
 
-뭐씀
+* Java 17
+* Spring boot
+* JSP/Servlet
+* JPA
+* 
 
 ---
 
