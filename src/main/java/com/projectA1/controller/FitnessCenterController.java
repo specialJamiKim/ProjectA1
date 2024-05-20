@@ -34,6 +34,7 @@ import com.projectA1.model.Owner;
 import com.projectA1.model.Review;
 import com.projectA1.service.FitnessCenterService;
 import com.projectA1.service.OwnerService;
+import com.projectA1.service.ReservationService;
 import com.projectA1.service.ReviewService;
 
 import lombok.RequiredArgsConstructor;
@@ -46,9 +47,7 @@ public class FitnessCenterController {
 	private final FitnessCenterService fitnessCenterService;
 	private final OwnerService ownerService;
 	private final ReviewService reviewService;
-
-//	@Value("${image.path}")
-//	private String imagePath;
+	private final ReservationService reservationService; 
 
 	// center 등록 폼
 	@GetMapping("joinForm")
@@ -56,16 +55,6 @@ public class FitnessCenterController {
 		return "/center/centerJoin";
 	}
 
-//	// 피트니스 센터 추가 (사장님에 center추가, 센터 추가)
-//    @PostMapping("register")
-//    @ResponseBody
-//    public String join(@AuthenticationPrincipal PrincipalUser principalUser, @RequestBody FitnessCenter fitnessCenter, @RequestParam("file") MultipartFile file, @RequestParam("data") String jsonData) {	   	
-//    	fitnessCenterService.join(fitnessCenter);
-//    	Owner owner = (Owner) principalUser.getUser();
-//    	//현재 owner에 센터아이디 등록
-//    	ownerService.addFitnessCenterToOwner(owner,fitnessCenter);
-//        return "success";
-//    }
 
 	// 센터 등록(이미지파일때문에 길어짐)
 	@PostMapping("register")
@@ -127,13 +116,7 @@ public class FitnessCenterController {
 		return "/center/updateForm";
 	}
 
-	// 수정
-//	@PutMapping("update")
-//	public ResponseEntity<String> updateFitnessCenter(@AuthenticationPrincipal PrincipalUser principalUser,
-//	        @ModelAttribute FitnessCenter fitnessCenter) {
-//	    fitnessCenterService.update(fitnessCenter);
-//	    return ResponseEntity.ok().body("Fitness center updated successfully");
-//	}
+	//수정
 	@PutMapping("update")
 	@ResponseBody
 	public String updateFitnessCenter(@RequestParam("id") Long id, @RequestParam("name") String name,
@@ -185,6 +168,9 @@ public class FitnessCenterController {
 
 		// 센터아이디 삭제
 		ownerService.clearCenterId(owner);
+		// 센터 리뷰 삭제
+		//reviewService.dele
+		//센터 예약 삭제
 		fitnessCenterService.deleteFitnessCenter(id);
 		return "redirect:/";
 	}
@@ -239,71 +225,6 @@ public class FitnessCenterController {
 	    return "center/gymview";
 	}
 
-
-	
-	/*
-	@GetMapping("/view/{id}")
-	public String view(@PathVariable Long id, @RequestParam(defaultValue = "0") String page,
-			@RequestParam(defaultValue = "5") String size, Model model) {
-
-		// 페이지 번호와 페이지 크기의 유효성 검사
-		int pageNumber;
-		int pageSize;
-		try {
-			pageNumber = Integer.parseInt(page);
-			pageSize = Integer.parseInt(size);
-		} catch (NumberFormatException e) {
-			pageNumber = 0;
-			pageSize = 5;
-		}
-		if (pageNumber < 0) {
-			pageNumber = 0; // 페이지 번호가 음수인 경우 0으로 설정
-		}
-		if (pageSize <= 0) {
-			pageSize = 5; // 페이지 크기가 0 또는 음수인 경우 기본값인 5로 설정
-		}
-
-		Pageable pageable = PageRequest.of(pageNumber, pageSize);
-		Page<Review> reviewsPage = reviewService.findByCenterId(id, pageable);
-
-		double avg = 0.0;
-		int sum = 0;
-		List<Review> reviews = reviewsPage.getContent(); // 페이지에 해당하는 후기 목록 가져오기
-
-		for (Review review : reviews) {
-			sum += review.getRating();
-		}
-
-		if (!reviews.isEmpty()) {
-			avg = (double) sum / reviews.size();
-		}
-
-		int totalPages = reviewsPage.getTotalPages(); // 전체 페이지 수 가져오기
-
-		int startPage;
-		int endPage;
-		if (totalPages <= 3) {
-			startPage = 0;
-			endPage = totalPages - 1;
-		} else {
-			startPage = Math.max(0, pageNumber / 3 * 3);
-			endPage = Math.min(totalPages - 1, startPage + 2);
-			if (endPage - startPage < 2) { // 페이지가 부족한 경우 보정
-				startPage = Math.max(0, endPage - 2);
-			}
-		}
-
-		model.addAttribute("avg", avg);
-		model.addAttribute("reviews", reviews);
-		model.addAttribute("fitnessCenter", fitnessCenterService.view(id));
-		model.addAttribute("currentPage", pageNumber); // 수정된 부분
-		model.addAttribute("totalPages", totalPages);
-		model.addAttribute("startPage", startPage);
-		model.addAttribute("endPage", endPage);
-
-		return "center/gymview";
-	}*/
-    
 	// 전체보기
 	@GetMapping("gymlist")
 	public String getAllFitnessCenters(Model model) {
