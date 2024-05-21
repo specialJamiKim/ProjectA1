@@ -13,6 +13,10 @@
 <!-- 이 템플릿을 위한 사용자 정의 스타일 -->
 <link href="styles.css" rel="stylesheet">
 <style>
+.container{
+	max-width: 1000px
+}
+
 ul .nav-item {
 	margin-left: 5px;
 	margin-right: 5px;
@@ -25,14 +29,13 @@ ul .nav-item {
 
 	<header th:fragment="header">
 		<div class="navbar navbar-dark bg-dark shadow-sm">
-			<div class="container" style="padding-left: 20px; padding-right: 20px;">
+			<div class="container"
+				style="padding-left: 20px; padding-right: 20px;">
 				<div class="d-flex justify-content-between w-100">
 					<!-- 로고를 클릭하면 홈페이지로 이동 -->
-					<a href="/" class="navbar-brand d-flex align-items-center"> <strong>Fit-PassPlater</strong>
+					<a href="/" class="navbar-brand d-flex align-items-center"> <strong>Fit-PassPlatter</strong>
 					</a>
 					<!-- 메뉴 항목들 -->
-
-
 					<div>
 						<ul class="navbar-nav mb-2 mb-lg-0 d-flex flex-row" id="userNav">
 
@@ -88,6 +91,7 @@ ul .nav-item {
 
 				</div>
 			</div>
+		</div>
 	</header>
 
 	<!-- 여기에 콘텐츠가 들어갑니다 -->
