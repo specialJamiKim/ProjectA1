@@ -10,6 +10,7 @@ import java.util.Optional;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import com.projectA1.model.FitnessCenter;
 import com.projectA1.model.Reservation;
 import com.projectA1.model.User;
 import com.projectA1.repository.ReservationRepository;
@@ -101,6 +102,11 @@ public class ReservationService {
 	public void deleteByUserId(User user) {
 		reservationRepository.deleteByUser(user);
 		
+	}
+
+	//센터 예약 삭제
+	public void deleteAllByCenter(FitnessCenter fitnessCenter) {
+		reservationRepository.deleteByCenter(fitnessCenter);
 	}
 
 }

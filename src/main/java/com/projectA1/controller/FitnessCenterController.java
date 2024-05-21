@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -37,6 +38,7 @@ import com.projectA1.service.OwnerService;
 import com.projectA1.service.ReservationService;
 import com.projectA1.service.ReviewService;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -159,18 +161,22 @@ public class FitnessCenterController {
 		return "success";
 	}
 
-	// 삭제
+	// 삭제 ==> 이 부분 수정해야함
 	@GetMapping("delete")
+	@Transactional
 	public String delete(@AuthenticationPrincipal PrincipalUser principalUser) {
 		// 고유 아이디로 삭제처리
 		Owner owner = (Owner) principalUser.getUser();
 		Long id = owner.getFitnessCenter().getId();
-
+		Optional<FitnessCenter> center = fitnessCenterService.findByCenter(id);
+		
 		// 센터아이디 삭제
 		ownerService.clearCenterId(owner);
 		// 센터 리뷰 삭제
-		//reviewService.dele
-		//센터 예약 삭제
+		reviewService.deleteByCenterReview(center.get());
+		// 센터 예약 삭제
+		reservationService.deleteAllByCenter(center.get());
+		//센터 삭제
 		fitnessCenterService.deleteFitnessCenter(id);
 		return "redirect:/";
 	}
@@ -221,6 +227,7 @@ public class FitnessCenterController {
 	    model.addAttribute("totalPages", totalPages);
 	    model.addAttribute("startPage", startPage);
 	    model.addAttribute("endPage", endPage);
+	    model.addAttribute("size", pageSize); // 페이지 크기 추가
 
 	    return "center/gymview";
 	}
