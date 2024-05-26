@@ -14,7 +14,7 @@ import com.projectA1.model.User;
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Long>{
 
-	//List<Reservation> findByReservationTimeBefore(LocalDateTime previousMidnight);
+	List<Reservation> findByReservationTimeBefore(LocalDateTime previousMidnight);
 
 	//유저 예약된 정보 다 표시
 	List<Reservation> findAllByUserId(Long id);
