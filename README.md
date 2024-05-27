@@ -1,4 +1,4 @@
-# Spring boot, Android(Kotlin) Project
+# Spring boot, Android(Kotlin) Project(Server)
 
 ### 헬스장 일일권 예약 및 헬스정보 어플리케이션 제작
 
