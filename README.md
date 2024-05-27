@@ -12,7 +12,7 @@
 
 ### ⏰ 개발기간
 
-* 2024.01.01 ~ 2024.01.01
+* 2024.03.04 ~ 2024.03.22
 
 ---
 
@@ -24,10 +24,12 @@
 
 * Java 17
 * Spring boot / Spring Security
-* JSP/Servlet
+* Android Studio / Kotlin
+* Retrofit2
+* Room Database
+* Glide
 * JPA
 * MySQL
-* Thymeleaf
 * Apache Tomcat
 * Gradle
 
@@ -37,4 +39,4 @@
 1. Spring Security 활용하여 회원가입 & 로그인
 2. BCryptPasswordEncoder를 통해 비밀번호 암호화 처리
 3. Spring Data JPA를 통한 데이터베이스와 상호작용 하여 CRUD 구현
-4. 개인회원 / 기업회원 페이지 처리
+4. 클라이언트 Session과 Room Database를 활용하여 정보
