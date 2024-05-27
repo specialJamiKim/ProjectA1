@@ -1,12 +1,12 @@
-# Spring boot, JSP/Servlet Project
+# Spring boot, Android(Kotlin) Project
 
-### 헬스장 일일권 예약 및 헬스정보 플랫폼 제작
+### 헬스장 일일권 예약 및 헬스정보 어플리케이션 제작
 
 ---
 
 ### 🖥️ 프로젝트 소개
 
-* Spring boot, JSP/Servlet을 활용한 헬스장 일일권 예약 프로젝트입니다.
+* Spring boot, Android(Kotlin)을 활용한 어플리케이션 제작 프로젝트 입니다.
 
 ---
 
@@ -16,28 +16,25 @@
 
 ---
 
-### 👫 팀원 역할
-* 팀장 : 김태룡 =>
-* 팀원1 : 윤성호
-* 팀원2 : 정혜윤
-* 팀원3 : 박산해
-
+### 👫 팀원
+* 4명
 ---
 
 ### ⚙️ 개발환경
 
 * Java 17
-* Spring boot
+* Spring boot / Spring Security
 * JSP/Servlet
 * JPA
-* 
+* MySQL
+* Thymeleaf
+* Apache Tomcat
+* Gradle
 
 ---
 
 ### 📌 주요기능
-1. 이거씀
-2. 이것도씀
-3. 저것도사용함
-4. 그런식으로 사용했음
-
-END
+1. Spring Security 활용하여 회원가입 & 로그인
+2. BCryptPasswordEncoder를 통해 비밀번호 암호화 처리
+3. Spring Data JPA를 통한 데이터베이스와 상호작용 하여 CRUD 구현
+4. 개인회원 / 기업회원 페이지 처리
