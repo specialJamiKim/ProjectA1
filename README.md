@@ -24,7 +24,6 @@
 
 * Java 17
 * Spring boot / Spring Security
-* JSP/Servlet
 * JPA
 * MySQL
 * Thymeleaf
